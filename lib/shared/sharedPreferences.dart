@@ -1,0 +1,66 @@
+import 'package:eRoomApp/models/post_like.dart';
+import 'package:eRoomApp/models/token.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SharedPrefs {
+  static String contactNumber;
+  static String prefIdUser;
+  static saveContactNumber(String contactNumber) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('contactNumber', contactNumber);
+  }
+
+  static Future setProfileUserUrl(String imageUrl) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('profileimageUrl', imageUrl);
+  }
+
+  static Future<String> getContactNumber() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    contactNumber = (preferences.getString('contactNumber') ?? '0');
+    print('contactNumber: ' + contactNumber);
+    return contactNumber;
+  }
+
+  static saveIdUser(String idUser) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('idUser', idUser);
+  }
+
+  static Future<String> getIdUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    prefIdUser = (preferences.getString('idUser') ?? '');
+    return prefIdUser;
+  }
+
+  static saveTokenData(Token token) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('auth_token', token.authToken);
+    preferences.setString('message', token.message);
+    preferences.setString('id', token.id);
+    preferences.setString('first_name', token.firstName);
+    preferences.setString('last_name', token.lastName);
+    preferences.setString('email', token.email);
+  }
+
+  static saveUserSatus(String userShortDescription) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('userShortDescription', userShortDescription);
+  }
+
+  static Future<String> getUserStatus() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString('userShortDescription');
+  }
+
+  static Future<List> setLikes(String adId, bool like) async {
+    List<PostLike> adLikes = new List<PostLike>();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('adId', adId);
+    preferences.setBool('like', like);
+    PostLike postLike = new PostLike(
+        adId: preferences.getString('adId'), like: preferences.getBool('like'));
+    adLikes.add(postLike);
+    return adLikes;
+  }
+}

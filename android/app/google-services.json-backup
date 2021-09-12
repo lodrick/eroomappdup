@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "100987302520",
+    "project_id": "eroomapp-e4679",
+    "storage_bucket": "eroomapp-e4679.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100987302520:android:6d1a7adb5fdc17725e338d",
+        "android_client_info": {
+          "package_name": "com.eroom.eRoomApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100987302520-mmhn9i0v6btlg43tpaaqeql2njs89nom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eroom.eRoomApp",
+            "certificate_hash": "55192859b669818d0f01cee4f642b0c6a8fceb17"
+          }
+        },
+        {
+          "client_id": "100987302520-isd8trbi492tedq3t30obl67lkjkt4jp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKilXt9B2d9fgz5wtmSmuBsi9SSnMl0kw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100987302520-isd8trbi492tedq3t30obl67lkjkt4jp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
