@@ -1,4 +1,5 @@
 import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/pages/post_ad_edit.dart';
 import 'package:eRoomApp/theme.dart';
@@ -6,16 +7,14 @@ import 'package:eRoomApp/widgets/dialog_box_stats.dart';
 import 'package:flutter/material.dart';
 
 class Favourites extends StatefulWidget {
-  final String authToken;
-  final String id;
+  final String idUser;
   final String firstName;
   final String lastName;
   final String email;
   final String contactNumber;
 
   Favourites({
-    @required this.authToken,
-    @required this.id,
+    @required this.idUser,
     @required this.firstName,
     @required this.lastName,
     @required this.contactNumber,
@@ -56,7 +55,7 @@ class _FavouritesState extends State<Favourites> {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.getFavouriteAdvert(widget.id, widget.authToken),
+            stream: FireBusinessApi.getFavouriteAdvert(widget.idUser, true),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -85,13 +84,13 @@ class _FavouritesState extends State<Favourites> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PostAdEdit(
-                                    authToken: widget.authToken,
+                                    //authToken: widget.authToken,
                                     advert: advert,
                                     contactNumber: widget.contactNumber,
                                     email: widget.email,
                                     firstName: widget.firstName,
                                     lastName: widget.lastName,
-                                    id: widget.id,
+                                    idUser: widget.idUser,
                                   ),
                                 ),
                               ),
@@ -159,7 +158,7 @@ class _FavouritesState extends State<Favourites> {
                                     GestureDetector(
                                       onTap: () {
                                         String statusDescription = 'pending';
-                                        if (advert.status == 'Approved')
+                                        if (advert.status == 'approved')
                                           _status = true;
 
                                         showDialog(

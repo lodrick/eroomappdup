@@ -9,6 +9,35 @@ class FireBusinessApi {
       .snapshots()
       .transform(Utils.transformer(Advert.fromJson));
 
+  static Stream<List<Advert>> getFavouriteAdvert(String idUser, bool liked) =>
+      FirebaseFirestore.instance
+          .collection('adverts')
+          .orderBy(AdvertField.updatedAt, descending: true)
+          .where('userId', isEqualTo: idUser)
+          .where('liked', isEqualTo: true)
+          .snapshots()
+          .transform(Utils.transformer(Advert.fromJson));
+
+  static Stream<List<Advert>> getMyAdverts(String idUser) =>
+      FirebaseFirestore.instance
+          .collection('adverts')
+          .orderBy(AdvertField.updatedAt, descending: true)
+          .where('userId', isEqualTo: idUser)
+          .snapshots()
+          .transform(Utils.transformer(Advert.fromJson));
+
+  static Stream<List<Advert>> getSearchResultAdvert(
+          double minprice, double maxPrice, String suburb, String city) =>
+      FirebaseFirestore.instance
+          .collection('adverts')
+          .orderBy(AdvertField.updatedAt, descending: true)
+          .where('price', isGreaterThan: maxPrice)
+          .where('price', isLessThan: minprice)
+          .where('suburb', isEqualTo: suburb)
+          .where('city', isEqualTo: city)
+          .snapshots()
+          .transform(Utils.transformer(Advert.fromJson));
+
   static Future addAdvert(Advert advert) async {
     FirebaseFirestore.instance.collection('adverts').add({
       'id': advert.id,
@@ -30,6 +59,23 @@ class FireBusinessApi {
       }).then((res) {
         print('Success');
       });
+    });
+  }
+
+  static Future updateAdvert(Advert advert, adId) async {
+    FirebaseFirestore.instance.collection('adverts').doc(adId).update({
+      'id': advert.id,
+      'roomType': advert.roomType,
+      'price': advert.price,
+      'title': advert.title,
+      'description': advert.decription,
+      'province': advert.province,
+      'city': advert.city,
+      'suburb': advert.suburb,
+      'userId': advert.userId,
+      'createdAt': advert.createdAt,
+      'updatedAt': advert.updatedAt,
+      'status': advert.status,
     });
   }
 }

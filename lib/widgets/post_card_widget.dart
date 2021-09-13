@@ -9,12 +9,9 @@ import 'package:intl/intl.dart';
 class PostCardWidget extends StatefulWidget {
   final List<Advert> adverts;
   final String contactNumber;
-  final String authToken;
+
   const PostCardWidget(
-      {@required this.adverts,
-      @required this.contactNumber,
-      @required this.authToken,
-      Key key})
+      {@required this.adverts, @required this.contactNumber, Key key})
       : super(key: key);
 
   @override
@@ -87,8 +84,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     status: advert.status,
                     userId: advert.userId,
                     updatedAt: updatedAt,
-                    authToken: widget.authToken,
-                    contactNumber: widget.contactNumber,
+                    //authToken: widget.authToken,
+                    //contactNumber: widget.contactNumber,
                     imageUrls: _imageUrls,
                   ),
                 ),

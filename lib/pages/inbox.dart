@@ -5,10 +5,9 @@ import 'package:eRoomApp/widgets/dialog_box_stats.dart';
 import 'package:flutter/material.dart';
 
 class Inbox extends StatelessWidget {
-  final String authToken;
+  //final String authToken;
   final String id;
-  Inbox({@required this.authToken, @required this.id, Key key})
-      : super(key: key);
+  Inbox({@required this.id, Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String imageUrl = '';
@@ -37,7 +36,7 @@ class Inbox extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.requestAdverts(authToken),
+            stream: BusinessApi.requestAdverts('authToken'),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:

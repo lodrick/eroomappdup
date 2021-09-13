@@ -1,13 +1,23 @@
+import 'package:eRoomApp/api/fire_business_api.dart';
+import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
+import 'package:eRoomApp/widgets/post_card_widget.dart';
 import 'package:eRoomApp/widgets/post_cards.dart';
 import 'package:flutter/material.dart';
 
 class PostSearchResultsDisplay extends StatelessWidget {
-  final List adverts;
-  final List images;
+  final double minPrice;
+  final double maxPrice;
+  final String suburb;
+  final String city;
 
-  PostSearchResultsDisplay({this.adverts, this.images, Key key})
-      : super(key: key);
+  PostSearchResultsDisplay({
+    @required this.minPrice,
+    @required this.maxPrice,
+    @required this.suburb,
+    @required this.city,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +51,36 @@ class PostSearchResultsDisplay extends StatelessWidget {
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   child: Container(
-                    child: adverts != null
-                        ? new PostCards(adverts: adverts, images: images)
-                        : buildText('No Search Found.'),
+                    child: StreamBuilder<List<Advert>>(
+                      stream: FireBusinessApi.getSearchResultAdvert(
+                          minPrice, maxPrice, suburb, city),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(child: CircularProgressIndicator());
+                          default:
+                            if (snapshot.hasError) {
+                              print(snapshot.error);
+                              return buildText(
+                                  'Something Went Wrong Try again later, ' +
+                                      snapshot.error.toString());
+                            } else {
+                              var adverts = snapshot.data;
+                              print(adverts.elementAt(0).city);
+
+                              if (adverts == null || adverts.isEmpty) {
+                                return buildText('No Advert Found');
+                              } else {
+                                return PostCardWidget(
+                                  adverts: adverts,
+                                  //contactNumber: widget.contactNumber,
+                                  //authToken: widget.authToken,
+                                );
+                              }
+                            }
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),

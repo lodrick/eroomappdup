@@ -1,4 +1,4 @@
-import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/pages/profile_page_user_detail_save.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:eRoomApp/pages/login_page.dart';
 import 'package:eRoomApp/pages/otp_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_store.g.dart';
 
@@ -146,42 +145,31 @@ abstract class LoginStoreBase with Store {
     isOtpLoading = true;
     firebaseUser = result.user;
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
+    //SharedPreferences preferences = await SharedPreferences.getInstance();
 
     if (firebaseUser.phoneNumber != null ||
         firebaseUser.phoneNumber.isNotEmpty) {
-      BusinessApi.authenticate(firebaseUser.phoneNumber.toString())
-          .then((response) {
-        if (response.statusCode == 200) {
+      FirebaseApi.retriveUser(firebaseUser.phoneNumber).then((user) {
+        if (user != null) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (_) => MainPostsPage(
-                  firstName: response.firstName ??
-                      preferences.getString('first_name') ??
-                      '',
-                  lastName: response.lastName ??
-                      preferences.getString('last_name') ??
-                      '',
-                  email: response.email ?? preferences.getString('email') ?? '',
-                  authToken: response.authToken ??
-                      preferences.getString('auth_token') ??
-                      '',
-                  id: response.id,
-                  contactNumber: response.phoneNumber,
+                  firstName: user.name ?? '',
+                  lastName: user.surname ?? '',
+                  email: user.email ?? '',
+                  idUser: user.idUser,
+                  contactNumber: user.contactNumber,
                 ),
               ),
               (Route<dynamic> route) => false);
-        } else if ((response.statusCode == 500) ||
-            (response.statusCode == 401 || response.statusCode == null)) {
+        } else {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (_) => ProfilePageUserDetailSave(
-                  statusCode: response.statusCode,
-                ),
+                builder: (_) => ProfilePageUserDetailSave(),
               ),
               (Route<dynamic> route) => false);
         }
-      });
+      }).catchError((e) => print(e.toString()));
     }
 
     isLoginLoading = false;

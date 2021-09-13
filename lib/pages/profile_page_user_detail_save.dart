@@ -23,13 +23,11 @@ class ProfilePageUserDetailSave extends StatefulWidget {
   final Token tokenUserInfo;
   final String imageUrl;
   final String currentIdUser;
-  final int statusCode;
 
   ProfilePageUserDetailSave({
     this.tokenUserInfo,
     this.imageUrl,
     this.currentIdUser,
-    this.statusCode,
     Key key,
   }) : super(key: key);
 
@@ -248,445 +246,517 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
               future: FirebaseApi.retriveUser(
                   loginStore.firebaseUser.phoneNumber.toString()),
               builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  if (widget.statusCode != 401)
-                    return buildText('Something Went Wrong Try again later');
-                } else if (snapshot.hasData) {
-                  if (snapshot.data.name.isNotEmpty)
-                    firstNameController.text = snapshot.data.name.toString();
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Container(
+                        color: MyColors.primaryColor,
+                        child: Center(child: CircularProgressIndicator()));
+                  default:
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return buildText(
+                          'Something Went Wrong Try again later, ' +
+                              snapshot.error.toString());
+                    } else {
+                      if (snapshot.data.name.isNotEmpty)
+                        firstNameController.text =
+                            snapshot.data.name.toString();
 
-                  if (snapshot.data.surname.isNotEmpty)
-                    lastNameController.text = snapshot.data.surname.toString();
+                      if (snapshot.data.surname.isNotEmpty)
+                        lastNameController.text =
+                            snapshot.data.surname.toString();
 
-                  if (snapshot.data.email.isNotEmpty) {
-                    emailController.text = snapshot.data.email.toString();
-                  }
-                }
+                      if (snapshot.data.email.isNotEmpty) {
+                        emailController.text = snapshot.data.email.toString();
+                      }
 
-                return Scaffold(
-                  backgroundColor: MyColors.primaryColor,
-                  extendBodyBehindAppBar: true,
-                  appBar: AppBar(
-                    iconTheme: IconThemeData(color: Colors.white70),
-                    backgroundColor: Colors.transparent,
-                    title: Text(
-                      'User Details',
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    elevation: 0.00,
-                  ),
-                  body: SafeArea(
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
+                      return Scaffold(
+                        backgroundColor: MyColors.primaryColor,
+                        extendBodyBehindAppBar: true,
+                        appBar: AppBar(
+                          iconTheme: IconThemeData(color: Colors.white70),
+                          backgroundColor: Colors.transparent,
+                          title: Text(
+                            'User Details',
+                            style: TextStyle(
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          elevation: 0.00,
                         ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: <Widget>[
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    padding: const EdgeInsets.only(
-                                        left: 17.0, right: 17.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30.0),
-                                        topRight: Radius.circular(30.0),
-                                      ),
-                                      image: new DecorationImage(
-                                        image: new AssetImage(
-                                          'assets/img/black-house.jpeg',
-                                          bundle: null,
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    child: GestureDetector(
-                                      child: CircleAvatar(
-                                        backgroundColor: MyColors.primaryColor,
-                                        radius: 50.0,
-                                        backgroundImage: NetworkImage(
-                                          widget.imageUrl ??
-                                              imageUrl ??
-                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/480px-President_Barack_Obama.jpg',
-                                        ),
-                                      ),
-                                      //onTap: uploadImage,
-                                      onTap: _handleFABPressed,
-                                    ),
-                                    top: 105.0,
-                                    left: 16.0,
-                                    right: 16.0,
-                                  ),
-                                ],
+                        body: SafeArea(
+                          child: Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30.0),
+                                topRight: Radius.circular(30.0),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: new Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 10.0),
-                                      height: 120.0,
-                                      width: double.maxFinite,
-                                      color: Colors.white,
-                                      child: Card(
-                                        elevation: 5.0,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Column(
-                                                children: [
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: TextFormField(
-                                                        controller:
-                                                            userShortDescriptionController,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Enter your status here',
-                                                          labelText:
-                                                              'Enter your status here',
-                                                          contentPadding:
-                                                              EdgeInsets
-                                                                  .symmetric(
-                                                                      vertical:
-                                                                          5.0),
-                                                          labelStyle: new TextStyle(
-                                                              color: MyColors
-                                                                  .primaryColor),
-                                                          hintStyle: new TextStyle(
-                                                              color: MyColors
-                                                                  .primaryColor),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 8.0),
-                                                        child: Text(
-                                                          userShortDesc,
-                                                          style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color:
-                                                                Colors.black87,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height,
+                                child: Column(
+                                  children: [
+                                    Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.25,
+                                          padding: const EdgeInsets.only(
+                                              left: 17.0, right: 17.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30.0),
+                                              topRight: Radius.circular(30.0),
+                                            ),
+                                            image: new DecorationImage(
+                                              image: new AssetImage(
+                                                'assets/img/black-house.jpeg',
+                                                bundle: null,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          child: GestureDetector(
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  MyColors.primaryColor,
+                                              radius: 50.0,
+                                              backgroundImage: NetworkImage(
+                                                widget.imageUrl ??
+                                                    imageUrl ??
+                                                    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/480px-President_Barack_Obama.jpg',
+                                              ),
+                                            ),
+                                            //onTap: uploadImage,
+                                            onTap: _handleFABPressed,
+                                          ),
+                                          top: 105.0,
+                                          left: 16.0,
+                                          right: 16.0,
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: new Column(
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                10.0, 10.0, 10.0, 10.0),
+                                            height: 120.0,
+                                            width: double.maxFinite,
+                                            color: Colors.white,
+                                            child: Card(
+                                              elevation: 5.0,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Flexible(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child:
+                                                                TextFormField(
+                                                              controller:
+                                                                  userShortDescriptionController,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                hintText:
+                                                                    'Enter your status here',
+                                                                labelText:
+                                                                    'Enter your status here',
+                                                                contentPadding:
+                                                                    EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            5.0),
+                                                                labelStyle: new TextStyle(
+                                                                    color: MyColors
+                                                                        .primaryColor),
+                                                                hintStyle: new TextStyle(
+                                                                    color: MyColors
+                                                                        .primaryColor),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      )
-                                                    ],
-                                                  )
+                                                        Row(
+                                                          children: <Widget>[
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          8.0),
+                                                              child: Text(
+                                                                userShortDesc,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black87,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              80),
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: MyColors
+                                                              .primaryColor),
+                                                    ),
+                                                    child: GestureDetector(
+                                                      child: Icon(
+                                                        Icons.edit,
+                                                        color: MyColors
+                                                            .primaryColor,
+                                                      ),
+                                                      onTap: () {
+                                                        print('Status edited');
+                                                        SharedPrefs.saveUserSatus(
+                                                            userShortDescriptionController
+                                                                .text
+                                                                .toString());
+                                                        SharedPrefs
+                                                                .getUserStatus()
+                                                            .then((results) {
+                                                          setState(() {
+                                                            print(results);
+                                                            userShortDesc =
+                                                                results;
+                                                          });
+                                                        }).catchError((e) {
+                                                          print(e);
+                                                        });
+                                                        print(userShortDesc);
+                                                      },
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              margin:
-                                                  const EdgeInsets.all(10.0),
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Container(
                                               decoration: BoxDecoration(
+                                                color: Color(0xFFFFF8E1),
                                                 borderRadius:
-                                                    BorderRadius.circular(80),
-                                                border: Border.all(
-                                                    width: 2,
-                                                    color:
-                                                        MyColors.primaryColor),
+                                                    BorderRadius.circular(30),
                                               ),
-                                              child: GestureDetector(
-                                                child: Icon(
-                                                  Icons.edit,
-                                                  color: MyColors.primaryColor,
+                                              child: TextFormField(
+                                                controller: firstNameController
+                                                  ..text,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                    vertical: 10.0,
+                                                  ),
+                                                  prefixIcon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    child: Icon(
+                                                      Icons.person,
+                                                      color:
+                                                          MyColors.primaryColor,
+                                                    ),
+                                                  ),
+                                                  filled: false,
+                                                  hintStyle: new TextStyle(
+                                                      color: Colors.grey[800]),
+                                                  hintText: 'John',
+                                                  labelText: 'Name*',
+                                                  border: InputBorder.none,
                                                 ),
-                                                onTap: () {
-                                                  print('Status edited');
-                                                  SharedPrefs.saveUserSatus(
-                                                      userShortDescriptionController
-                                                          .text
-                                                          .toString());
-                                                  SharedPrefs.getUserStatus()
-                                                      .then((results) {
-                                                    setState(() {
-                                                      print(results);
-                                                      userShortDesc = results;
-                                                    });
-                                                  }).catchError((e) {
-                                                    print(e);
-                                                  });
-                                                  print(userShortDesc);
-                                                },
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFF8E1),
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: TextFormField(
-                                          controller: firstNameController..text,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                              vertical: 10.0,
-                                            ),
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(0.0),
-                                              child: Icon(
-                                                Icons.person,
-                                                color: MyColors.primaryColor,
-                                              ),
-                                            ),
-                                            filled: false,
-                                            hintStyle: new TextStyle(
-                                                color: Colors.grey[800]),
-                                            hintText: 'John',
-                                            labelText: 'Name*',
-                                            border: InputBorder.none,
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFF8E1),
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                        child: TextFormField(
-                                          controller: lastNameController..text,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                              vertical: 10.0,
-                                            ),
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(0.0),
-                                              child: Icon(
-                                                Icons.person_add,
-                                                color: MyColors.primaryColor,
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFFFF8E1),
+                                                borderRadius:
+                                                    BorderRadius.circular(30.0),
+                                              ),
+                                              child: TextFormField(
+                                                controller: lastNameController
+                                                  ..text,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                    vertical: 10.0,
+                                                  ),
+                                                  prefixIcon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    child: Icon(
+                                                      Icons.person_add,
+                                                      color:
+                                                          MyColors.primaryColor,
+                                                    ),
+                                                  ),
+                                                  filled: false,
+                                                  hintStyle: new TextStyle(
+                                                      color: Colors.grey[800]),
+                                                  hintText: 'Doe',
+                                                  labelText: 'Surname*',
+                                                  border: InputBorder.none,
+                                                ),
                                               ),
                                             ),
-                                            filled: false,
-                                            hintStyle: new TextStyle(
-                                                color: Colors.grey[800]),
-                                            hintText: 'Doe',
-                                            labelText: 'Surname*',
-                                            border: InputBorder.none,
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFF8E1),
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                        child: TextFormField(
-                                          controller: emailController..text,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                              vertical: 10.0,
-                                            ),
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(0.0),
-                                              child: Icon(
-                                                Icons.email,
-                                                color: MyColors.primaryColor,
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFFFF8E1),
+                                                borderRadius:
+                                                    BorderRadius.circular(30.0),
+                                              ),
+                                              child: TextFormField(
+                                                controller: emailController
+                                                  ..text,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                    vertical: 10.0,
+                                                  ),
+                                                  prefixIcon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    child: Icon(
+                                                      Icons.email,
+                                                      color:
+                                                          MyColors.primaryColor,
+                                                    ),
+                                                  ),
+                                                  filled: false,
+                                                  hintStyle: new TextStyle(
+                                                      color: Colors.grey[800]),
+                                                  hintText:
+                                                      'john.doe@gmail.com',
+                                                  labelText: 'Email*',
+                                                  border: InputBorder.none,
+                                                ),
                                               ),
                                             ),
-                                            filled: false,
-                                            hintStyle: new TextStyle(
-                                                color: Colors.grey[800]),
-                                            hintText: 'john.doe@gmail.com',
-                                            labelText: 'Email*',
-                                            border: InputBorder.none,
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: _disableButton
-                        ? () {
-                            showAlert(context);
-                            if (firstNameController.text.isNotEmpty &&
-                                lastNameController.text.isNotEmpty &&
-                                emailController.text.isNotEmpty) {
-                              if (snapshot.data != null) {
-                                print(imageUrl);
+                        floatingActionButton: FloatingActionButton(
+                          onPressed: _disableButton
+                              ? () {
+                                  showAlert(context);
+                                  if (firstNameController.text.isNotEmpty &&
+                                      lastNameController.text.isNotEmpty &&
+                                      emailController.text.isNotEmpty) {
+                                    if (snapshot.data != null) {
+                                      print(imageUrl);
 
-                                User userDataToUpdate = User(
-                                  name: firstNameController.text
-                                          .toString()
-                                          .trim() ??
-                                      snapshot.data.name,
-                                  surname: lastNameController.text
-                                          .toString()
-                                          .trim() ??
-                                      snapshot.data.surname,
-                                  contactNumber: loginStore
-                                          .firebaseUser.phoneNumber
-                                          .toString() ??
-                                      snapshot.data.contactNumber,
-                                  email:
-                                      emailController.text.toString().trim() ??
-                                          snapshot.data.email,
-                                  country: 'South Africa',
-                                  imageUrl: imageUrl != null
-                                      ? imageUrl
-                                      : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
-                                  lastMessageTime: DateTime.now(),
-                                  password: 'password',
-                                  passwordConf: 'password',
-                                  userType: 'user',
-                                );
+                                      User userDataToUpdate = User(
+                                        name: firstNameController.text
+                                                .toString()
+                                                .trim() ??
+                                            snapshot.data.name,
+                                        surname: lastNameController.text
+                                                .toString()
+                                                .trim() ??
+                                            snapshot.data.surname,
+                                        contactNumber: loginStore
+                                                .firebaseUser.phoneNumber
+                                                .toString() ??
+                                            snapshot.data.contactNumber,
+                                        email: emailController.text
+                                                .toString()
+                                                .trim() ??
+                                            snapshot.data.email,
+                                        country: 'South Africa',
+                                        imageUrl: imageUrl != null
+                                            ? imageUrl
+                                            : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
+                                        lastMessageTime: DateTime.now(),
+                                        password: 'password',
+                                        passwordConf: 'password',
+                                        userType: 'user',
+                                      );
 
-                                FirebaseApi.updateUser(
-                                    userDataToUpdate, snapshot.data.idUser);
-                                print('Hey this user exits');
-
-                                BusinessApi.authenticate(loginStore
-                                        .firebaseUser.phoneNumber
-                                        .toString())
-                                    .then((res) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MainPostsPage(
-                                        firstName: res.firstName,
-                                        lastName: res.lastName,
-                                        email: res.email,
-                                        authToken: res.authToken,
-                                        contactNumber: res.phoneNumber,
-                                        id: res.id,
-                                      ),
-                                    ),
-                                  );
-                                }).catchError((e) {
-                                  print('Error loging in: ' + e.toString());
-                                });
-                              } else {
-                                print('This user does not exit.');
-                                User user = User(
-                                  name: firstNameController.text
-                                          .toString()
-                                          .trim() ??
-                                      '',
-                                  surname: lastNameController.text
-                                          .toString()
-                                          .trim() ??
-                                      '',
-                                  contactNumber: loginStore
-                                          .firebaseUser.phoneNumber
-                                          .toString() ??
-                                      '',
-                                  email:
-                                      emailController.text.toString().trim() ??
-                                          '',
-                                  country: 'South Africa',
-                                  imageUrl: imageUrl != null
-                                      ? imageUrl
-                                      //: 'https://thumbs.dreamstime.com/z/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg',
-                                      : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
-                                  lastMessageTime: DateTime.now(),
-                                  password: 'password',
-                                  passwordConf: 'password',
-                                  userType: 'user',
-                                );
-                                //business logic endpoint
-                                BusinessApi.signUp(user).then((res) {
-                                  print('Res for business data');
-                                  FirebaseApi.addUser(user).then((res) {
-                                    print('Res for firestore data');
-
-                                    BusinessApi.authenticate(loginStore
-                                            .firebaseUser.phoneNumber
-                                            .toString())
-                                        .then((res) {
-                                      Navigator.push(
-                                        context,
+                                      FirebaseApi.updateUser(userDataToUpdate,
+                                              snapshot.data.idUser)
+                                          .then((result) {
                                         MaterialPageRoute(
                                           builder: (context) => MainPostsPage(
-                                            firstName: res.firstName,
-                                            lastName: res.lastName,
-                                            email: res.email,
-                                            authToken: res.authToken,
-                                            contactNumber: res.phoneNumber,
-                                            id: res.id,
+                                            firstName: result.name,
+                                            lastName: result.surname,
+                                            email: result.email,
+                                            contactNumber: result.contactNumber,
+                                            idUser: result.idUser,
                                           ),
-                                        ),
+                                        );
+                                      });
+                                      print('Hey this user exits');
+
+                                      /*BusinessApi.authenticate(loginStore
+                                              .firebaseUser.phoneNumber
+                                              .toString())
+                                          .then((res) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MainPostsPage(
+                                              firstName: res.firstName,
+                                              lastName: res.lastName,
+                                              email: res.email,
+                                              authToken: res.authToken,
+                                              contactNumber: res.phoneNumber,
+                                              id: res.id,
+                                            ),
+                                          ),
+                                        );
+                                      }).catchError((e) {
+                                        print(
+                                            'Error loging in: ' + e.toString());
+                                      });*/
+
+                                    } else {
+                                      print('This user does not exit.');
+                                      User user = User(
+                                        name: firstNameController.text
+                                                .toString()
+                                                .trim() ??
+                                            '',
+                                        surname: lastNameController.text
+                                                .toString()
+                                                .trim() ??
+                                            '',
+                                        contactNumber: loginStore
+                                                .firebaseUser.phoneNumber
+                                                .toString() ??
+                                            '',
+                                        email: emailController.text
+                                                .toString()
+                                                .trim() ??
+                                            '',
+                                        country: 'South Africa',
+                                        imageUrl: imageUrl != null
+                                            ? imageUrl
+                                            //: 'https://thumbs.dreamstime.com/z/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg',
+                                            : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
+                                        lastMessageTime: DateTime.now(),
+                                        password: 'password',
+                                        passwordConf: 'password',
+                                        userType: 'user',
                                       );
-                                    }).catchError((e) {
-                                      print('Error loging in: ' + e.toString());
-                                    });
-                                  }).catchError((e) {
-                                    print(
-                                        'Error adding a user from firestore: ' +
-                                            e.toString());
-                                  });
-                                }).catchError((e) {
-                                  print('error sign up: ' + e.toString());
-                                });
-                              }
-                            }
-                            clear();
-                          }
-                        : null,
-                    child: Icon(
-                      Icons.check,
-                      color: Colors.white70,
-                    ),
-                    backgroundColor: MyColors.primaryColor,
-                  ),
-                );
+
+                                      FirebaseApi.addUser(user).then((result) {
+                                        print('Res for firestore data');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MainPostsPage(
+                                              firstName: result.name,
+                                              lastName: result.surname,
+                                              email: result.email,
+                                              contactNumber:
+                                                  result.contactNumber,
+                                              idUser: result.idUser,
+                                            ),
+                                          ),
+                                        );
+                                      }).catchError((e) => print(
+                                          'Error adding a user from firestore: ' +
+                                              e.toString()));
+
+                                      //business logic endpoint
+                                      /*BusinessApi.signUp(user).then((res) {
+                                        print('Res for business data');
+                                        FirebaseApi.addUser(user).then((res) {
+                                          print('Res for firestore data');
+
+                                          BusinessApi.authenticate(loginStore
+                                                  .firebaseUser.phoneNumber
+                                                  .toString())
+                                              .then((res) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MainPostsPage(
+                                                  firstName: res.firstName,
+                                                  lastName: res.lastName,
+                                                  email: res.email,
+                                                  authToken: res.authToken,
+                                                  contactNumber:
+                                                      res.phoneNumber,
+                                                  id: res.id,
+                                                ),
+                                              ),
+                                            );
+                                          }).catchError((e) {
+                                            print('Error loging in: ' +
+                                                e.toString());
+                                          });
+                                        }).catchError((e) {
+                                          print(
+                                              'Error adding a user from firestore: ' +
+                                                  e.toString());
+                                        });
+                                      }).catchError((e) {
+                                        print('error sign up: ' + e.toString());
+                                      });*/
+                                    }
+                                  }
+                                  clear();
+                                }
+                              : null,
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white70,
+                          ),
+                          backgroundColor: MyColors.primaryColor,
+                        ),
+                      );
+                    }
+                }
               },
             ),
           ),

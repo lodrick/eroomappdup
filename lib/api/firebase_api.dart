@@ -122,7 +122,7 @@ class FirebaseApi {
     }
   }
 
-  static Future addUser(User user) async {
+  static Future<User> addUser(User user) async {
     FirebaseFirestore.instance.collection('users').add({
       'idUser': user.idUser,
       'name': user.name,
@@ -150,6 +150,7 @@ class FirebaseApi {
         });
       });
     });
+    return retriveUser(user.contactNumber);
   }
 
   static Future<User> retriveUser(String contactNumber) async {
@@ -165,9 +166,9 @@ class FirebaseApi {
     return User.fromJson(documentSnapshot.data());
   }
 
-  static Future updateUser(User userToupdate, idUser) async {
-    var user = FirebaseFirestore.instance.collection('users');
-    return user
+  static Future<User> updateUser(User userToupdate, idUser) async {
+    FirebaseFirestore.instance
+        .collection('users')
         .doc(idUser)
         .update({
           'name': userToupdate.name,
@@ -179,6 +180,7 @@ class FirebaseApi {
         })
         .then((value) => print('user updated:'))
         .catchError((error) => print('Failed to update user: $error'));
+    return retriveUser(userToupdate.contactNumber);
   }
 
   static Future uploadImageUrl(String imageUrl, idUser) {
@@ -230,4 +232,3 @@ class FirebaseApi {
     return PostLike.fromJson(documentSnapshot.data());
   }
 }
-

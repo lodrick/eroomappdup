@@ -2,6 +2,7 @@ import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/create_post_part_2.dart';
+import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CreatePost extends StatefulWidget {
   final String firstName;
   final String lastName;
-  final String id;
+  final String idUser;
   final String email;
   final String contactNumber;
-  final String authToken;
 
   CreatePost({
-    @required this.authToken,
     @required this.firstName,
     @required this.lastName,
-    @required this.id,
+    @required this.idUser,
     @required this.email,
     @required this.contactNumber,
     Key key,
@@ -351,10 +350,23 @@ class _CreatePostState extends State<CreatePost> {
               province: _province,
               city: _city,
               suburb: suburbController.text.toString(),
+              userId: widget.idUser,
               status: 'pending',
             );
             FireBusinessApi.addAdvert(advert).then((result) {
               print(result.toString());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPostsPage(
+                    firstName: widget.firstName,
+                    lastName: widget.lastName,
+                    contactNumber: widget.contactNumber,
+                    email: widget.email,
+                    idUser: widget.idUser,
+                  ),
+                ),
+              );
             }).catchError((e) => print(e.toString));
 
             // Navigator.push(

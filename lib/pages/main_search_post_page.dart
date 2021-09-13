@@ -6,11 +6,8 @@ import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
-import 'package:http/http.dart' as http;
 
 class MainSearchPostPage extends StatefulWidget {
-  final String authToken;
-  MainSearchPostPage({@required this.authToken, Key key}) : super(key: key);
   @override
   _MainSearchPostPageState createState() => _MainSearchPostPageState();
 }
@@ -24,34 +21,31 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
   String url = BusinessApi.url;
   String _city;
 
-  List adverts;
-  List images;
+  // Future<void> makeRequest(
+  //     {String minValue, String maxValue, String suburb, String city}) async {
 
-  Future<void> makeRequest(
-      {String minValue, String maxValue, String suburb, String city}) async {
-    
-    var response = await http.get(
-      Uri.encodeFull(url +
-          'adverts?min_value=' +
-          minValue +
-          '&max_value=' +
-          maxValue +
-          '&suburb=' +
-          suburb +
-          '&city=' +
-          city),
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': widget.authToken,
-      },
-    );
+  //   var response = await http.get(
+  //     Uri.encodeFull(url +
+  //         'adverts?min_value=' +
+  //         minValue +
+  //         '&max_value=' +
+  //         maxValue +
+  //         '&suburb=' +
+  //         suburb +
+  //         '&city=' +
+  //         city),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Authorization': widget.authToken,
+  //     },
+  //   );
 
-    setState(() {
-      var extractData = jsonDecode(response.body);
-      adverts = extractData[1]['adverts'] as List;
-      images = extractData[0]['images'] as List;
-    });
-  }
+  //   setState(() {
+  //     var extractData = jsonDecode(response.body);
+  //     adverts = extractData[1]['adverts'] as List;
+  //     images = extractData[0]['images'] as List;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -245,18 +239,15 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          makeRequest(
-            minValue: minPriceController.text.toString(),
-            maxValue: maxPriceControler.text.toString(),
-            suburb: suburbController.text.toString(),
-            city: _city,
-          );
-
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  PostSearchResultsDisplay(adverts: adverts, images: images),
+              builder: (context) => PostSearchResultsDisplay(
+                minPrice: double.parse(minPriceController.text.toString()),
+                maxPrice: double.parse(maxPriceControler.text.toString()),
+                suburb: suburbController.text,
+                city: _city,
+              ),
             ),
           );
         },

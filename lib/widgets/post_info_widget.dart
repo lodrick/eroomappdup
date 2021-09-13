@@ -24,8 +24,8 @@ class PostInfo extends StatefulWidget {
   final String userId;
   final String updatedAt;
   final List<String> imageUrls;
-  final String authToken;
-  final String contactNumber;
+  //final String authToken;
+  //final String contactNumber;
 
   PostInfo({
     @required this.idAd,
@@ -38,8 +38,8 @@ class PostInfo extends StatefulWidget {
     @required this.status,
     @required this.userId,
     @required this.updatedAt,
-    @required this.authToken,
-    @required this.contactNumber,
+    //@required this.authToken,
+    //@required this.contactNumber,
     this.imageUrls,
   });
 
@@ -127,9 +127,9 @@ class _PostInfoState extends State<PostInfo> {
               padding: EdgeInsets.only(right: 15.0),
               child: GestureDetector(
                 onTap: () {
-                  BusinessApi.createFavouriteAdvert(
+                  /*BusinessApi.createFavouriteAdvert(
                       widget.userId, widget.idAd, widget.authToken);
-                  print('Like');
+                  print('Like');*/
                 },
                 child: Icon(Icons.thumb_up, size: 22.0),
               ),
@@ -272,78 +272,72 @@ class _PostInfoState extends State<PostInfo> {
                                             tooltip:
                                                 'Click here to chat about the post.',
                                             onPressed: () {
-                                              Token token;
-                                              BusinessApi.getUser(
-                                                userId: widget.userId,
-                                                authTohen: widget.authToken,
-                                              ).then((results) {
-                                                setState(
-                                                  () {
-                                                    token =
-                                                        Token(data: results);
-                                                    print(token.phoneNumber);
-                                                    print(token.firstName);
-                                                    FirebaseApi.retriveUser(
-                                                            token.phoneNumber)
-                                                        .then(
-                                                      (result) {
-                                                        print(
-                                                            'result.idUser: ' +
-                                                                result.idUser);
-                                                        if (currentUserId ==
-                                                            result.idUser) {
-                                                          print(currentUserId +
-                                                              ' Is eqaul ' +
-                                                              result.idUser);
-                                                          final snackBar =
-                                                              SnackBar(
-                                                            behavior:
-                                                                SnackBarBehavior
-                                                                    .floating,
-                                                            backgroundColor:
-                                                                Colors.black38
-                                                                    .withOpacity(
-                                                                        0.8),
-                                                            content: Text(
-                                                              'You own this post you can not chat with yourself.',
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                  0.7,
-                                                                ),
+                                              // Token token;
+                                              // BusinessApi.getUser(
+                                              //   userId: widget.userId,
+                                              //   authTohen: 'widget.authToken',
+                                              // ).then((results) {
+                                              setState(
+                                                () {
+                                                  FirebaseApi.retriveUser(
+                                                          'widget.contactNumber')
+                                                      .then(
+                                                    (result) {
+                                                      print('result.idUser: ' +
+                                                          result.idUser);
+                                                      if (currentUserId ==
+                                                          result.idUser) {
+                                                        print(currentUserId +
+                                                            ' Is eqaul ' +
+                                                            result.idUser);
+                                                        final snackBar =
+                                                            SnackBar(
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                          backgroundColor:
+                                                              Colors.black38
+                                                                  .withOpacity(
+                                                                      0.8),
+                                                          content: Text(
+                                                            'You own this post you can not chat with yourself.',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                0.7,
                                                               ),
                                                             ),
-                                                          );
-                                                          Scaffold.of(context)
-                                                              .showSnackBar(
-                                                            snackBar,
-                                                          );
-                                                        } else {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder:
-                                                                  (context) =>
-                                                                      ChatPage(
-                                                                currentIdUser:
-                                                                    currentUserId,
-                                                                user: result,
-                                                                contactNumber:
-                                                                    widget
-                                                                        .contactNumber,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              }).catchError((e) {
-                                                print('BusinessApi.getUser: ' +
-                                                    e.toString());
-                                              });
+                                                          ),
+                                                        );
+                                                        Scaffold.of(context)
+                                                            .showSnackBar(
+                                                          snackBar,
+                                                        );
+                                                      } else {
+                                                        // Navigator.push(
+                                                        //   context,
+                                                        //   MaterialPageRoute(
+                                                        //     builder:
+                                                        //         (context) =>
+                                                        //             ChatPage(
+                                                        //       currentIdUser:
+                                                        //           currentUserId,
+                                                        //       user: result,
+                                                        //       contactNumber: widget
+                                                        //           .contactNumber,
+                                                        //     ),
+                                                        //   ),
+                                                        // );
+                                                      }
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                              // }).catchError((e) {
+                                              //   print('BusinessApi.getUser: ' +
+                                              //       e.toString());
+                                              // });
                                             },
                                           ),
                                           'eRoom Chat',

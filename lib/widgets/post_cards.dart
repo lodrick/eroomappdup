@@ -1,4 +1,3 @@
-import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
@@ -44,48 +43,6 @@ class _PostCardsState extends State<PostCards> {
               topRight: Radius.circular(20.0),
             ),
           ),
-          /*child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.requestAdverts(widget.authToken)
-                .asBroadcastStream(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
-                default:
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child:
-                          buildText('Something Went Wrong Try again later, '),
-                    );
-                  } else {
-                    if (snapshot.data.isNotEmpty) {
-                      for (int index = 0;
-                          index < snapshot.data.length;
-                          index++) {
-                        print(snapshot.data[index].status);
-                        if (snapshot.data[index].status != 'active') {
-                          snapshot.data.removeAt(index);
-                        }
-                      }
-                    }
-
-                    var adverts = snapshot.data.reversed.toList();
-
-                    if (adverts.isEmpty) {
-                      return buildText('No Advert Found');
-                    } else {
-                      return PostCardWidget(
-                        adverts: adverts,
-                        contactNumber: widget.contactNumber,
-                        authToken: widget.authToken,
-                      );
-                    }
-                  }
-              }
-            },
-          ),*/
           child: StreamBuilder<List<Advert>>(
             stream: FireBusinessApi.getAdverts(),
             builder: (context, snapshot) {
@@ -106,8 +63,8 @@ class _PostCardsState extends State<PostCards> {
                     } else {
                       return PostCardWidget(
                         adverts: adverts,
-                        contactNumber: widget.contactNumber,
-                        authToken: widget.authToken,
+                        //contactNumber: widget.contactNumber,
+                        //authToken: widget.authToken,
                       );
                     }
                   }

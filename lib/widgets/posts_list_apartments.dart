@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:eRoomApp/pages/post_ad_edit.dart';
 
 class PostsListApartments extends StatefulWidget {
-  final String authToken;
+  //final String authToken;
   final String id;
   final String firstName;
   final String lastName;
@@ -14,7 +14,7 @@ class PostsListApartments extends StatefulWidget {
   final String contactNumber;
 
   PostsListApartments({
-    @required this.authToken,
+    //@required this.authToken,
     @required this.id,
     @required this.firstName,
     @required this.lastName,
@@ -81,7 +81,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.requestAdverts(widget.authToken),
+            stream: BusinessApi.requestAdverts('widget.authToken'),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -130,13 +130,13 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PostAdEdit(
-                                    authToken: widget.authToken,
+                                    //authToken: widget.authToken,
                                     advert: advert,
                                     contactNumber: widget.contactNumber,
                                     email: widget.email,
                                     firstName: widget.firstName,
                                     lastName: widget.lastName,
-                                    id: widget.id,
+                                    idUser: widget.id,
                                   ),
                                 ),
                               ),

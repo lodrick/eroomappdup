@@ -1,4 +1,6 @@
 import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/fire_business_api.dart';
+import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 
@@ -34,25 +36,22 @@ class _SplashPageState extends State<SplashPage> {
   void currentUser() {
     SharedPrefs.getContactNumber().then((cNumber) {
       if (cNumber.isNotEmpty) {
-        BusinessApi.authenticate(cNumber).then((result) {
-          setState(() {
-            print('result.email ' + result.email);
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (_) => MainPostsPage(
-                    firstName: result.firstName,
-                    lastName: result.lastName,
-                    email: result.email,
-                    authToken: result.authToken,
-                    contactNumber: result.phoneNumber,
-                    id: result.id,
-                  ),
+        FirebaseApi.retriveUser(cNumber).then((result) {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (_) => MainPostsPage(
+                  firstName: result.name,
+                  lastName: result.surname,
+                  email: result.email,
+                  //authToken: result.authToken,
+                  contactNumber: result.contactNumber,
+                  idUser: result.idUser,
                 ),
-                (Route<dynamic> route) => false);
-          });
-        }).catchError((e) {});
+              ),
+              (Route<dynamic> route) => false);
+        }).catchError((e) => print(e.toString()));
       }
-    }).catchError((e) {});
+    }).catchError((e) => print(e.toString()));
   }
 
   @override

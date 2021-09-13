@@ -1,4 +1,4 @@
-import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
@@ -9,19 +9,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class PostAdEdit extends StatefulWidget {
   final Advert advert;
-  final String authToken;
+  //final String authToken;
   final String firstName;
   final String lastName;
-  final String id;
+  final String idUser;
   final String email;
   final String contactNumber;
 
   PostAdEdit({
     @required this.advert,
-    @required this.authToken,
+    //@required this.authToken,
     @required this.firstName,
     @required this.lastName,
-    @required this.id,
+    @required this.idUser,
     @required this.email,
     @required this.contactNumber,
   });
@@ -340,8 +340,26 @@ class _PostAdEditState extends State<PostAdEdit> {
             suburb: suburbController.text.toString(),
             status: 'pending',
           );
-          print(widget.advert.id);
-          BusinessApi.updateAdvert(advert, widget.advert.id, widget.authToken)
+
+          FireBusinessApi.updateAdvert(advert, widget.advert.id).then((resut) {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => MainPostsPage(
+                    firstName: widget.firstName,
+                    lastName: widget.lastName,
+                    contactNumber: widget.contactNumber,
+                    //authToken: widget.authToken,
+                    email: widget.email,
+                    idUser: widget.idUser,
+                  ),
+                ),
+                (Route<dynamic> route) => false);
+          }).catchError((e) => Fluttertoast.showToast(
+              msg: 'Unable to update the post.',
+              backgroundColor: MyColors.primaryColor,
+              textColor: Colors.white));
+
+          /*BusinessApi.updateAdvert(advert, widget.advert.id, widget.authToken)
               .then((result) {
             if (result == 200) {
               Navigator.of(context).pushAndRemoveUntil(
@@ -350,7 +368,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                       firstName: widget.firstName,
                       lastName: widget.lastName,
                       contactNumber: widget.contactNumber,
-                      authToken: widget.authToken,
+                      //authToken: widget.authToken,
                       email: widget.email,
                       id: widget.id,
                     ),
@@ -364,7 +382,7 @@ class _PostAdEditState extends State<PostAdEdit> {
             }
           }).catchError((error) {
             print(error.toString());
-          });
+          });*/
           dispose();
         },
         child: Icon(
