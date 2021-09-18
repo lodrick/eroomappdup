@@ -2,7 +2,6 @@ import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_card_widget.dart';
-import 'package:eRoomApp/widgets/post_cards.dart';
 import 'package:flutter/material.dart';
 
 class PostSearchResultsDisplay extends StatelessWidget {

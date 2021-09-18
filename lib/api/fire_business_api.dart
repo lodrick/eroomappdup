@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/models/advert_image.dart';
 import 'package:eRoomApp/utils.dart';
 
 class FireBusinessApi {
@@ -78,4 +79,27 @@ class FireBusinessApi {
       'status': advert.status,
     });
   }
+
+  static Future addAdvertImage(AdvertImage advertImage) async {
+    FirebaseFirestore.instance
+        .collection('advertImages')
+        .add({}).then((result) {
+      FirebaseFirestore.instance
+          .collection('advertImages')
+          .doc(result.id)
+          .update({
+        'imageId': result.id,
+      }).then((res) {
+        print('Success');
+      });
+    }).catchError((e) => print(e.toString()));
+  }
+
+  static Stream<List<AdvertImage>> retrieveAdvertImages(String advertId) =>
+      FirebaseFirestore.instance
+          .collection('advertImages')
+          .orderBy(AdvertImageField.createdAt, descending: true)
+          .where('advertId', isEqualTo: advertId)
+          .snapshots()
+          .transform(Utils.transformer(AdvertImage.fromJson));
 }

@@ -24,6 +24,8 @@ class User {
   final String imageUrl;
   @required
   final lastMessageTime;
+  final createdAt;
+  final updatedAt;
   final String token;
 
   User(
@@ -38,6 +40,8 @@ class User {
       this.userType,
       this.imageUrl,
       this.lastMessageTime,
+      this.createdAt,
+      this.updatedAt,
       this.token});
 
   User copyWith({
@@ -52,6 +56,8 @@ class User {
     String userType,
     String imageUrl,
     String lastMessageTime,
+    String createdAt,
+    String updatedAt,
     String token,
   }) =>
       User(
@@ -66,6 +72,8 @@ class User {
         userType: userType ?? this.userType,
         imageUrl: imageUrl ?? this.imageUrl,
         lastMessageTime: lastMessageTime ?? this.lastMessageTime,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
         token: token ?? this.token,
       );
 
@@ -81,6 +89,8 @@ class User {
         userType: json['userType'],
         imageUrl: json['imageUrl'],
         lastMessageTime: Utils.toDateTime(json['lastMessageTime']),
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
         token: json['token'],
       );
 
@@ -96,6 +106,8 @@ class User {
         'userType': userType,
         'imageUrl': imageUrl,
         'lastMessageTime': lastMessageTime,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
         'token': token,
       };
 
