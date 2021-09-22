@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
-import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/advert_images_widget.dart';
 import 'package:eRoomApp/widgets/popover.dart';

@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/models/advert_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class AdvertField {
