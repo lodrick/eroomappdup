@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,6 +36,7 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  List<String> imageUrls;
   String _province;
   String _roomType;
   String _city;
@@ -424,40 +426,48 @@ class _CreatePostState extends State<CreatePost> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          print("beae");
+
           if (priceController.text.isNotEmpty &&
               titleController.text.isNotEmpty &&
               suburbController.text.isNotEmpty &&
               _province.isNotEmpty &&
               _city.isNotEmpty) {
             var price = double.parse(priceController.text.toString());
-            Advert advert = Advert(
-              roomType: _roomType,
-              //prince: double.parse(priceController.text).toDouble(),
-              price: price,
-              title: titleController.text.toString(),
-              decription: decriptionController.text.toString(),
-              province: _province,
-              city: _city,
-              suburb: suburbController.text.toString(),
-              userId: widget.idUser,
-              status: 'pending',
-            );
-            FireBusinessApi.addAdvert(advert).then((result) {
-              print(result.toString());
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainPostsPage(
-                    firstName: widget.firstName,
-                    lastName: widget.lastName,
-                    contactNumber: widget.contactNumber,
-                    email: widget.email,
-                    idUser: widget.idUser,
-                  ),
-                ),
+            if (imageUrls != null && imageUrls.length > 0) {
+              Advert advert = Advert(
+                roomType: _roomType,
+                price: price,
+                title: titleController.text.toString(),
+                decription: decriptionController.text.toString(),
+                province: _province,
+                city: _city,
+                suburb: suburbController.text.toString(),
+                userId: widget.idUser,
+                status: 'pending',
+                //advertUrl: imageUrls.first,
               );
-            }).catchError((e) => print(e.toString));
+
+              FireBusinessApi.addAdvert(advert, imageUrls).then((result) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainPostsPage(
+                      firstName: widget.firstName,
+                      lastName: widget.lastName,
+                      contactNumber: widget.contactNumber,
+                      email: widget.email,
+                      idUser: widget.idUser,
+                    ),
+                  ),
+                );
+              }).catchError((e) => print(e.toString));
+            } else {
+              Fluttertoast.showToast(
+                  backgroundColor: Colors.black38.withOpacity(0.8),
+                  msg: 'Aleast 1 Image is required.');
+            }
 
             // Navigator.push(
             //   context,
@@ -492,7 +502,9 @@ class _CreatePostState extends State<CreatePost> {
   _uploadImageFromCamera() async {
     String error = 'No Error Detected';
     final _imagePicker = ImagePicker();
+    imageUrls = List<String>();
     PickedFile image;
+
     File file;
     try {
       //Check Permissions
@@ -514,15 +526,18 @@ class _CreatePostState extends State<CreatePost> {
     setState(() {
       //_error = error;
       //imageFiles.add(file);
+      imageUrls.add(file.path);
     });
     //print(images.length);
   }
 
   Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
+    List<Asset> multiImgsPicked = <Asset>[];
+    imageUrls = List<String>();
     String error = 'No Error Detected';
     try {
-      resultList = await MultiImagePicker.pickImages(
+      print('please');
+      multiImgsPicked = await MultiImagePicker.pickImages(
         maxImages: 4,
         enableCamera: true,
         selectedAssets: images,
@@ -537,6 +552,7 @@ class _CreatePostState extends State<CreatePost> {
       );
     } on Exception catch (e) {
       error = e.toString();
+      print('error ' + error);
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -544,15 +560,18 @@ class _CreatePostState extends State<CreatePost> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() async {
+    setState(() {
       // _error = error;
-
-      // fileConvert(resultList).then((result) {
-      //   setState(() {
-      //     imageFiles.addAll(result);
-      //     isLoading = false;
-      //   });
-      // }).catchError((e) {});
+      fileConvert(multiImgsPicked);
     });
+  }
+
+  Future fileConvert(List<Asset> resultList) async {
+    for (Asset asset in resultList) {
+      final tempImageFile =
+          File("${(await getTemporaryDirectory()).path}/${asset.name}");
+      imageUrls.add(tempImageFile.path);
+      print(tempImageFile.path);
+    }
   }
 }

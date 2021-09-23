@@ -1,7 +1,4 @@
 import 'package:eRoomApp/models/advert_image.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 class AdvertField {
   static final String updatedAt = 'updatedAt';
@@ -9,33 +6,20 @@ class AdvertField {
 
 class Advert {
   final String id;
-  @required
   final String roomType;
-  @required
   final double price;
-  @required
   final String title;
-  @required
   final String decription;
-  @required
   final String province;
-  @required
   final String city;
-  @required
   final String suburb;
-  @required
   final String userId;
-  @required
   final createdAt;
-  @required
   final updatedAt;
-  @required
   final bool liked;
-  @required
   final String status;
-  //List<String> uriImages;
-  List<Asset> images;
-  List<AdvertImage> advertImages = new List<AdvertImage>();
+  final String advertUrl;
+  final List<AdvertImage> advertImages;
 
   Advert({
     this.id,
@@ -50,6 +34,8 @@ class Advert {
     this.createdAt,
     this.updatedAt,
     this.liked,
+    this.advertUrl,
+    this.advertImages,
     this.status,
   });
 
@@ -66,7 +52,8 @@ class Advert {
     String createdAt,
     String updatedAt,
     String status,
-    List<String> uriImages,
+    String advertUrl,
+    List<AdvertImage> advertImages,
   }) =>
       Advert(
         id: id ?? this.id,
@@ -81,7 +68,8 @@ class Advert {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         status: status ?? this.status,
-        //uriImages: uriImages ?? this.uriImages,
+        advertUrl: advertUrl ?? this.advertUrl,
+        advertImages: advertImages ?? this.advertImages,
       );
 
   // factory Advert.fromJson(Map<String, dynamic> json) => Advert(
@@ -107,11 +95,12 @@ class Advert {
         decription: json['description'],
         city: json['city'],
         suburb: json['suburb'],
-        userId: json['user_id'],
+        userId: json['userId'],
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt'],
         liked: json['liked'],
         status: json['status'],
+        advertUrl: json['advertUrl'],
       );
 
   // fromJS({Map<String, dynamic> json, List<AdvertImage> advertImagess}) {
@@ -142,6 +131,7 @@ class Advert {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,
+        'advertUrl': advertUrl
         //'uriImages': uriImages,
       };
 }

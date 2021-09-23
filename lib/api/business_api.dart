@@ -138,7 +138,7 @@ class BusinessApi {
           advertsTpUrl.add(advertImage);
         }
       }
-      advert.advertImages = advertsTpUrl;
+      //advert.advertImages = advertsTpUrl;
       adverts.add(advert);
       advertsTpUrl = new List<AdvertImage>();
     }
@@ -275,7 +275,7 @@ class BusinessApi {
           advertsTpUrl.add(advertImage);
         }
       }
-      advert.advertImages = advertsTpUrl;
+      //advert.advertImages = advertsTpUrl;
       adverts.add(advert);
     }
 

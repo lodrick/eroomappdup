@@ -65,7 +65,6 @@ class PostSearchResultsDisplay extends StatelessWidget {
                                       snapshot.error.toString());
                             } else {
                               var adverts = snapshot.data;
-                              print(adverts.elementAt(0).city);
 
                               if (adverts == null || adverts.isEmpty) {
                                 return buildText('No Advert Found');

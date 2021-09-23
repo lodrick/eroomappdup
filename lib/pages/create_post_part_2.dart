@@ -370,7 +370,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          widget.advert.images = images;
+          //widget.advert.images = images;
           //print('Creator token: ' + _token);
 
           // BusinessApi.uploadAdvert(imageFiles, widget.advert, widget.authToken)
@@ -405,7 +405,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
           //   ),
           // );
           print("using firebase");
-          FireBusinessApi.addAdvert(widget.advert);
+          //FireBusinessApi.addAdvert(widget.advert);
         },
         child: Icon(
           Icons.check,
