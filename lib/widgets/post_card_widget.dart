@@ -1,5 +1,7 @@
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/models/advert_image.dart';
 import 'package:eRoomApp/models/post_like.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_info_widget.dart';

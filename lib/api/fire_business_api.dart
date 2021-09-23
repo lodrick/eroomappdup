@@ -57,12 +57,13 @@ class FireBusinessApi {
       'createdAt': DateTime.now(),
       'updatedAt': DateTime.now(),
       'status': advert.status,
-      //'uriImages': advert.uriImages,
     }).then((advert) {
+      String mainUrl;
       for (String path in paths) {
         getAdvertImageUrl(path).then((path) {
           AdvertImage advertImage =
               AdvertImage(advertId: advert.id, imageUrl: path);
+          mainUrl = advertImage.imageUrl;
           addAdvertImage(advertImage).then((advertImage) {
             print(advertImage.toString());
           }).catchError((e) => print(e.toString()));
@@ -110,12 +111,23 @@ class FireBusinessApi {
     }).catchError((e) => print(e.toString()));
   }
 
+  static Future<AdvertImage> retrieveAdvertImage(String advertId) async {
+    QueryDocumentSnapshot documentSnapshot;
+    var result = await FirebaseFirestore.instance
+        .collection('advertImages')
+        .where('advertId', isEqualTo: advertId)
+        .get();
+    result.docs.forEach((res) {
+      if (res != null) documentSnapshot = res;
+    });
+    return AdvertImage.fromJson(documentSnapshot.data());
+  }
+
   static Future<String> getAdvertImageUrl(path) async {
     String fileName = path.split('/').last;
     var file = await File(path).create();
     var downLoadUrl;
     if (path.isNotEmpty) {
-      print('path is not empty');
       var snapshot = await FirebaseStorage.instance
           .ref()
           .child('advertImages/${Path.basename(fileName)}')
