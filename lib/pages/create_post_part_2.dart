@@ -1,14 +1,16 @@
 import 'dart:io';
-import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/advert_images_widget.dart';
 import 'package:eRoomApp/widgets/popover.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -39,16 +41,51 @@ class CreatePostPart2 extends StatefulWidget {
 class _CreatePostPart2State extends State<CreatePostPart2> {
   // ignore: unused_field
   String _error = 'No Error Detected';
-  List<Asset> images = <Asset>[];
+  //List<Asset> images = <Asset>[];
   List<File> imageFiles = <File>[];
   bool isLoading = true;
+
+  //String _path;
+  File _file;
+  //Map<String, String> _paths;
+  List<File> _files;
+  String _extension;
+  FileType _pickType;
+  bool _multiPick = false;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  List<UploadTask> _tasks = <UploadTask>[];
+
+  void openFileExplorer() async {
+    try {
+      _file = null;
+      if (_multiPick) {
+        FilePickerResult result =
+            await FilePicker.platform.pickFiles(allowMultiple: true);
+        if (result != null) {
+          _files = result.paths.map((path) => File(path)).toList();
+        }
+      } else {
+        FilePickerResult result = await FilePicker.platform.pickFiles();
+        if (result != null) {
+          Uint8List fileBytes = result.files.first.bytes;
+          String fileName = result.files.first.name;
+          //_file = File(result.files.single.path);
+          await FirebaseStorage.instance
+              .ref('uploads/$fileName')
+              .putData(fileBytes);
+        }
+      }
+    } on PlatformException catch (e) {
+      print('Unsupported operation ' + e.toString());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
   }
 
-  Future<List<File>> fileConvert(List<Asset> resultList) async {
+  /*Future<List<File>> fileConvert(List<Asset> resultList) async {
     List<File> files = <File>[];
 
     //int index = 0; index < resultList.length; index++
@@ -98,7 +135,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
         });
       }).catchError((e) {});
     });
-  }
+  }*/
 
   _uploadImageFromCamera() async {
     String error = 'No Error Detected';
@@ -126,7 +163,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
       _error = error;
       imageFiles.add(file);
     });
-    print(images.length);
+    //print(images.length);
   }
 
   @override
@@ -205,7 +242,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
                                         thickness: 1.0,
                                       ),
                                       GestureDetector(
-                                        onTap: loadAssets,
+                                        //onTap: loadAssets,
                                         child: ListTile(
                                           leading: Icon(
                                             Icons.photo_album,
@@ -313,7 +350,7 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
                                               thickness: 1.0,
                                             ),
                                             GestureDetector(
-                                              onTap: loadAssets,
+                                              //onTap: loadAssets,
                                               child: ListTile(
                                                 leading: Icon(
                                                   Icons.photo_album,

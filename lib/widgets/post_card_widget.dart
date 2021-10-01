@@ -1,7 +1,7 @@
-import 'package:eRoomApp/api/fire_business_api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/models/advert.dart';
-import 'package:eRoomApp/models/advert_image.dart';
+
 import 'package:eRoomApp/models/post_like.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_info_widget.dart';
@@ -37,41 +37,27 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
+          List<String> photos = List<String>();
           //DateTime updatedAt = DateTime.parse(advert.updatedAt);
           //DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(
           //   advert.updatedAt); //from firebase
-          print(
-              DateTime.parse(advert.updatedAt.toDate().toString()).toString());
+          /*var value = FirebaseFirestore.instance
+              .collection('adverts')
+              .doc(advert.id)
+              .get()
+              .then((result) {
+            return result.data()['photosUrl'].forEach((f) {
+              return photos.add(f['photoUrl']);
+            });
+          });*/
 
           String updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
           bool isAdvertLiked = false;
           _imageUrls = new List<String>();
 
-          // for (int x = 0; x < advert.advertImages.length; x++) {
-          //   if (advert.advertImages[x].imageUrl.isNotEmpty) {
-          //     imageUrl = advert.advertImages[x].imageUrl;
-          //   } else {
-          //     imageUrl = '';
-          //   }
-          // }
-
-          // FirebaseApi.getLikeObj(adId: advert.id, currentUserId: advert.userId)
-          //     .then((result) {
-          //   print("Entered");
-          //   print(result.like);
-          //   if (result != null) {
-          //     isAdvertLiked = result.like;
-          //   }
-          // });
-
-          print(isAdvertLiked);
-
           return GestureDetector(
             onTap: () {
-              // for (int x = 0; x < advert.advertImages.length; x++) {
-              //   _imageUrls.add(advert.advertImages[x].imageUrl);
-              // }
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -86,8 +72,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     status: advert.status,
                     userId: advert.userId,
                     updatedAt: updatedAt,
-                    //authToken: widget.authToken,
-                    //contactNumber: widget.contactNumber,
                     imageUrls: _imageUrls,
                   ),
                 ),
@@ -99,7 +83,52 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    FutureBuilder<dynamic>(
+                      future: FirebaseFirestore.instance
+                          .collection('adverts')
+                          .doc(advert.id)
+                          .get(),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Container(
+                                color: MyColors.primaryColor,
+                                child:
+                                    Center(child: CircularProgressIndicator()));
+                          default:
+                            String url = '';
+                            if (snapshot.hasError) {
+                            } else {
+                              //print();
+                              snapshot.data['photosUrl'].forEach((f) {
+                                //print(f['photoUrl'][0]);
+                                url = f['photoUrl'];
+                              });
+                              print(url);
+                            }
+                            return Container(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: 400.0,
+                                height: 200.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: new BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                  ),
+                                  image: DecorationImage(
+                                    image: NetworkImage(url.isEmpty
+                                        ? url
+                                        : 'https://i.imgur.com/GXoYikT.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            );
+                        }
+                      },
+                    ),
+                    /*Container(
                       alignment: Alignment.center,
                       child: Container(
                         width: 400.0,
@@ -116,7 +145,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                               fit: BoxFit.cover),
                         ),
                       ),
-                    ),
+                    ),*/
                     ListTile(
                       leading: Icon(
                         Icons.house,

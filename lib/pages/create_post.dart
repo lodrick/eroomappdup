@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
@@ -7,13 +9,15 @@ import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:eRoomApp/widgets/popover.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:image_picker/image_picker.dart';
+//import 'package:multi_image_picker/multi_image_picker.dart';
+//import 'package:path_provider/path_provider.dart';
+//import 'package:permission_handler/permission_handler.dart';
 
 class CreatePost extends StatefulWidget {
   final String firstName;
@@ -36,7 +40,7 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  List<String> imageUrls;
+  List<File> imageFiles;
   String _province;
   String _roomType;
   String _city;
@@ -46,71 +50,11 @@ class _CreatePostState extends State<CreatePost> {
   TextEditingController decriptionController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController suburbController = TextEditingController();
-  List<Asset> images = <Asset>[];
-
-  String token = '';
-
-  Future<void> getToken() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    token = preferences.getString('auth_token');
-  }
+  //List<Asset> images = <Asset>[];
 
   @override
   void initState() {
-    this.getToken();
     super.initState();
-  }
-
-  //Remove this code
-  Widget buildMultiChoice(
-      List<String> items, String selectedItem, String itemHint) {
-    final List<String> options = items.toList();
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: DropdownButton(
-        dropdownColor: MyColors.primaryColor,
-        underline: SizedBox(),
-        value: selectedItem,
-        hint: Text(
-          itemHint,
-          style: TextStyle(
-            color: Colors.blueGrey,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        isExpanded: true,
-        iconSize: 30.0,
-        style: TextStyle(
-          color: Colors.white,
-        ),
-        items: options.map(
-          (val) {
-            return DropdownMenuItem<String>(
-              value: val,
-              child: Text(
-                val,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            );
-          },
-        ).toList(),
-        onChanged: (val) {
-          setState(() {
-            selectedItem = val;
-            print('Yeah: ' + selectedItem);
-          });
-        },
-      ),
-    );
   }
 
   @override
@@ -121,6 +65,52 @@ class _CreatePostState extends State<CreatePost> {
     decriptionController.dispose();
     cityController.dispose();
     suburbController.dispose();
+  }
+
+  void filePicker() async {
+    String error = 'No Error Detected';
+    final _imagePicker = ImagePicker();
+    imageFiles = List<File>();
+    PickedFile image;
+
+    File file;
+    try {
+      await Permission.photos.request();
+      var permissionStatus = await Permission.photos.status;
+      if (permissionStatus.isGranted) {
+        //Select Image
+        image = await _imagePicker.getImage(source: ImageSource.camera);
+        file = File(image.path);
+        print(file.path);
+      } else {
+        print('Permission not granted. Try again with permission access');
+      }
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      imageFiles.add(file);
+    });
+  }
+
+  void filesPicker() async {
+    imageFiles = List<File>();
+    FilePickerResult result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
+    if (result != null) {
+      List<File> files = result.paths.map((path) => File(path)).toList();
+      for (File file in files) {
+        Uint8List fileBytes = file.readAsBytesSync();
+        print('file byte Length ${fileBytes.length}');
+      }
+
+      setState(() {
+        imageFiles.addAll(files);
+      });
+    }
   }
 
   @override
@@ -371,7 +361,8 @@ class _CreatePostState extends State<CreatePost> {
                                               ),
                                             ),
                                             GestureDetector(
-                                              onTap: _uploadImageFromCamera,
+                                              //onTap: _uploadImageFromCamera,
+                                              onTap: filePicker,
                                               child: ListTile(
                                                 leading: Icon(
                                                   Icons.photo_camera,
@@ -389,7 +380,8 @@ class _CreatePostState extends State<CreatePost> {
                                               thickness: 1.0,
                                             ),
                                             GestureDetector(
-                                              onTap: loadAssets,
+                                              //onTap: loadAssets,
+                                              onTap: filesPicker,
                                               child: ListTile(
                                                 leading: Icon(
                                                   Icons.photo_album,
@@ -435,7 +427,7 @@ class _CreatePostState extends State<CreatePost> {
               _city.isNotEmpty) {
             var price = double.parse(priceController.text.toString());
 
-            if (imageUrls != null && imageUrls.length > 0) {
+            if (imageFiles != null && imageFiles.length > 0) {
               Advert advert = Advert(
                 roomType: _roomType,
                 price: price,
@@ -449,7 +441,7 @@ class _CreatePostState extends State<CreatePost> {
                 //advertUrl: imageUrls.first,
               );
 
-              FireBusinessApi.addAdvert(advert, imageUrls).then((result) {
+              FireBusinessApi.addAdvert(advert, imageFiles).then((result) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -499,10 +491,10 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  _uploadImageFromCamera() async {
+  /*_uploadImageFromCamera() async {
     String error = 'No Error Detected';
     final _imagePicker = ImagePicker();
-    imageUrls = List<String>();
+    imageFiles = List<File>();
     PickedFile image;
 
     File file;
@@ -526,14 +518,14 @@ class _CreatePostState extends State<CreatePost> {
     setState(() {
       //_error = error;
       //imageFiles.add(file);
-      imageUrls.add(file.path);
+      imageFiles.add(file);
     });
-    //print(images.length);
-  }
+    print(images.length);
+  }*/
 
-  Future<void> loadAssets() async {
+  /*Future<void> loadAssets() async {
     List<Asset> multiImgsPicked = <Asset>[];
-    imageUrls = List<String>();
+    imageFiles = List<File>();
     String error = 'No Error Detected';
     try {
       print('please');
@@ -570,8 +562,8 @@ class _CreatePostState extends State<CreatePost> {
     for (Asset asset in resultList) {
       final tempImageFile =
           File("${(await getTemporaryDirectory()).path}/${asset.name}");
-      imageUrls.add(tempImageFile.path);
+      imageFiles.add(tempImageFile);
       print(tempImageFile.path);
     }
-  }
+  }*/
 }

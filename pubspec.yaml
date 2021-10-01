@@ -30,7 +30,7 @@ dependencies:
   #Firebase Packages
   firebase_core:
   firebase_analytics: ^5.0.2
-  cloud_firestore: ^0.14.1+3
+  cloud_firestore:
   firebase_auth: ^0.17.0-dev.2
   firebase_storage: 
 
@@ -41,7 +41,8 @@ dependencies:
 
   #Image pick from library, crop image after pick image.
   image_picker: ^0.6.0+17
-  multi_image_picker:
+  #multi_image_picker:
+  file_picker:
   image_cropper:
   cached_network_image:
 

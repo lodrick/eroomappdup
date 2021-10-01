@@ -50,4 +50,11 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <queries>
+      <intent>
+        <action android:name="andoid.intent.action.PICK"/>
+        <data android:mimeType="vnd.android.cursor.dir/image"/>
+      </intent>
+    </queries>
+
 </manifest>

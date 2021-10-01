@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/models/advert_image.dart';
+import 'package:flutter/cupertino.dart';
 
 class AdvertField {
   static final String updatedAt = 'updatedAt';
@@ -18,8 +20,9 @@ class Advert {
   final updatedAt;
   final bool liked;
   final String status;
-  final String advertUrl;
+
   final List<AdvertImage> advertImages;
+  final List advertPhotos;
 
   Advert({
     this.id,
@@ -34,9 +37,9 @@ class Advert {
     this.createdAt,
     this.updatedAt,
     this.liked,
-    this.advertUrl,
     this.advertImages,
     this.status,
+    this.advertPhotos,
   });
 
   Advert copyWith({
@@ -52,7 +55,6 @@ class Advert {
     String createdAt,
     String updatedAt,
     String status,
-    String advertUrl,
     List<AdvertImage> advertImages,
   }) =>
       Advert(
@@ -68,7 +70,6 @@ class Advert {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         status: status ?? this.status,
-        advertUrl: advertUrl ?? this.advertUrl,
         advertImages: advertImages ?? this.advertImages,
       );
 
@@ -100,7 +101,7 @@ class Advert {
         updatedAt: json['updatedAt'],
         liked: json['liked'],
         status: json['status'],
-        advertUrl: json['advertUrl'],
+        advertPhotos: json['advertPhotos'],
       );
 
   // fromJS({Map<String, dynamic> json, List<AdvertImage> advertImagess}) {
@@ -131,7 +132,19 @@ class Advert {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,
-        'advertUrl': advertUrl
+
         //'uriImages': uriImages,
       };
+
+  static Map<String, dynamic> adPhotos(
+      {@required String photoUrl, @required String id}) {
+    return {
+      'photosUrl': FieldValue.arrayUnion([
+        {
+          'photoUrl': photoUrl,
+        }
+      ]),
+      'id': id
+    };
+  }
 }

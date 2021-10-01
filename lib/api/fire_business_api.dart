@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/models/advert.dart';
@@ -43,7 +44,7 @@ class FireBusinessApi {
           .snapshots()
           .transform(Utils.transformer(Advert.fromJson));
 
-  static Future addAdvert(Advert advert, List<String> paths) async {
+  static Future addAdvert(Advert advert, List<File> files) async {
     FirebaseFirestore.instance.collection('adverts').add({
       'id': advert.id,
       'roomType': advert.roomType,
@@ -58,23 +59,22 @@ class FireBusinessApi {
       'updatedAt': DateTime.now(),
       'status': advert.status,
     }).then((advert) {
-      String mainUrl;
-      for (String path in paths) {
-        getAdvertImageUrl(path).then((path) {
-          AdvertImage advertImage =
-              AdvertImage(advertId: advert.id, imageUrl: path);
-          mainUrl = advertImage.imageUrl;
-          addAdvertImage(advertImage).then((advertImage) {
-            print(advertImage.toString());
-          }).catchError((e) => print(e.toString()));
+      List<String> urlImages = List<String>();
+
+      for (File file in files) {
+        getAdvertImageUrl(file).then((path) {
+          print(path);
+          urlImages.add(path);
+          FirebaseFirestore.instance
+              .collection('adverts')
+              .doc(advert.id)
+              .update(
+                Advert.adPhotos(id: advert.id, photoUrl: path),
+              )
+              .then((res) {})
+              .catchError((e) => print(e.toString()));
         }).catchError((e) => print(e.toString()));
       }
-
-      FirebaseFirestore.instance.collection('adverts').doc(advert.id).update({
-        'id': advert.id,
-      }).then((res) {
-        print('Success');
-      });
     });
   }
 
@@ -111,27 +111,17 @@ class FireBusinessApi {
     }).catchError((e) => print(e.toString()));
   }
 
-  static Future<AdvertImage> retrieveAdvertImage(String advertId) async {
-    QueryDocumentSnapshot documentSnapshot;
-    var result = await FirebaseFirestore.instance
-        .collection('advertImages')
-        .where('advertId', isEqualTo: advertId)
-        .get();
-    result.docs.forEach((res) {
-      if (res != null) documentSnapshot = res;
-    });
-    return AdvertImage.fromJson(documentSnapshot.data());
-  }
-
-  static Future<String> getAdvertImageUrl(path) async {
-    String fileName = path.split('/').last;
-    var file = await File(path).create();
+  static Future<String> getAdvertImageUrl(File file) async {
+    String fileName = Path.basename(file.path);
+    //var file = await File(path).create();
     var downLoadUrl;
-    if (path.isNotEmpty) {
+    if (file != null) {
+      Uint8List fileByte = file.readAsBytesSync();
       var snapshot = await FirebaseStorage.instance
           .ref()
-          .child('advertImages/${Path.basename(fileName)}')
-          .putFile(file);
+          .child('advertImages/$fileName')
+          //.putFile(file);
+          .putData(fileByte);
       downLoadUrl = await snapshot.ref.getDownloadURL();
     } else {
       print('No Image Path Received');

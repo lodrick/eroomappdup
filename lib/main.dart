@@ -1,16 +1,16 @@
 import 'package:eRoomApp/themes/custom_theme.dart';
-import 'package:eRoomApp/users.dart';
+//import 'package:eRoomApp/users.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:eRoomApp/pages/splash_page.dart';
 import 'package:eRoomApp/stores/login_store.dart';
-import 'api/firebase_api.dart';
+//import 'api/firebase_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseApi.addRandomUsers(Users.initUsers);
+  //await FirebaseApi.addRandomUsers(Users.initUsers);
   runApp(App());
 }
 
