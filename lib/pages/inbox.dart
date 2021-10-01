@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 class Inbox extends StatelessWidget {
   //final String authToken;
   final String id;
-  Inbox({@required this.id, Key key}) : super(key: key);
+  Inbox({
+    @required this.id,
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String imageUrl = '';

@@ -82,6 +82,8 @@ class _CreatePostState extends State<CreatePost> {
         image = await _imagePicker.getImage(source: ImageSource.camera);
         file = File(image.path);
         print(file.path);
+        Uint8List fileBytes = file.readAsBytesSync();
+        print('file byte Length ${fileBytes.length}');
       } else {
         print('Permission not granted. Try again with permission access');
       }

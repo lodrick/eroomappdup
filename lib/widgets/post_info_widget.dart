@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
@@ -21,8 +22,6 @@ class PostInfo extends StatefulWidget {
   final String userId;
   final String updatedAt;
   final List<String> imageUrls;
-  //final String authToken;
-  //final String contactNumber;
 
   PostInfo({
     @required this.idAd,
@@ -35,9 +34,7 @@ class PostInfo extends StatefulWidget {
     @required this.status,
     @required this.userId,
     @required this.updatedAt,
-    //@required this.authToken,
-    //@required this.contactNumber,
-    this.imageUrls,
+    @required this.imageUrls,
   });
 
   @override
@@ -47,6 +44,7 @@ class PostInfo extends StatefulWidget {
 class _PostInfoState extends State<PostInfo> {
   String authToken;
   String currentUserId;
+  List<String> imageUrls;
   /*final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -74,24 +72,51 @@ class _PostInfoState extends State<PostInfo> {
     });
   }
 
+  void addPostFramecallback() {
+    imageUrls = List<String>();
+    if (widget.imageUrls.isNotEmpty && widget.imageUrls.length > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (widget.imageUrls.isNotEmpty) {
+          widget.imageUrls.forEach((imageUrl) {
+            precacheImage(NetworkImage(imageUrl), context);
+          });
+        }
+      });
+    }
+    /*FirebaseFirestore.instance
+        .collection('adverts')
+        .doc(widget.idAd)
+        .get()
+        .then((result) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        print(result.data()['photosUrl'].forEach((f) {
+          setState(() {
+            imageUrls.add(f['photoUrl']);
+            print(f['photoUrl']);
+            precacheImage(NetworkImage(f['photoUrl']), context);
+          });
+        }));
+      });
+    });*/
+  }
+
   @override
   void initState() {
     currentUser();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.imageUrls.isNotEmpty) {
         widget.imageUrls.forEach((imageUrl) {
           precacheImage(NetworkImage(imageUrl), context);
         });
       }
-    });
-    print('length');
-    print(widget.imageUrls.length);
+    });*/
+    addPostFramecallback();
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.imageUrls.clear();
+    imageUrls.clear();
     super.dispose();
   }
 

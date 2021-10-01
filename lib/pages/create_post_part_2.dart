@@ -45,41 +45,6 @@ class _CreatePostPart2State extends State<CreatePostPart2> {
   List<File> imageFiles = <File>[];
   bool isLoading = true;
 
-  //String _path;
-  File _file;
-  //Map<String, String> _paths;
-  List<File> _files;
-  String _extension;
-  FileType _pickType;
-  bool _multiPick = false;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<UploadTask> _tasks = <UploadTask>[];
-
-  void openFileExplorer() async {
-    try {
-      _file = null;
-      if (_multiPick) {
-        FilePickerResult result =
-            await FilePicker.platform.pickFiles(allowMultiple: true);
-        if (result != null) {
-          _files = result.paths.map((path) => File(path)).toList();
-        }
-      } else {
-        FilePickerResult result = await FilePicker.platform.pickFiles();
-        if (result != null) {
-          Uint8List fileBytes = result.files.first.bytes;
-          String fileName = result.files.first.name;
-          //_file = File(result.files.single.path);
-          await FirebaseStorage.instance
-              .ref('uploads/$fileName')
-              .putData(fileBytes);
-        }
-      }
-    } on PlatformException catch (e) {
-      print('Unsupported operation ' + e.toString());
-    }
-  }
-
   @override
   void initState() {
     super.initState();

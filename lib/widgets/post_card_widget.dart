@@ -10,11 +10,13 @@ import 'package:intl/intl.dart';
 
 class PostCardWidget extends StatefulWidget {
   final List<Advert> adverts;
-  final String contactNumber;
+  //final String contactNumber;
 
-  const PostCardWidget(
-      {@required this.adverts, @required this.contactNumber, Key key})
-      : super(key: key);
+  const PostCardWidget({
+    @required this.adverts,
+    //@required this.contactNumber,
+    Key key,
+  }) : super(key: key);
 
   @override
   _PostCardWidgetState createState() => _PostCardWidgetState();
@@ -37,7 +39,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
-          List<String> photos = List<String>();
+
           //DateTime updatedAt = DateTime.parse(advert.updatedAt);
           //DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(
           //   advert.updatedAt); //from firebase
@@ -99,12 +101,10 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                             String url = '';
                             if (snapshot.hasError) {
                             } else {
-                              //print();
                               snapshot.data['photosUrl'].forEach((f) {
-                                //print(f['photoUrl'][0]);
                                 url = f['photoUrl'];
+                                _imageUrls.add(url);
                               });
-                              print(url);
                             }
                             return Container(
                               alignment: Alignment.center,
@@ -117,7 +117,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                     topRight: Radius.circular(10.0),
                                   ),
                                   image: DecorationImage(
-                                    image: NetworkImage(url.isEmpty
+                                    image: NetworkImage(url.isNotEmpty
                                         ? url
                                         : 'https://i.imgur.com/GXoYikT.png'),
                                     fit: BoxFit.cover,
@@ -128,24 +128,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                         }
                       },
                     ),
-                    /*Container(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 400.0,
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                          borderRadius: new BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
-                          ),
-                          image: DecorationImage(
-                              image: NetworkImage(imageUrl.isNotEmpty
-                                  ? imageUrl
-                                  : 'https://i.imgur.com/GXoYikT.png'),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                    ),*/
                     ListTile(
                       leading: Icon(
                         Icons.house,
