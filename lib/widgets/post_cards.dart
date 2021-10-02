@@ -56,15 +56,12 @@ class _PostCardsState extends State<PostCards> {
                         snapshot.error.toString());
                   } else {
                     var adverts = snapshot.data;
-                    print(adverts.elementAt(0).city);
 
                     if (adverts == null || adverts.isEmpty) {
                       return buildText('No Advert Found');
                     } else {
                       return PostCardWidget(
                         adverts: adverts,
-                        //contactNumber: widget.contactNumber,
-                        //authToken: widget.authToken,
                       );
                     }
                   }

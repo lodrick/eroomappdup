@@ -71,8 +71,6 @@ class PostSearchResultsDisplay extends StatelessWidget {
                               } else {
                                 return PostCardWidget(
                                   adverts: adverts,
-                                  //contactNumber: widget.contactNumber,
-                                  //authToken: widget.authToken,
                                 );
                               }
                             }

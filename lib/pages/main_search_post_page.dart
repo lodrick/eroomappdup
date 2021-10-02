@@ -19,32 +19,6 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
   String url = BusinessApi.url;
   String _city;
 
-  // Future<void> makeRequest(
-  //     {String minValue, String maxValue, String suburb, String city}) async {
-
-  //   var response = await http.get(
-  //     Uri.encodeFull(url +
-  //         'adverts?min_value=' +
-  //         minValue +
-  //         '&max_value=' +
-  //         maxValue +
-  //         '&suburb=' +
-  //         suburb +
-  //         '&city=' +
-  //         city),
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Authorization': widget.authToken,
-  //     },
-  //   );
-
-  //   setState(() {
-  //     var extractData = jsonDecode(response.body);
-  //     adverts = extractData[1]['adverts'] as List;
-  //     images = extractData[0]['images'] as List;
-  //   });
-  // }
-
   @override
   void dispose() {
     super.dispose();

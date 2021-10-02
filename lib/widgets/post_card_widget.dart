@@ -35,6 +35,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
+          print('advert.userId ${advert.userId}');
 
           String updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
