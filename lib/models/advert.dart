@@ -73,21 +73,6 @@ class Advert {
         advertImages: advertImages ?? this.advertImages,
       );
 
-  // factory Advert.fromJson(Map<String, dynamic> json) => Advert(
-  //       id: json['id'] as String,
-  //       roomType: json['room_type'] as String,
-  //       price: json['price'] as double,
-  //       title: json['title'] as String,
-  //       decription: json['description'] as String,
-  //       city: json['city'] as String,
-  //       suburb: json['suburb'] as String,
-  //       userId: json['user_id'] as String,
-  //       createdAt: json['created_at'] as String,
-  //       updatedAt: json['updated_at'] as String,
-  //       status: json['status'] as String,
-  //       images: json['images'] as List<Asset>,
-  //       //for(AdvertImage advertImage in advertImages ){}
-  //     );
   static Advert fromJson(Map<String, dynamic> json) => Advert(
         id: json['id'],
         roomType: json['roomType'],
@@ -104,21 +89,6 @@ class Advert {
         advertPhotos: json['advertPhotos'],
       );
 
-  // fromJS({Map<String, dynamic> json, List<AdvertImage> advertImagess}) {
-  //   id = json['id'];
-  //   roomType = json['roomType'];
-  //   price = json['price'];
-  //   title = json['title'];
-  //   decription = json['description'];
-  //   city = json['city'];
-  //   suburb = json['suburb'];
-  //   userId = json['user_id'];
-  //   createdAt = json['createdAt'];
-  //   updatedAt = json['updatedAt'];
-  //   status = json['status'];
-  //   images = json['images'];
-  // }
-
   Map<String, dynamic> toJson() => {
         'id': id,
         'roomType': roomType,
@@ -132,8 +102,6 @@ class Advert {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,
-
-        //'uriImages': uriImages,
       };
 
   static Map<String, dynamic> adPhotos(
