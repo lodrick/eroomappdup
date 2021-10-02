@@ -1,4 +1,5 @@
 import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/dialog_box_stats.dart';
@@ -6,16 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:eRoomApp/pages/post_ad_edit.dart';
 
 class PostsListApartments extends StatefulWidget {
-  //final String authToken;
-  final String id;
+  final String idUser;
   final String firstName;
   final String lastName;
   final String email;
   final String contactNumber;
 
   PostsListApartments({
-    //@required this.authToken,
-    @required this.id,
+    @required this.idUser,
     @required this.firstName,
     @required this.lastName,
     @required this.contactNumber,
@@ -27,11 +26,7 @@ class PostsListApartments extends StatefulWidget {
 }
 
 class _PostsListApartmentsState extends State<PostsListApartments> {
-  // ignore: non_constant_identifier_names
-  //String URL = BusinessApi.url;
   List adverts;
-  //List images;
-
   var _controller = ScrollController();
   ScrollPhysics _physics = ClampingScrollPhysics();
 
@@ -81,7 +76,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.requestAdverts('widget.authToken'),
+            stream: FireBusinessApi.getMyAdverts(widget.idUser),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -97,12 +92,12 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                     if (adverts.isEmpty) {
                       return buildText('No Adverts Found');
                     } else {
-                      List<Advert> myAdverts = List<Advert>();
-                      for (var advert in adverts) {
-                        if (advert.userId == widget.id) {
+                      //List<Advert> myAdverts = List<Advert>();
+                      /*for (var advert in adverts) {
+                        if (advert.userId == widget.idUser) {
                           myAdverts.add(advert);
                         }
-                      }
+                      }*/
 
                       return ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -112,11 +107,11 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                         child: ListView.builder(
                           controller: _controller,
                           physics: _physics,
-                          itemCount: myAdverts.length,
+                          itemCount: adverts.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final Advert advert = myAdverts[index];
-
-                            for (int x = 0;
+                            final Advert advert = adverts[index];
+                            
+                            /*for (int x = 0;
                                 x < advert.advertImages.length;
                                 x++) {
                               if (advert.advertImages[x].imageUrl.isNotEmpty) {
@@ -124,19 +119,18 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               } else {
                                 imageUrl = '';
                               }
-                            }
+                            }*/
                             return GestureDetector(
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PostAdEdit(
-                                    //authToken: widget.authToken,
                                     advert: advert,
                                     contactNumber: widget.contactNumber,
                                     email: widget.email,
                                     firstName: widget.firstName,
                                     lastName: widget.lastName,
-                                    idUser: widget.id,
+                                    idUser: widget.idUser,
                                   ),
                                 ),
                               ),

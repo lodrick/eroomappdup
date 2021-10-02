@@ -27,7 +27,7 @@ class FireBusinessApi {
   static Stream<List<Advert>> getMyAdverts(String idUser) =>
       FirebaseFirestore.instance
           .collection('adverts')
-          .orderBy(AdvertField.updatedAt, descending: true)
+          //.orderBy(AdvertField.updatedAt, descending: true)
           .where('userId', isEqualTo: idUser)
           .snapshots()
           .transform(Utils.transformer(Advert.fromJson));
@@ -80,7 +80,7 @@ class FireBusinessApi {
 
   static Future updateAdvert(Advert advert, adId) async {
     FirebaseFirestore.instance.collection('adverts').doc(adId).update({
-      'id': advert.id,
+      //'id': advert.id,
       'roomType': advert.roomType,
       'price': advert.price,
       'title': advert.title,
@@ -113,14 +113,12 @@ class FireBusinessApi {
 
   static Future<String> getAdvertImageUrl(File file) async {
     String fileName = Path.basename(file.path);
-    //var file = await File(path).create();
     var downLoadUrl;
     if (file != null) {
       Uint8List fileByte = file.readAsBytesSync();
       var snapshot = await FirebaseStorage.instance
           .ref()
           .child('advertImages/$fileName')
-          //.putFile(file);
           .putData(fileByte);
       downLoadUrl = await snapshot.ref.getDownloadURL();
     } else {
@@ -136,4 +134,6 @@ class FireBusinessApi {
           .where('advertId', isEqualTo: advertId)
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
+
+  static Future<void> createLike({String idUser, idAd, like}) async {}
 }

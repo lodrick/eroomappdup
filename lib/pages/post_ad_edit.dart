@@ -9,7 +9,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class PostAdEdit extends StatefulWidget {
   final Advert advert;
-  //final String authToken;
   final String firstName;
   final String lastName;
   final String idUser;
@@ -18,7 +17,6 @@ class PostAdEdit extends StatefulWidget {
 
   PostAdEdit({
     @required this.advert,
-    //@required this.authToken,
     @required this.firstName,
     @required this.lastName,
     @required this.idUser,
@@ -63,8 +61,7 @@ class _PostAdEditState extends State<PostAdEdit> {
     super.initState();
     setState(() {
       print(widget.advert.status);
-      if (widget.advert != null && widget.advert.status == 'active')
-        isSwitched = true;
+      if (widget.advert != null) isSwitched = true;
 
       priceController.text = widget.advert.price.toString();
       titleController.text = widget.advert.title;
@@ -173,7 +170,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         dropdownColor: Colors.blueGrey[100]
                                             .withOpacity(0.6),
                                         underline: SizedBox(),
-                                        value: _roomType,
+                                        //value: _roomType,
                                         hint: Text(
                                           'Seelect Room/Type',
                                           style: TextStyle(
@@ -354,6 +351,10 @@ class _PostAdEditState extends State<PostAdEdit> {
                   ),
                 ),
                 (Route<dynamic> route) => false);
+            Fluttertoast.showToast(
+                msg: 'Post updated.',
+                backgroundColor: MyColors.primaryColor,
+                textColor: Colors.white);
           }).catchError((e) => Fluttertoast.showToast(
               msg: 'Unable to update the post.',
               backgroundColor: MyColors.primaryColor,

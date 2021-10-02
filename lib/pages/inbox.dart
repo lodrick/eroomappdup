@@ -1,4 +1,4 @@
-import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/dialog_box_stats.dart';
@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 
 class Inbox extends StatelessWidget {
   //final String authToken;
-  final String id;
+  final String idUser;
   Inbox({
-    @required this.id,
+    @required this.idUser,
     Key key,
   }) : super(key: key);
   @override
@@ -39,7 +39,7 @@ class Inbox extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: BusinessApi.requestAdverts('authToken'),
+            stream: FireBusinessApi.getMyAdverts(idUser),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -57,7 +57,7 @@ class Inbox extends StatelessWidget {
                     } else {
                       List<Advert> myAdverts = List<Advert>();
                       for (var advert in adverts) {
-                        if (advert.userId == id) {
+                        if (advert.userId == idUser) {
                           myAdverts.add(advert);
                         }
                       }
@@ -74,7 +74,7 @@ class Inbox extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = myAdverts[index];
 
-                            for (int x = 0;
+                            /*for (int x = 0;
                                 x < advert.advertImages.length;
                                 x++) {
                               if (advert.advertImages[x].imageUrl.isNotEmpty) {
@@ -82,7 +82,7 @@ class Inbox extends StatelessWidget {
                               } else {
                                 imageUrl = '';
                               }
-                            }
+                            }*/
                             return GestureDetector(
                               onTap: () {
                                 showDialog(

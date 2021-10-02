@@ -271,9 +271,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         textSize: 16.0,
                                         height: (menuContainerHeight) / 8,
                                         widget: Inbox(
-                                            //authToken: widget.authToken,
-                                            //id: widget.id,
-                                            ),
+                                          idUser: widget.idUser,
+                                        ),
                                       ),
                                       MyButton(
                                         text: 'My Post',
@@ -281,12 +280,11 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         textSize: 16.0,
                                         height: (menuContainerHeight) / 8,
                                         widget: PostsListApartments(
-                                          //authToken: widget.authToken,
                                           contactNumber: widget.contactNumber,
                                           email: widget.email,
                                           firstName: widget.firstName,
                                           lastName: widget.lastName,
-                                          //id: widget.id,
+                                          idUser: widget.idUser,
                                         ),
                                       ),
                                       MyButton(
@@ -305,7 +303,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         textSize: 16.0,
                                         height: (menuContainerHeight) / 8,
                                         widget: Favourites(
-                                          //authToken: widget.authToken,
                                           idUser: widget.idUser,
                                           contactNumber: widget.contactNumber,
                                           email: widget.email,
