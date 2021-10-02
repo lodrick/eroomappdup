@@ -1,4 +1,3 @@
-import 'package:eRoomApp/models/post_like.dart';
 import 'package:eRoomApp/models/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -51,16 +50,5 @@ class SharedPrefs {
   static Future<String> getUserStatus() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString('userShortDescription');
-  }
-
-  static Future<List> setLikes(String adId, bool like) async {
-    List<PostLike> adLikes = new List<PostLike>();
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('adId', adId);
-    preferences.setBool('like', like);
-    PostLike postLike = new PostLike(
-        adId: preferences.getString('adId'), like: preferences.getBool('like'));
-    adLikes.add(postLike);
-    return adLikes;
   }
 }

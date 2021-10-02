@@ -114,11 +114,7 @@ class _FavouritesState extends State<Favourites> {
                                         CircleAvatar(
                                           radius: 35.0,
                                           backgroundImage: NetworkImage(
-                                            advert.advertImages[0].imageUrl !=
-                                                    null
-                                                ? advert
-                                                    .advertImages[0].imageUrl
-                                                : 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                                            'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
                                           ),
                                         ),
                                         SizedBox(width: 10.0),

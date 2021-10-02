@@ -82,33 +82,12 @@ class _PostInfoState extends State<PostInfo> {
         }
       });
     }
-    /*FirebaseFirestore.instance
-        .collection('adverts')
-        .doc(widget.idAd)
-        .get()
-        .then((result) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        print(result.data()['photosUrl'].forEach((f) {
-          setState(() {
-            imageUrls.add(f['photoUrl']);
-            print(f['photoUrl']);
-            precacheImage(NetworkImage(f['photoUrl']), context);
-          });
-        }));
-      });
-    });*/
   }
 
   @override
   void initState() {
     currentUser();
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.imageUrls.isNotEmpty) {
-        widget.imageUrls.forEach((imageUrl) {
-          precacheImage(NetworkImage(imageUrl), context);
-        });
-      }
-    });*/
+
     addPostFramecallback();
     super.initState();
   }

@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 
-import 'package:eRoomApp/models/post_like.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_info_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +8,9 @@ import 'package:intl/intl.dart';
 
 class PostCardWidget extends StatefulWidget {
   final List<Advert> adverts;
-  //final String contactNumber;
 
   const PostCardWidget({
     @required this.adverts,
-    //@required this.contactNumber,
     Key key,
   }) : super(key: key);
 
@@ -39,19 +35,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
-
-          //DateTime updatedAt = DateTime.parse(advert.updatedAt);
-          //DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(
-          //   advert.updatedAt); //from firebase
-          /*var value = FirebaseFirestore.instance
-              .collection('adverts')
-              .doc(advert.id)
-              .get()
-              .then((result) {
-            return result.data()['photosUrl'].forEach((f) {
-              return photos.add(f['photoUrl']);
-            });
-          });*/
 
           String updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
@@ -202,38 +185,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 SizedBox(width: 18.0),
                                 GestureDetector(
                                   onTap: () {
-                                    FirebaseApi.getLikeObj(
-                                            adId: advert.id,
-                                            currentUserId: advert.userId)
-                                        .then((result) {
-                                      print("Entered");
-                                      print(result.baseId);
-                                      PostLike postLike;
-                                      if (result != null) {
-                                        if (result.like == true) {
-                                          postLike = PostLike(
-                                              like: false,
-                                              adId: advert.id,
-                                              currentUserId: advert.userId,
-                                              baseId: result.baseId);
-                                          isAdvertLiked = false;
-                                        } else {
-                                          postLike = PostLike(
-                                              like: true,
-                                              adId: advert.id,
-                                              currentUserId: advert.userId,
-                                              baseId: result.baseId);
-                                          isAdvertLiked = true;
-                                        }
-
-                                        FirebaseApi.updatePostLike(postLike);
-                                      }
-                                    });
-                                    /*PostLike postLike = PostLike(
-                                        like: true,
-                                        adId: advert.id,
-                                        currentUserId: advert.userId);
-                                    FirebaseApi.updatePostLike(postLike);*/
                                     print('Liked');
                                     print(isAdvertLiked);
                                   },

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/models/advert_image.dart';
-import 'package:eRoomApp/models/like.dart';
+
 import 'package:eRoomApp/utils.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as Path;
@@ -135,30 +135,4 @@ class FireBusinessApi {
           .where('advertId', isEqualTo: advertId)
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
-
-  static Future<void> createLike(
-      {String idUser, String idAd, bool like}) async {
-    FirebaseFirestore.instance.collection('favoritePost').add({
-      'idUser': idUser,
-      'idAd': idAd,
-      'like': like,
-    }).then((result) {
-      FirebaseFirestore.instance
-          .collection('favoritePost')
-          .doc(result.id)
-          .update({'idLike': result.id});
-    }).catchError((e) => print(e.toString()));
-  }
-
-  static Future<void> updateLike(
-      {String idUser, String idAd, bool like}) async {
-    //FirebaseFirestore.instance.collection('favoritePost').where('idUser',isEqualTo: idUser).where()
-  }
-
-  static Stream<List<Like>> retrieveLikes(String idUser) =>
-      FirebaseFirestore.instance
-          .collection('favoritePost')
-          .where('idUser', isEqualTo: idUser)
-          .snapshots()
-          .transform(Utils.transformer(Like.fromJson));
 }

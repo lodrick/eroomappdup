@@ -72,7 +72,6 @@ class _CreatePostState extends State<CreatePost> {
       await Permission.photos.request();
       var permissionStatus = await Permission.photos.status;
       if (permissionStatus.isGranted) {
-        //Select Image
         image = await _imagePicker.getImage(source: ImageSource.camera);
         file = File(image.path);
         print(file.path);

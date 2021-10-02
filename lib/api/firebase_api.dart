@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eRoomApp/models/post_like.dart';
 import 'package:eRoomApp/models_chat/message.dart';
 import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/theme.dart';
@@ -190,45 +189,5 @@ class FirebaseApi {
         .update({'imageUrl': imageUrl})
         .then((value) => print('ImageUrl updated'))
         .catchError((error) => print('Failed to update user imageUrl $error'));
-  }
-
-  static Future createPostLike(PostLike postLike) async {
-    FirebaseFirestore.instance.collection('postLike').add({
-      'like': postLike.like,
-      'adId': postLike.adId,
-      'currentUserId': postLike.currentUserId,
-    }).then((result) {
-      FirebaseFirestore.instance.collection('postLike').doc(result.id).update({
-        'baseId': result.id,
-      });
-    }).catchError((error) {
-      print(error.toString());
-    });
-  }
-
-  static Future updatePostLike(PostLike postLike) async {
-    FirebaseFirestore.instance
-        .collection('postLike')
-        .doc(postLike.baseId)
-        .update({'like': postLike.like}).catchError((error) {
-      print(error.toString());
-    });
-  }
-
-  static Future<PostLike> getLikeObj(
-      {String adId, String currentUserId}) async {
-    QueryDocumentSnapshot documentSnapshot;
-
-    var result = await FirebaseFirestore.instance
-        .collection('postLike')
-        .where('adId', isEqualTo: adId)
-        .where('currentUserId', isEqualTo: currentUserId)
-        .get();
-    result.docs.forEach((res) {
-      print(PostLike.fromJson(res.data()).adId);
-      if (res != null) documentSnapshot = res;
-    });
-
-    return PostLike.fromJson(documentSnapshot.data());
   }
 }

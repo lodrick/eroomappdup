@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eRoomApp/models/advert_image.dart';
 import 'package:flutter/cupertino.dart';
 
 class AdvertField {
@@ -18,10 +17,8 @@ class Advert {
   final String userId;
   final createdAt;
   final updatedAt;
-  final bool liked;
   final String status;
-
-  final List<AdvertImage> advertImages;
+  final dynamic likes;
   final List advertPhotos;
 
   Advert({
@@ -36,10 +33,9 @@ class Advert {
     this.userId,
     this.createdAt,
     this.updatedAt,
-    this.liked,
-    this.advertImages,
     this.status,
     this.advertPhotos,
+    this.likes,
   });
 
   Advert copyWith({
@@ -55,7 +51,8 @@ class Advert {
     String createdAt,
     String updatedAt,
     String status,
-    List<AdvertImage> advertImages,
+    dynamic likes,
+    List advertPhotos,
   }) =>
       Advert(
         id: id ?? this.id,
@@ -70,7 +67,8 @@ class Advert {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         status: status ?? this.status,
-        advertImages: advertImages ?? this.advertImages,
+        likes: likes ?? this.likes,
+        advertPhotos: advertPhotos ?? advertPhotos,
       );
 
   static Advert fromJson(Map<String, dynamic> json) => Advert(
@@ -84,9 +82,9 @@ class Advert {
         userId: json['userId'],
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt'],
-        liked: json['liked'],
         status: json['status'],
         advertPhotos: json['advertPhotos'],
+        likes: json['likes'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,6 +100,8 @@ class Advert {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,
+        'advertPhotos': advertPhotos,
+        'likes': likes,
       };
 
   static Map<String, dynamic> adPhotos(
