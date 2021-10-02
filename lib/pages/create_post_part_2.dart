@@ -1,16 +1,12 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/advert_images_widget.dart';
 import 'package:eRoomApp/widgets/popover.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-//import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 

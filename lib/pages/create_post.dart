@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -14,10 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-//import 'package:image_picker/image_picker.dart';
-//import 'package:multi_image_picker/multi_image_picker.dart';
-//import 'package:path_provider/path_provider.dart';
-//import 'package:permission_handler/permission_handler.dart';
 
 class CreatePost extends StatefulWidget {
   final String firstName;
@@ -50,7 +45,6 @@ class _CreatePostState extends State<CreatePost> {
   TextEditingController decriptionController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController suburbController = TextEditingController();
-  //List<Asset> images = <Asset>[];
 
   @override
   void initState() {
@@ -89,6 +83,7 @@ class _CreatePostState extends State<CreatePost> {
       }
     } on Exception catch (e) {
       error = e.toString();
+      print(error);
     }
 
     if (!mounted) return;
@@ -363,7 +358,6 @@ class _CreatePostState extends State<CreatePost> {
                                               ),
                                             ),
                                             GestureDetector(
-                                              //onTap: _uploadImageFromCamera,
                                               onTap: filePicker,
                                               child: ListTile(
                                                 leading: Icon(
@@ -382,7 +376,6 @@ class _CreatePostState extends State<CreatePost> {
                                               thickness: 1.0,
                                             ),
                                             GestureDetector(
-                                              //onTap: loadAssets,
                                               onTap: filesPicker,
                                               child: ListTile(
                                                 leading: Icon(
@@ -420,8 +413,6 @@ class _CreatePostState extends State<CreatePost> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("beae");
-
           if (priceController.text.isNotEmpty &&
               titleController.text.isNotEmpty &&
               suburbController.text.isNotEmpty &&
@@ -462,21 +453,6 @@ class _CreatePostState extends State<CreatePost> {
                   backgroundColor: Colors.black38.withOpacity(0.8),
                   msg: 'Aleast 1 Image is required.');
             }
-
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => CreatePostPart2(
-            //       firstName: widget.firstName,
-            //       lastName: widget.lastName,
-            //       contactNumber: widget.contactNumber,
-            //       email: widget.email,
-            //       id: widget.id,
-            //       authToken: widget.authToken,
-            //       advert: advert,
-            //     ),
-            //   ),
-            // );
           } else {
             Fluttertoast.showToast(
                 backgroundColor: Colors.black38.withOpacity(0.8),
@@ -492,80 +468,4 @@ class _CreatePostState extends State<CreatePost> {
       ),
     );
   }
-
-  /*_uploadImageFromCamera() async {
-    String error = 'No Error Detected';
-    final _imagePicker = ImagePicker();
-    imageFiles = List<File>();
-    PickedFile image;
-
-    File file;
-    try {
-      //Check Permissions
-      await Permission.photos.request();
-      var permissionStatus = await Permission.photos.status;
-      if (permissionStatus.isGranted) {
-        //Select Image
-        image = await _imagePicker.getImage(source: ImageSource.camera);
-        file = File(image.path);
-        print(file.path);
-      } else {
-        print('Permission not granted. Try again with permission access');
-      }
-    } on Exception catch (e) {
-      error = e.toString();
-    }
-    if (!mounted) return;
-
-    setState(() {
-      //_error = error;
-      //imageFiles.add(file);
-      imageFiles.add(file);
-    });
-    print(images.length);
-  }*/
-
-  /*Future<void> loadAssets() async {
-    List<Asset> multiImgsPicked = <Asset>[];
-    imageFiles = List<File>();
-    String error = 'No Error Detected';
-    try {
-      print('please');
-      multiImgsPicked = await MultiImagePicker.pickImages(
-        maxImages: 4,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: 'Photos'),
-        materialOptions: MaterialOptions(
-          actionBarColor: '#FF30C6D1',
-          actionBarTitle: 'eRoom App',
-          allViewTitle: 'Room Images',
-          useDetailsView: true,
-          selectCircleStrokeColor: '#000000',
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-      print('error ' + error);
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      // _error = error;
-      fileConvert(multiImgsPicked);
-    });
-  }
-
-  Future fileConvert(List<Asset> resultList) async {
-    for (Asset asset in resultList) {
-      final tempImageFile =
-          File("${(await getTemporaryDirectory()).path}/${asset.name}");
-      imageFiles.add(tempImageFile);
-      print(tempImageFile.path);
-    }
-  }*/
 }

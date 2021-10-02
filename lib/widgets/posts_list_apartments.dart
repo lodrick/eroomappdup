@@ -1,4 +1,3 @@
-import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
@@ -110,7 +109,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                           itemCount: adverts.length,
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = adverts[index];
-                            
+
                             /*for (int x = 0;
                                 x < advert.advertImages.length;
                                 x++) {
