@@ -6,15 +6,11 @@ import 'package:flutter/material.dart';
 
 class PostCards extends StatefulWidget {
   final List adverts;
-  final List images;
-  final String authToken;
   final String contactNumber;
   final String currentIdUser;
 
   PostCards({
     this.adverts,
-    this.images,
-    this.authToken,
     this.contactNumber,
     this.currentIdUser,
     Key key,

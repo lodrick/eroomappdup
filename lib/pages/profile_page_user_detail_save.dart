@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:eRoomApp/api/firebase_api.dart';
-import 'package:eRoomApp/models/token.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/stores/login_store.dart';
@@ -19,12 +18,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePageUserDetailSave extends StatefulWidget {
-  final Token tokenUserInfo;
   final String imageUrl;
   final String currentIdUser;
 
   ProfilePageUserDetailSave({
-    this.tokenUserInfo,
     this.imageUrl,
     this.currentIdUser,
     Key key,
@@ -43,12 +40,10 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
   TextEditingController userShortDescriptionController =
       TextEditingController();
   var imageUrl;
-  //User currentRetrievedUser;
 
   @override
   void initState() {
     super.initState();
-    //getUrlforUser();
   }
 
   @override
@@ -81,7 +76,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
         //Upload to Firebase
         var snapshot = await _firebaseStorage
             .ref()
-            .child('images/$fileName')
+            .child('images${widget.currentIdUser}/$fileName')
             .putFile(file);
         var downLoadUrl = await snapshot.ref.getDownloadURL();
         setState(() {
@@ -119,7 +114,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
         //Upload to Firebase
         var snapshot = await _firebaseStorage
             .ref()
-            .child('images/$fileName')
+            .child('images${widget.currentIdUser}/$fileName')
             .putFile(file);
         var downLoadUrl = await snapshot.ref.getDownloadURL();
         setState(() {

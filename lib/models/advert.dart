@@ -19,7 +19,7 @@ class Advert {
   final updatedAt;
   final String status;
   final dynamic likes;
-  final List advertPhotos;
+  final dynamic photosUrl;
 
   Advert({
     this.id,
@@ -34,7 +34,7 @@ class Advert {
     this.createdAt,
     this.updatedAt,
     this.status,
-    this.advertPhotos,
+    this.photosUrl,
     this.likes,
   });
 
@@ -52,7 +52,7 @@ class Advert {
     String updatedAt,
     String status,
     dynamic likes,
-    List advertPhotos,
+    dynamic photosUrl,
   }) =>
       Advert(
         id: id ?? this.id,
@@ -68,7 +68,7 @@ class Advert {
         updatedAt: updatedAt ?? this.updatedAt,
         status: status ?? this.status,
         likes: likes ?? this.likes,
-        advertPhotos: advertPhotos ?? advertPhotos,
+        photosUrl: photosUrl ?? this.photosUrl,
       );
 
   static Advert fromJson(Map<String, dynamic> json) => Advert(
@@ -83,7 +83,7 @@ class Advert {
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt'],
         status: json['status'],
-        advertPhotos: json['advertPhotos'],
+        photosUrl: json['photosUrl'],
         likes: json['likes'],
       );
 
@@ -100,7 +100,7 @@ class Advert {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,
-        'advertPhotos': advertPhotos,
+        'photosUrl': photosUrl,
         'likes': likes,
       };
 
@@ -113,6 +113,17 @@ class Advert {
         }
       ]),
       'id': id
+    };
+  }
+
+  static Map<String, dynamic> updateLike(
+      {@required String idUser, @required bool like}) {
+    return {
+      'likes': FieldValue.arrayUnion([
+        {
+          '$idUser': like,
+        }
+      ]),
     };
   }
 }

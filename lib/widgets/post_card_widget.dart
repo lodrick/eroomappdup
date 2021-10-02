@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 
 import 'package:eRoomApp/theme.dart';
@@ -19,8 +20,8 @@ class PostCardWidget extends StatefulWidget {
 }
 
 class _PostCardWidgetState extends State<PostCardWidget> {
-  List<String> _imageUrls;
-  String imageUrl = '';
+  List<String> imageUrls;
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,12 +36,18 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
-          print('advert.userId ${advert.userId}');
-
-          String updatedAt = DateFormat('dd-MM-yyy')
+          imageUrls = new List<String>();
+          String _updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
-          bool isAdvertLiked = false;
-          _imageUrls = new List<String>();
+
+          if (advert.likes.isNotEmpty) {
+            isLiked = advert.likes[0][advert.userId];
+          }
+          String _url = '';
+          advert.photosUrl.forEach((e) {
+            imageUrls.add(e['photoUrl']);
+            _url = e['photoUrl'];
+          });
 
           return GestureDetector(
             onTap: () {
@@ -57,8 +64,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     price: advert.price.toString(),
                     status: advert.status,
                     userId: advert.userId,
-                    updatedAt: updatedAt,
-                    imageUrls: _imageUrls,
+                    updatedAt: _updatedAt,
+                    imageUrls: imageUrls,
                   ),
                 ),
               );
@@ -69,48 +76,24 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: <Widget>[
-                    FutureBuilder<dynamic>(
-                      future: FirebaseFirestore.instance
-                          .collection('adverts')
-                          .doc(advert.id)
-                          .get(),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container(
-                                color: MyColors.primaryColor,
-                                child:
-                                    Center(child: CircularProgressIndicator()));
-                          default:
-                            String url = '';
-                            if (snapshot.hasError) {
-                            } else {
-                              snapshot.data['photosUrl'].forEach((f) {
-                                url = f['photoUrl'];
-                                _imageUrls.add(url);
-                              });
-                            }
-                            return Container(
-                              alignment: Alignment.center,
-                              child: Container(
-                                width: 400.0,
-                                height: 200.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: new BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
-                                  ),
-                                  image: DecorationImage(
-                                    image: NetworkImage(url.isNotEmpty
-                                        ? url
-                                        : 'https://i.imgur.com/GXoYikT.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            );
-                        }
-                      },
+                    Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 400.0,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          borderRadius: new BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(_url != null || _url.isNotEmpty
+                                ? _url
+                                : 'https://i.imgur.com/GXoYikT.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                     ListTile(
                       leading: Icon(
@@ -151,7 +134,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 Icons.lock_clock,
                                 color: Colors.blueGrey,
                               ),
-                              Text(updatedAt)
+                              Text(_updatedAt)
                             ],
                           ),
                           Padding(
@@ -185,20 +168,41 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 ),
                                 SizedBox(width: 18.0),
                                 GestureDetector(
-                                  onTap: () {
-                                    print('Liked');
-                                    print(isAdvertLiked);
-                                  },
-                                  child: isAdvertLiked == true
-                                      ? Icon(
-                                          Icons.thumb_up,
-                                          color: MyColors.primaryColor,
-                                        )
-                                      : Icon(
-                                          Icons.thumb_up,
-                                          color: Colors.blueGrey[400],
-                                        ),
-                                ),
+                                    onTap: () {
+                                      print(advert.likes[0][advert.userId]);
+                                      bool _isLiked =
+                                          advert.likes[0][advert.userId];
+                                      if (_isLiked) {
+                                        FireBusinessApi.updateLikes(
+                                          idAd: advert.id,
+                                          idUser: advert.userId,
+                                          like: false,
+                                        );
+                                        setState(() {
+                                          isLiked = false;
+                                          advert.likes[0][advert.userId] =
+                                              false;
+                                        });
+                                      } else {
+                                        FireBusinessApi.updateLikes(
+                                          idAd: advert.id,
+                                          idUser: advert.userId,
+                                          like: true,
+                                        );
+                                        setState(() {
+                                          isLiked = true;
+                                          advert.likes[0][advert.userId] = true;
+                                        });
+                                      }
+                                    },
+                                    child: Icon(
+                                      isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: isLiked
+                                          ? Colors.pink
+                                          : Colors.black54,
+                                    )),
                               ],
                             ),
                           ),

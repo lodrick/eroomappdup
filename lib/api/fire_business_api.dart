@@ -59,18 +59,19 @@ class FireBusinessApi {
       'createdAt': DateTime.now(),
       'updatedAt': DateTime.now(),
       'status': advert.status,
-    }).then((advert) {
+      'likes': FieldValue.arrayUnion([])
+    }).then((advertRuslt) {
       List<String> urlImages = List<String>();
 
       for (File file in files) {
-        getAdvertImageUrl(file).then((path) {
+        getAdvertImageUrl(file: file, userId: advert.userId).then((path) {
           print(path);
           urlImages.add(path);
           FirebaseFirestore.instance
               .collection('adverts')
-              .doc(advert.id)
+              .doc(advertRuslt.id)
               .update(
-                Advert.adPhotos(id: advert.id, photoUrl: path),
+                Advert.adPhotos(id: advertRuslt.id, photoUrl: path),
               )
               .then((res) {})
               .catchError((e) => print(e.toString()));
@@ -112,14 +113,14 @@ class FireBusinessApi {
     }).catchError((e) => print(e.toString()));
   }
 
-  static Future<String> getAdvertImageUrl(File file) async {
+  static Future<String> getAdvertImageUrl({File file, String userId}) async {
     String fileName = Path.basename(file.path);
     var downLoadUrl;
     if (file != null) {
       Uint8List fileByte = file.readAsBytesSync();
       var snapshot = await FirebaseStorage.instance
           .ref()
-          .child('advertImages/$fileName')
+          .child('advertImages$userId/$fileName')
           .putData(fileByte);
       downLoadUrl = await snapshot.ref.getDownloadURL();
     } else {
@@ -135,4 +136,14 @@ class FireBusinessApi {
           .where('advertId', isEqualTo: advertId)
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
+
+  static Future<void> updateLikes(
+      {String idAd, String idUser, bool like}) async {
+    FirebaseFirestore.instance
+        .collection('adverts')
+        .doc(idAd)
+        .update(Advert.updateLike(idUser: idUser, like: like))
+        .then((result) {})
+        .catchError((e) => print(e.toString()));
+  }
 }

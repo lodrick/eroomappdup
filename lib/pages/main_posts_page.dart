@@ -1,7 +1,6 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/constants.dart';
-import 'package:eRoomApp/models/token.dart';
 import 'package:eRoomApp/models/user_model.dart';
 
 import 'package:eRoomApp/pages/contact_us.dart';
@@ -46,9 +45,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
   var currentImageUrl;
   String contactNumber;
   String currentIdUser;
-  Token token;
-  List adverts;
-  List images;
 
   void _onItemTap(int index) {
     setState(() {
@@ -68,7 +64,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
 
     List<Widget> _widgetOptions = <Widget>[
       PostCards(
-        //authToken: widget.authToken,
         contactNumber: widget.contactNumber,
       ),
       CreatePost(
@@ -260,7 +255,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         textSize: 16.0,
                                         height: (menuContainerHeight) / 8,
                                         widget: ProfilePageUserDetailSave(
-                                          tokenUserInfo: token,
                                           imageUrl: currentImageUrl,
                                           currentIdUser: currentIdUser,
                                         ),
@@ -374,7 +368,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                   ),
                 ),
                 bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
+                  type: BottomNavigationBarType.shifting,
                   selectedItemColor: MyColors.primaryColor,
                   unselectedItemColor: Colors.blueGrey,
                   selectedFontSize: 15.0,
@@ -403,7 +397,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
       context,
       MaterialPageRoute(
         builder: (context) => ProfilePageUserDetailSave(
-          tokenUserInfo: token,
           imageUrl: currentImageUrl,
         ),
       ),
@@ -417,7 +410,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
         context,
         MaterialPageRoute(
           builder: (context) => ProfilePageUserDetailSave(
-            tokenUserInfo: token,
             imageUrl: currentImageUrl,
           ),
         ),
