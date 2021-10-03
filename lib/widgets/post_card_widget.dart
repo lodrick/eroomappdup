@@ -77,6 +77,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     userId: advert.userId,
                     updatedAt: _updatedAt,
                     imageUrls: imageUrls,
+                    isLiked: isLiked,
                     contactNumber: widget.contactNumber,
                   ),
                 ),
@@ -161,6 +162,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.amberAccent,
                               ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Align(
@@ -180,62 +182,64 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 ),
                                 SizedBox(width: 18.0),
                                 GestureDetector(
-                                    onTap: () {
-                                      //print(advert.likes[0][advert.userId]);
+                                  onTap: () {
+                                    //print(advert.likes[0][advert.userId]);
 
-                                      bool _isLiked = false;
-                                      if (advert.likes.isNotEmpty) {
-                                        _isLiked =
-                                            advert.likes[_index][advert.userId];
-                                      }
-                                      if (_isLiked) {
-                                        FireBusinessApi.updateLikes(
-                                          idAd: advert.id,
-                                          idUser: advert.userId,
-                                          like: false,
-                                        );
-                                        FireBusinessApi.removeLikes(
-                                          idAd: advert.id,
-                                          idUser: advert.userId,
-                                          like: true,
-                                        );
+                                    bool _isLiked = false;
+                                    if (advert.likes.isNotEmpty) {
+                                      _isLiked =
+                                          advert.likes[_index][advert.userId];
+                                    }
+                                    if (_isLiked) {
+                                      FireBusinessApi.updateLikes(
+                                        idAd: advert.id,
+                                        idUser: advert.userId,
+                                        like: false,
+                                      );
+                                      FireBusinessApi.removeLikes(
+                                        idAd: advert.id,
+                                        idUser: advert.userId,
+                                        like: true,
+                                      );
 
-                                        setState(() {
-                                          isLiked = false;
-                                          if (advert.likes.isNotEmpty) {
-                                            advert.likes[_index]
-                                                [advert.userId] = false;
-                                          }
-                                        });
-                                      } else {
-                                        FireBusinessApi.updateLikes(
-                                          idAd: advert.id,
-                                          idUser: advert.userId,
-                                          like: true,
-                                        );
-                                        FireBusinessApi.removeLikes(
-                                          idAd: advert.id,
-                                          idUser: advert.userId,
-                                          like: false,
-                                        );
+                                      setState(() {
+                                        isLiked = false;
+                                        if (advert.likes.isNotEmpty) {
+                                          advert.likes[_index][advert.userId] =
+                                              false;
+                                        }
+                                      });
+                                    } else {
+                                      FireBusinessApi.updateLikes(
+                                        idAd: advert.id,
+                                        idUser: advert.userId,
+                                        like: true,
+                                      );
+                                      FireBusinessApi.removeLikes(
+                                        idAd: advert.id,
+                                        idUser: advert.userId,
+                                        like: false,
+                                      );
 
-                                        setState(() {
-                                          isLiked = true;
-                                          if (advert.likes.isNotEmpty) {
-                                            advert.likes[_index]
-                                                [advert.userId] = true;
-                                          }
-                                        });
-                                      }
-                                    },
-                                    child: Icon(
-                                      isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: isLiked
-                                          ? Colors.pink[400]
-                                          : Colors.black54,
-                                    )),
+                                      setState(() {
+                                        isLiked = true;
+                                        if (advert.likes.isNotEmpty) {
+                                          advert.likes[_index][advert.userId] =
+                                              true;
+                                        }
+                                      });
+                                    }
+                                  },
+                                  child: Icon(
+                                    isLiked
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isLiked
+                                        ? Colors.pink[400]
+                                        : Colors.black54,
+                                  ),
+                                ),
+                                Text('1'),
                               ],
                             ),
                           ),

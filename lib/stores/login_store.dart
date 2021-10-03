@@ -145,8 +145,6 @@ abstract class LoginStoreBase with Store {
     isOtpLoading = true;
     firebaseUser = result.user;
 
-    //SharedPreferences preferences = await SharedPreferences.getInstance();
-
     if (firebaseUser.phoneNumber != null ||
         firebaseUser.phoneNumber.isNotEmpty) {
       FirebaseApi.retriveUser(firebaseUser.phoneNumber).then((user) {

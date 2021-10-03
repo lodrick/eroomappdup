@@ -22,6 +22,7 @@ class PostInfo extends StatefulWidget {
   final String userId;
   final String updatedAt;
   final String contactNumber;
+  final bool isLiked;
   final List<String> imageUrls;
 
   PostInfo({
@@ -36,6 +37,7 @@ class PostInfo extends StatefulWidget {
     @required this.userId,
     @required this.updatedAt,
     @required this.imageUrls,
+    @required this.isLiked,
     @required this.contactNumber,
   });
 
@@ -133,7 +135,11 @@ class _PostInfoState extends State<PostInfo> {
                       widget.userId, widget.idAd, widget.authToken);
                   print('Like');*/
                 },
-                child: Icon(Icons.thumb_up, size: 22.0),
+                child: Icon(
+                  widget.isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: widget.isLiked ? Colors.pink[400] : Colors.white70,
+                  size: 22.0,
+                ),
               ),
             ),
           ],
@@ -274,19 +280,12 @@ class _PostInfoState extends State<PostInfo> {
                                             tooltip:
                                                 'Click here to chat about the post.',
                                             onPressed: () {
-                                              // Token token;
-                                              // BusinessApi.getUser(
-                                              //   userId: widget.userId,
-                                              //   authTohen: 'widget.authToken',
-                                              // ).then((results) {
                                               setState(
                                                 () {
                                                   FirebaseApi.retriveUser(
                                                           widget.contactNumber)
                                                       .then(
                                                     (result) {
-                                                      print('result.idUser: ' +
-                                                          result.idUser);
                                                       if (currentUserId ==
                                                           result.idUser) {
                                                         print(currentUserId +
@@ -403,6 +402,7 @@ class _PostInfoState extends State<PostInfo> {
             color: color,
           ),
           softWrap: true,
+          overflow: TextOverflow.ellipsis,
         ),
       );
 
@@ -429,6 +429,7 @@ class _PostInfoState extends State<PostInfo> {
                         fontSize: 18.0,
                       ),
                       softWrap: true,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
@@ -437,6 +438,7 @@ class _PostInfoState extends State<PostInfo> {
                       color: Colors.grey[500],
                     ),
                     softWrap: true,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
