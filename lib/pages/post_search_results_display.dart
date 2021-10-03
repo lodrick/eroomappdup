@@ -9,12 +9,14 @@ class PostSearchResultsDisplay extends StatelessWidget {
   final double maxPrice;
   final String suburb;
   final String city;
+  final String contactNumber;
 
   PostSearchResultsDisplay({
     @required this.minPrice,
     @required this.maxPrice,
     @required this.suburb,
     @required this.city,
+    @required this.contactNumber,
     Key key,
   }) : super(key: key);
 
@@ -71,6 +73,7 @@ class PostSearchResultsDisplay extends StatelessWidget {
                               } else {
                                 return PostCardWidget(
                                   adverts: adverts,
+                                  contactNumber: contactNumber,
                                 );
                               }
                             }

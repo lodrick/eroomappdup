@@ -73,7 +73,9 @@ class _MainPostsPageState extends State<MainPostsPage> {
         email: widget.email,
         idUser: widget.idUser,
       ),
-      MainSearchPostPage(),
+      MainSearchPostPage(
+        contactNumber: widget.contactNumber,
+      ),
     ];
 
     return Consumer<LoginStore>(
@@ -119,8 +121,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => MainSearchPostPage(
-                              //authToken: widget.authToken,
-                              ),
+                            contactNumber: contactNumber,
+                          ),
                         ),
                       ),
                       child: Icon(Icons.search, size: 25.0),

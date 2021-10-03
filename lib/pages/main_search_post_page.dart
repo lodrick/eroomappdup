@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
 
 class MainSearchPostPage extends StatefulWidget {
+  final String contactNumber;
+  MainSearchPostPage({
+    @required this.contactNumber,
+    Key key,
+  }) : super(key: key);
+
   @override
   _MainSearchPostPageState createState() => _MainSearchPostPageState();
 }
@@ -218,6 +224,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                 minPrice: double.parse(minPriceController.text.toString()),
                 maxPrice: double.parse(maxPriceControler.text.toString()),
                 suburb: suburbController.text,
+                contactNumber: widget.contactNumber,
                 city: _city,
               ),
             ),
