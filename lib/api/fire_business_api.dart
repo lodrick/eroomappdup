@@ -120,7 +120,7 @@ class FireBusinessApi {
       Uint8List fileByte = file.readAsBytesSync();
       var snapshot = await FirebaseStorage.instance
           .ref()
-          .child('advertImages$userId/$fileName')
+          .child('advertImages/$userId/$fileName')
           .putData(fileByte);
       downLoadUrl = await snapshot.ref.getDownloadURL();
     } else {

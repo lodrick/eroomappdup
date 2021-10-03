@@ -43,6 +43,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
 
   @override
   void initState() {
+    print(widget.currentIdUser);
     super.initState();
   }
 
@@ -76,7 +77,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
         //Upload to Firebase
         var snapshot = await _firebaseStorage
             .ref()
-            .child('images${widget.currentIdUser}/$fileName')
+            .child('images/${widget.currentIdUser}/$fileName')
             .putFile(file);
         var downLoadUrl = await snapshot.ref.getDownloadURL();
         setState(() {
@@ -114,7 +115,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
         //Upload to Firebase
         var snapshot = await _firebaseStorage
             .ref()
-            .child('images${widget.currentIdUser}/$fileName')
+            .child('images/${widget.currentIdUser}/$fileName')
             .putFile(file);
         var downLoadUrl = await snapshot.ref.getDownloadURL();
         setState(() {

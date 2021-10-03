@@ -41,7 +41,6 @@ class _SplashPageState extends State<SplashPage> {
                   firstName: result.name,
                   lastName: result.surname,
                   email: result.email,
-                  //authToken: result.authToken,
                   contactNumber: result.contactNumber,
                   idUser: result.idUser,
                 ),

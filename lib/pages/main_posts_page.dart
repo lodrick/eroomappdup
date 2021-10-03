@@ -28,11 +28,11 @@ class MainPostsPage extends StatefulWidget {
   final String contactNumber;
 
   const MainPostsPage({
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.idUser,
-    this.contactNumber,
+    @required this.firstName,
+    @required this.lastName,
+    @required this.email,
+    @required this.idUser,
+    @required this.contactNumber,
     Key key,
   }) : super(key: key);
   @override
@@ -398,6 +398,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
       MaterialPageRoute(
         builder: (context) => ProfilePageUserDetailSave(
           imageUrl: currentImageUrl,
+          currentIdUser: currentIdUser,
         ),
       ),
     );
@@ -411,6 +412,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
         MaterialPageRoute(
           builder: (context) => ProfilePageUserDetailSave(
             imageUrl: currentImageUrl,
+            currentIdUser: currentIdUser,
           ),
         ),
       );
