@@ -1,4 +1,3 @@
-
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 
@@ -9,9 +8,11 @@ import 'package:intl/intl.dart';
 
 class PostCardWidget extends StatefulWidget {
   final List<Advert> adverts;
+  final String contactNumber;
 
   const PostCardWidget({
     @required this.adverts,
+    @required this.contactNumber,
     Key key,
   }) : super(key: key);
 
@@ -22,6 +23,8 @@ class PostCardWidget extends StatefulWidget {
 class _PostCardWidgetState extends State<PostCardWidget> {
   List<String> imageUrls;
   bool isLiked = false;
+  int _index = 0;
+  Map<String, bool> testLike = Map<String, bool>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,8 +44,16 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
 
           if (advert.likes.isNotEmpty) {
-            isLiked = advert.likes[0][advert.userId];
+            for (int x = 0; x < advert.likes.length; x++) {
+              if (advert.likes[x][advert.userId]) {
+                print(advert.likes[x][advert.userId]);
+                _index = x;
+                break;
+              }
+            }
+            print('index: $_index');
           }
+          isLiked = advert.likes[index][advert.userId];
           String _url = '';
           advert.photosUrl.forEach((e) {
             imageUrls.add(e['photoUrl']);
@@ -66,6 +77,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     userId: advert.userId,
                     updatedAt: _updatedAt,
                     imageUrls: imageUrls,
+                    contactNumber: widget.contactNumber,
                   ),
                 ),
               );
@@ -169,19 +181,31 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 SizedBox(width: 18.0),
                                 GestureDetector(
                                     onTap: () {
-                                      print(advert.likes[0][advert.userId]);
-                                      bool _isLiked =
-                                          advert.likes[0][advert.userId];
+                                      //print(advert.likes[0][advert.userId]);
+
+                                      bool _isLiked = false;
+                                      if (advert.likes.isNotEmpty) {
+                                        _isLiked =
+                                            advert.likes[_index][advert.userId];
+                                      }
                                       if (_isLiked) {
                                         FireBusinessApi.updateLikes(
                                           idAd: advert.id,
                                           idUser: advert.userId,
                                           like: false,
                                         );
+                                        FireBusinessApi.removeLikes(
+                                          idAd: advert.id,
+                                          idUser: advert.userId,
+                                          like: true,
+                                        );
+
                                         setState(() {
                                           isLiked = false;
-                                          advert.likes[0][advert.userId] =
-                                              false;
+                                          if (advert.likes.isNotEmpty) {
+                                            advert.likes[_index]
+                                                [advert.userId] = false;
+                                          }
                                         });
                                       } else {
                                         FireBusinessApi.updateLikes(
@@ -189,9 +213,18 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                           idUser: advert.userId,
                                           like: true,
                                         );
+                                        FireBusinessApi.removeLikes(
+                                          idAd: advert.id,
+                                          idUser: advert.userId,
+                                          like: false,
+                                        );
+
                                         setState(() {
                                           isLiked = true;
-                                          advert.likes[0][advert.userId] = true;
+                                          if (advert.likes.isNotEmpty) {
+                                            advert.likes[_index]
+                                                [advert.userId] = true;
+                                          }
                                         });
                                       }
                                     },
@@ -200,7 +233,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                           ? Icons.favorite
                                           : Icons.favorite_border,
                                       color: isLiked
-                                          ? Colors.pink
+                                          ? Colors.pink[400]
                                           : Colors.black54,
                                     )),
                               ],

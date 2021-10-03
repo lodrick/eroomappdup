@@ -77,6 +77,9 @@ class FireBusinessApi {
               .catchError((e) => print(e.toString()));
         }).catchError((e) => print(e.toString()));
       }
+      //removeLikes(idAd: advertRuslt.id, idUser: advert.userId);
+
+      updateLikes(idAd: advertRuslt.id, idUser: advert.userId, like: false);
     });
   }
 
@@ -145,5 +148,22 @@ class FireBusinessApi {
         .update(Advert.updateLike(idUser: idUser, like: like))
         .then((result) {})
         .catchError((e) => print(e.toString()));
+  }
+
+  static Future<void> removeLikes(
+      {String idAd, String idUser, bool like}) async {
+    FirebaseFirestore.instance
+        .collection('adverts')
+        .doc(idAd)
+        .update(
+            /*{
+      'likes': FieldValue.arrayRemove([
+        {idUser: like}
+      ])
+    }*/
+            Advert.removeLike(idUser: idUser, like: like))
+        .then((result) {
+      print('Item removed');
+    }).catchError((e) => print(e.toString()));
   }
 }

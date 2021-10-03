@@ -1,5 +1,6 @@
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/app_launcher_utils.dart';
+import 'package:eRoomApp/pages_chat/chat_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class PostInfo extends StatefulWidget {
   final String price;
   final String userId;
   final String updatedAt;
+  final String contactNumber;
   final List<String> imageUrls;
 
   PostInfo({
@@ -34,6 +36,7 @@ class PostInfo extends StatefulWidget {
     @required this.userId,
     @required this.updatedAt,
     @required this.imageUrls,
+    @required this.contactNumber,
   });
 
   @override
@@ -87,7 +90,6 @@ class _PostInfoState extends State<PostInfo> {
   @override
   void initState() {
     currentUser();
-
     addPostFramecallback();
     super.initState();
   }
@@ -280,7 +282,7 @@ class _PostInfoState extends State<PostInfo> {
                                               setState(
                                                 () {
                                                   FirebaseApi.retriveUser(
-                                                          'widget.contactNumber')
+                                                          widget.contactNumber)
                                                       .then(
                                                     (result) {
                                                       print('result.idUser: ' +
@@ -315,20 +317,20 @@ class _PostInfoState extends State<PostInfo> {
                                                           snackBar,
                                                         );
                                                       } else {
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //     builder:
-                                                        //         (context) =>
-                                                        //             ChatPage(
-                                                        //       currentIdUser:
-                                                        //           currentUserId,
-                                                        //       user: result,
-                                                        //       contactNumber: widget
-                                                        //           .contactNumber,
-                                                        //     ),
-                                                        //   ),
-                                                        // );
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    ChatPage(
+                                                              currentIdUser:
+                                                                  currentUserId,
+                                                              user: result,
+                                                              contactNumber: widget
+                                                                  .contactNumber,
+                                                            ),
+                                                          ),
+                                                        );
                                                       }
                                                     },
                                                   );

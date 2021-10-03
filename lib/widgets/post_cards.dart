@@ -5,14 +5,12 @@ import 'package:eRoomApp/widgets/post_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class PostCards extends StatefulWidget {
-  final List adverts;
   final String contactNumber;
-  final String currentIdUser;
+  //final String currentIdUser;
 
   PostCards({
-    this.adverts,
-    this.contactNumber,
-    this.currentIdUser,
+    @required this.contactNumber,
+    //this.currentIdUser,
     Key key,
   }) : super(key: key);
 
@@ -53,11 +51,15 @@ class _PostCardsState extends State<PostCards> {
                   } else {
                     var adverts = snapshot.data;
 
+                    adverts
+                        .removeWhere((advert) => advert.status != 'approved');
+
                     if (adverts == null || adverts.isEmpty) {
                       return buildText('No Advert Found');
                     } else {
                       return PostCardWidget(
                         adverts: adverts,
+                        contactNumber: widget.contactNumber,
                       );
                     }
                   }
