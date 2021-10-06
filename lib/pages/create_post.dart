@@ -62,6 +62,7 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   void filePicker() async {
+    Navigator.of(context).pop();
     String error = 'No Error Detected';
     final _imagePicker = ImagePicker();
     imageFiles = List<File>();
@@ -93,6 +94,7 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   void filesPicker() async {
+    Navigator.of(context).pop();
     imageFiles = List<File>();
     FilePickerResult result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -336,7 +338,8 @@ class _CreatePostState extends State<CreatePost> {
                                   itemCount: 1,
                                   itemBuilder: (BuildContext context, index) {
                                     return GestureDetector(
-                                      onTap: () {},
+                                      onTap: () => Navigator.of(context)
+                                          .pop(), // Closing the sheet.
                                       child: Container(
                                         margin: EdgeInsets.all(5.0),
                                         padding: EdgeInsets.symmetric(

@@ -69,6 +69,7 @@ dependencies:
   path_provider:
   flutter_bloc:
   rxdart:
+  flutter_screenutil:
 
 dev_dependencies:
   flutter_test:

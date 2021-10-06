@@ -2,6 +2,7 @@ import 'package:eRoomApp/themes/custom_theme.dart';
 //import 'package:eRoomApp/users.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:eRoomApp/pages/splash_page.dart';
 import 'package:eRoomApp/stores/login_store.dart';
@@ -22,17 +23,20 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<LoginStore>(
-          create: (_) => LoginStore(),
-        )
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: CustomTheme.lightTheme,
-        home: SplashPage(),
+    return ScreenUtilInit(
+      builder: () => MultiProvider(
+        providers: [
+          Provider<LoginStore>(
+            create: (_) => LoginStore(),
+          )
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: CustomTheme.lightTheme,
+          home: SplashPage(),
+        ),
       ),
+      designSize: const Size(360, 640),
     );
   }
 }
