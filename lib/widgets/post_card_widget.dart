@@ -53,7 +53,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
             }
             print('index: $_index');
           }
-          isLiked = advert.likes[index][advert.userId];
+          isLiked = advert.likes[_index][advert.userId];
           String _url = '';
           advert.photosUrl.forEach((e) {
             imageUrls.add(e['photoUrl']);
@@ -183,8 +183,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 SizedBox(width: 18.0),
                                 GestureDetector(
                                   onTap: () {
-                                    //print(advert.likes[0][advert.userId]);
-
                                     bool _isLiked = false;
                                     if (advert.likes.isNotEmpty) {
                                       _isLiked =

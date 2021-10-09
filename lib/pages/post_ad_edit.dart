@@ -340,25 +340,29 @@ class _PostAdEditState extends State<PostAdEdit> {
 
           FireBusinessApi.updateAdvert(advert, widget.advert.id).then((resut) {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => MainPostsPage(
-                    firstName: widget.firstName,
-                    lastName: widget.lastName,
-                    contactNumber: widget.contactNumber,
-                    //authToken: widget.authToken,
-                    email: widget.email,
-                    idUser: widget.idUser,
-                  ),
+              MaterialPageRoute(
+                builder: (context) => MainPostsPage(
+                  firstName: widget.firstName,
+                  lastName: widget.lastName,
+                  contactNumber: widget.contactNumber,
+                  email: widget.email,
+                  idUser: widget.idUser,
                 ),
-                (Route<dynamic> route) => false);
+              ),
+              (Route<dynamic> route) => false,
+            );
             Fluttertoast.showToast(
-                msg: 'Post updated.',
-                backgroundColor: MyColors.primaryColor,
-                textColor: Colors.white);
-          }).catchError((e) => Fluttertoast.showToast(
+              msg: 'Post updated.',
+              backgroundColor: MyColors.primaryColor,
+              textColor: Colors.white,
+            );
+          }).catchError(
+            (e) => Fluttertoast.showToast(
               msg: 'Unable to update the post.',
               backgroundColor: MyColors.primaryColor,
-              textColor: Colors.white));
+              textColor: Colors.white,
+            ),
+          );
 
           /*BusinessApi.updateAdvert(advert, widget.advert.id, widget.authToken)
               .then((result) {
