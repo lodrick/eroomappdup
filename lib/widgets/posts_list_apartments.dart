@@ -188,6 +188,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                         showDialog(
                                           context: context,
                                           builder: (context) => DialogAdReview(
+                                            imageUrl: _imageUrl,
                                             title: advert.status
                                                     .substring(0, 1)
                                                     .toLowerCase() +
@@ -200,7 +201,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                       child: Container(
                                         child: Column(
                                           children: <Widget>[
-                                            advert.status == 'active'
+                                            advert.status == 'approved'
                                                 ? Column(
                                                     children: <Widget>[
                                                       Icon(
