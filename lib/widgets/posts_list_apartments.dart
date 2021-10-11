@@ -48,7 +48,6 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = '';
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
       appBar: AppBar(
@@ -87,17 +86,11 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                         snapshot.error.toString());
                   } else {
                     var adverts = snapshot.data;
-
+                    String _imageUrl = '';
+                    List<String> _imageUrls = new List<String>();
                     if (adverts.isEmpty) {
                       return buildText('No Adverts Found');
                     } else {
-                      //List<Advert> myAdverts = List<Advert>();
-                      /*for (var advert in adverts) {
-                        if (advert.userId == widget.idUser) {
-                          myAdverts.add(advert);
-                        }
-                      }*/
-
                       return ClipRRect(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30.0),
@@ -110,15 +103,11 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = adverts[index];
 
-                            /*for (int x = 0;
-                                x < advert.advertImages.length;
-                                x++) {
-                              if (advert.advertImages[x].imageUrl.isNotEmpty) {
-                                imageUrl = advert.advertImages[x].imageUrl;
-                              } else {
-                                imageUrl = '';
-                              }
-                            }*/
+                            advert.photosUrl.forEach((e) {
+                              _imageUrls.add(e['photoUrl']);
+                              _imageUrl = e['photoUrl'];
+                            });
+
                             return GestureDetector(
                               onTap: () => Navigator.push(
                                 context,
@@ -154,8 +143,8 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                         CircleAvatar(
                                           radius: 35.0,
                                           backgroundImage: NetworkImage(
-                                            imageUrl.isNotEmpty
-                                                ? imageUrl
+                                            _imageUrl.isNotEmpty
+                                                ? _imageUrl
                                                 : 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
                                           ),
                                           backgroundColor:

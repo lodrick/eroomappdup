@@ -65,7 +65,10 @@ class _CreatePostState extends State<CreatePost> {
     Navigator.of(context).pop();
     String error = 'No Error Detected';
     final _imagePicker = ImagePicker();
-    imageFiles = List<File>();
+    if (imageFiles == null) {
+      imageFiles = List<File>();
+    }
+
     PickedFile image;
 
     File file;
@@ -95,7 +98,9 @@ class _CreatePostState extends State<CreatePost> {
 
   void filesPicker() async {
     Navigator.of(context).pop();
-    imageFiles = List<File>();
+    if (imageFiles == null) {
+      imageFiles = List<File>();
+    }
     FilePickerResult result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
     if (result != null) {
@@ -250,7 +255,6 @@ class _CreatePostState extends State<CreatePost> {
                       onChanged: (val) {
                         setState(() {
                           _province = val;
-                          print(_province);
                         });
                       },
                     ),
@@ -298,7 +302,6 @@ class _CreatePostState extends State<CreatePost> {
                       onChanged: (val) {
                         setState(() {
                           _city = val;
-                          print(_city);
                         });
                       },
                     ),
@@ -406,7 +409,46 @@ class _CreatePostState extends State<CreatePost> {
                         //Navigator.of(context).pop();
                       });
                     },
-                  )
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 65.0,
+                          padding: EdgeInsets.all(1.0),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.grey[800],
+                                  Colors.white,
+                                ]),
+                          ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                imageFiles != null ? imageFiles.length : 0,
+                            itemBuilder: (context, index) {
+                              final imageFile = imageFiles[index];
+                              if (imageFiles == null &&
+                                  imageFiles.length <= 0) {
+                                return SizedBox.shrink();
+                              } else {
+                                return Container(
+                                  padding: EdgeInsets.only(right: 5.0),
+                                  child: Image.asset(imageFile.path),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

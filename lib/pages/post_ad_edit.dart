@@ -170,7 +170,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         dropdownColor: Colors.blueGrey[100]
                                             .withOpacity(0.6),
                                         underline: SizedBox(),
-                                        //value: _roomType,
                                         hint: Text(
                                           'Seelect Room/Type',
                                           style: TextStyle(
@@ -215,8 +214,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: priceController,
-                                      //initialValue:
-                                      //    'widget.advert.price.toString()',
                                     ),
                                     CustomTextField(
                                       hintTxt: 'Incredible room a bachelar',
@@ -226,7 +223,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: titleController,
-                                      //initialValue: widget.advert.title,
                                     ),
                                     CustomTextField(
                                       hintTxt:
@@ -237,7 +233,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: descriptionController,
-                                      //initialValue: widget.advert.decription,
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
@@ -296,7 +291,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: cityController,
-                                      //initialValue: widget.advert.city,
                                     ),
                                     CustomTextField(
                                       hintTxt: 'Midrand',
@@ -306,7 +300,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: suburbController,
-                                      //initialValue: widget.advert.suburb,
                                     ),
                                     SizedBox(height: 10.0),
                                   ],
@@ -364,30 +357,6 @@ class _PostAdEditState extends State<PostAdEdit> {
             ),
           );
 
-          /*BusinessApi.updateAdvert(advert, widget.advert.id, widget.authToken)
-              .then((result) {
-            if (result == 200) {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => MainPostsPage(
-                      firstName: widget.firstName,
-                      lastName: widget.lastName,
-                      contactNumber: widget.contactNumber,
-                      //authToken: widget.authToken,
-                      email: widget.email,
-                      id: widget.id,
-                    ),
-                  ),
-                  (Route<dynamic> route) => false);
-            } else {
-              Fluttertoast.showToast(
-                  msg: 'Unable to update the post.',
-                  backgroundColor: MyColors.primaryColor,
-                  textColor: Colors.white);
-            }
-          }).catchError((error) {
-            print(error.toString());
-          });*/
           dispose();
         },
         child: Icon(
