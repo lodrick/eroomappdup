@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/models/static_data.dart';
-import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
+import 'package:eRoomApp/widgets/dialog_box_post_confirm.dart';
 import 'package:eRoomApp/widgets/popover.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -416,36 +416,41 @@ class _CreatePostState extends State<CreatePost> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 65.0,
-                          padding: EdgeInsets.all(1.0),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.grey[800],
-                                  Colors.white,
-                                ]),
-                          ),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount:
-                                imageFiles != null ? imageFiles.length : 0,
-                            itemBuilder: (context, index) {
-                              final imageFile = imageFiles[index];
-                              if (imageFiles == null &&
-                                  imageFiles.length <= 0) {
-                                return SizedBox.shrink();
-                              } else {
-                                return Container(
-                                  padding: EdgeInsets.only(right: 5.0),
-                                  child: Image.asset(imageFile.path),
-                                );
-                              }
-                            },
-                          ),
-                        ),
+                        imageFiles != null
+                            ? Container(
+                                height: 70.0,
+                                padding: EdgeInsets.all(1.0),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.grey[800],
+                                        Colors.white,
+                                      ]),
+                                ),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: imageFiles != null
+                                      ? imageFiles.length
+                                      : 0,
+                                  itemBuilder: (context, index) {
+                                    final imageFile = imageFiles[index];
+                                    if (imageFiles.length <= 0) {
+                                      return SizedBox.shrink();
+                                    } else {
+                                      AssetImage assetImage =
+                                          AssetImage(imageFile.path);
+                                      Image image = Image(image: assetImage);
+                                      return Container(
+                                        padding: EdgeInsets.only(right: 5.0),
+                                        child: image,
+                                      );
+                                    }
+                                  },
+                                ),
+                              )
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -479,6 +484,20 @@ class _CreatePostState extends State<CreatePost> {
               );
 
               FireBusinessApi.addAdvert(advert, imageFiles).then((result) {
+                showDialog(
+                  context: context,
+                  builder: (context) => DialogBoxPost(
+                    title: advert.title,
+                    descrition:
+                        'Your post is under review, you will receive an email when it has been declined or approved',
+                    firstName: widget.firstName,
+                    lastName: widget.lastName,
+                    email: widget.email,
+                    contactNumber: widget.contactNumber,
+                    idUser: widget.idUser,
+                  ),
+                );
+                /*
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -490,7 +509,7 @@ class _CreatePostState extends State<CreatePost> {
                       idUser: widget.idUser,
                     ),
                   ),
-                );
+                );*/
               }).catchError((e) => print(e.toString));
             } else {
               Fluttertoast.showToast(

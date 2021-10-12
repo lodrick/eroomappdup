@@ -108,6 +108,43 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               _imageUrl = e['photoUrl'];
                             });
 
+                            String description = '';
+                            Icon icons = Icon(
+                              Icons.deck,
+                              color: Colors.yellow[500],
+                              size: 45.0,
+                            );
+
+                            Color colors = MyColors.primaryColor;
+                            if (advert.status == 'pending') {
+                              description =
+                                  'Your post is under review, you will receive an email when it has been approved or declined';
+                              icons = Icon(
+                                Icons.hourglass_top_rounded,
+                                color: Colors.yellow[500],
+                                size: 45.0,
+                              );
+                              colors = Colors.yellow[500];
+                            } else if (advert.status == 'approved') {
+                              description =
+                                  'Your post has been Accepted and can be viewed online';
+                              icons = Icon(
+                                Icons.check,
+                                color: MyColors.primaryColor,
+                                size: 45.0,
+                              );
+                              colors = MyColors.primaryColor;
+                            } else {
+                              description =
+                                  'Your post has been declined, please check your email why it was declined';
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.red[500],
+                                size: 45.0,
+                              );
+                              colors = Colors.red[500];
+                            }
+
                             return GestureDetector(
                               onTap: () => Navigator.push(
                                 context,
@@ -193,64 +230,30 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                                     .substring(0, 1)
                                                     .toLowerCase() +
                                                 advert.status.substring(1),
-                                            descrition:
-                                                'You are doing great job please keep it up you are the best',
+                                            descrition: description,
                                           ),
                                         );
                                       },
                                       child: Container(
                                         child: Column(
                                           children: <Widget>[
-                                            advert.status == 'approved'
-                                                ? Column(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.check,
-                                                        color: MyColors
-                                                            .primaryColor,
-                                                        size: 45.0,
-                                                      ),
-                                                      Text(
-                                                        advert.status
-                                                                .substring(0, 1)
-                                                                .toUpperCase() +
-                                                            advert.status
-                                                                .substring(1),
-                                                        style: TextStyle(
-                                                          color: MyColors
-                                                              .primaryColor,
-                                                          fontSize: 13.5,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Column(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons
-                                                            .hourglass_top_rounded,
-                                                        color:
-                                                            Colors.yellow[500],
-                                                        size: 45.0,
-                                                      ),
-                                                      Text(
-                                                        advert.status
-                                                                .substring(0, 1)
-                                                                .toUpperCase() +
-                                                            advert.status
-                                                                .substring(1),
-                                                        style: TextStyle(
-                                                          color:
-                                                              Colors.blueGrey,
-                                                          fontSize: 13.5,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
+                                            Column(
+                                              children: <Widget>[
+                                                icons,
+                                                Text(
+                                                  advert.status
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      advert.status
+                                                          .substring(1),
+                                                  style: TextStyle(
+                                                    color: colors,
+                                                    fontSize: 13.5,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ),
