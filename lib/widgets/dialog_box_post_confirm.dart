@@ -90,12 +90,13 @@ class DialogBoxPost extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(width: 8.0),
                     FlatButton(
+                      splashColor: Colors.blueGrey,
                       color: Colors.white,
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Comtinue Posting'.toUpperCase(),
+                        'Continue Posting'.toUpperCase(),
                         style: TextStyle(
                           color: MyColors.primaryColor,
                           fontWeight: FontWeight.w600,
@@ -104,6 +105,7 @@ class DialogBoxPost extends StatelessWidget {
                     ),
                     SizedBox(width: 3.0),
                     FlatButton(
+                      splashColor: Colors.blueGrey,
                       color: MyColors.primaryColor,
                       onPressed: () {
                         Navigator.push(

@@ -370,7 +370,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                   ),
                 ),
                 bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.shifting,
+                  type: BottomNavigationBarType.fixed,
                   selectedItemColor: MyColors.primaryColor,
                   unselectedItemColor: Colors.blueGrey,
                   selectedFontSize: 15.0,

@@ -430,6 +430,7 @@ class _CreatePostState extends State<CreatePost> {
                                       ]),
                                 ),
                                 child: ListView.builder(
+                                  //shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: imageFiles != null
                                       ? imageFiles.length
@@ -439,12 +440,31 @@ class _CreatePostState extends State<CreatePost> {
                                     if (imageFiles.length <= 0) {
                                       return SizedBox.shrink();
                                     } else {
-                                      AssetImage assetImage =
-                                          AssetImage(imageFile.path);
-                                      Image image = Image(image: assetImage);
                                       return Container(
                                         padding: EdgeInsets.only(right: 5.0),
-                                        child: image,
+                                        margin: EdgeInsets.only(right: 5.0),
+                                        width: 75.0,
+                                        child: IconButton(
+                                          splashColor: MyColors.primaryColor,
+                                          icon: Icon(
+                                            Icons.cancel_outlined,
+                                            size: 40,
+                                            color: Colors.black54,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              imageFiles.removeAt(imageFiles
+                                                  .indexOf(imageFile));
+                                            });
+                                          },
+                                        ),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          image: DecorationImage(
+                                            image: FileImage(imageFile),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
                                       );
                                     }
                                   },
@@ -461,6 +481,7 @@ class _CreatePostState extends State<CreatePost> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        splashColor: Colors.blueGrey,
         onPressed: () {
           if (priceController.text.isNotEmpty &&
               titleController.text.isNotEmpty &&
@@ -497,19 +518,6 @@ class _CreatePostState extends State<CreatePost> {
                     idUser: widget.idUser,
                   ),
                 );
-                /*
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainPostsPage(
-                      firstName: widget.firstName,
-                      lastName: widget.lastName,
-                      contactNumber: widget.contactNumber,
-                      email: widget.email,
-                      idUser: widget.idUser,
-                    ),
-                  ),
-                );*/
               }).catchError((e) => print(e.toString));
             } else {
               Fluttertoast.showToast(
