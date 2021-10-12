@@ -74,6 +74,11 @@ class Inbox extends StatelessWidget {
                             final Advert advert = myAdverts[index];
                             Color color = Colors.amberAccent;
                             var statusMessage;
+                            String _imageUrl = '';
+                            advert.photosUrl.forEach((e) {
+                              //_imageUrls.add(e['photoUrl']);
+                              _imageUrl = e['photoUrl'];
+                            });
 
                             if (advert.status == 'pending') {
                               statusMessage =
@@ -124,8 +129,8 @@ class Inbox extends StatelessWidget {
                                         CircleAvatar(
                                           radius: 35.0,
                                           backgroundImage: NetworkImage(
-                                            imageUrl.isNotEmpty
-                                                ? imageUrl
+                                            _imageUrl.isNotEmpty
+                                                ? _imageUrl
                                                 : 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
                                           ),
                                           backgroundColor:
