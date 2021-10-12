@@ -262,8 +262,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         ),
                                       ),
                                       MyButton(
-                                        text: 'Inbox',
-                                        iconData: Icons.mark_email_unread,
+                                        text: 'Notifications',
+                                        iconData: Icons.notifications,
                                         textSize: 16.0,
                                         height: (menuContainerHeight) / 8,
                                         widget: Inbox(

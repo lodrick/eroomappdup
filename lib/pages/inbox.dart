@@ -5,7 +5,6 @@ import 'package:eRoomApp/widgets/dialog_box_stats.dart';
 import 'package:flutter/material.dart';
 
 class Inbox extends StatelessWidget {
-  //final String authToken;
   final String idUser;
   Inbox({
     @required this.idUser,
@@ -73,16 +72,23 @@ class Inbox extends StatelessWidget {
                           itemCount: myAdverts.length,
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = myAdverts[index];
+                            Color color = Colors.amberAccent;
+                            var statusMessage;
 
-                            /*for (int x = 0;
-                                x < advert.advertImages.length;
-                                x++) {
-                              if (advert.advertImages[x].imageUrl.isNotEmpty) {
-                                imageUrl = advert.advertImages[x].imageUrl;
-                              } else {
-                                imageUrl = '';
-                              }
-                            }*/
+                            if (advert.status == 'pending') {
+                              statusMessage =
+                                  'Your post is under review, you will receive an email when it has been declined or approved';
+                              color = Colors.yellow[500];
+                            } else if (advert.status == 'approved') {
+                              statusMessage =
+                                  'Your post has been Accepted and can be viewed online';
+                              color = MyColors.primaryColor;
+                            } else if (advert.status == 'rejected') {
+                              statusMessage =
+                                  'Your post has been declined, please check your email why it was declined';
+                              color = Colors.redAccent;
+                            }
+
                             return GestureDetector(
                               onTap: () {
                                 showDialog(
@@ -160,16 +166,6 @@ class Inbox extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        var statusMessage;
-                                        if (advert.status == 'pending')
-                                          statusMessage =
-                                              'Your post is under review, you will receive an email when it has been declined or approved';
-                                        else if (advert.status == 'active')
-                                          statusMessage =
-                                              'Your post has been Accepted and can be viewed online';
-                                        else if (advert.status == 'rejected')
-                                          statusMessage =
-                                              'Your post has been declined, please check your email why it was declined';
                                         showDialog(
                                           context: context,
                                           builder: (context) => DialogAdReview(
@@ -184,17 +180,17 @@ class Inbox extends StatelessWidget {
                                       child: Container(
                                         child: Column(
                                           children: <Widget>[
-                                            if (advert.status == 'active')
-                                              Column(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.email,
-                                                    color:
-                                                        MyColors.primaryColor,
-                                                    size: 45.0,
-                                                  ),
-                                                ],
-                                              )
+                                            Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.email,
+                                                  color: color,
+                                                  size: 45.0,
+                                                ),
+                                              ],
+                                            )
+                                            /*if (advert.status == 'active')
+                                              
                                             else if (advert.status == 'pending')
                                               Column(
                                                 children: <Widget>[
@@ -215,7 +211,7 @@ class Inbox extends StatelessWidget {
                                                     size: 45.0,
                                                   ),
                                                 ],
-                                              )
+                                              )*/
                                           ],
                                         ),
                                       ),
