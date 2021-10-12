@@ -178,6 +178,9 @@ class Inbox extends StatelessWidget {
                                                     .substring(0, 1)
                                                     .toLowerCase() +
                                                 advert.status.substring(1),
+                                            imageUrl: _imageUrl.isNotEmpty
+                                                ? _imageUrl
+                                                : '',
                                             descrition: statusMessage,
                                           ),
                                         );
