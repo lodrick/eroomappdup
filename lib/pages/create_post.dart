@@ -430,7 +430,6 @@ class _CreatePostState extends State<CreatePost> {
                                       ]),
                                 ),
                                 child: ListView.builder(
-                                  //shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: imageFiles != null
                                       ? imageFiles.length

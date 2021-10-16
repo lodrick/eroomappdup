@@ -102,7 +102,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
             }
             return SafeArea(
               child: Scaffold(
-                backgroundColor: MyColors.primaryColor,
+                //backgroundColor: MyColors.primaryColor,
                 appBar: AppBar(
                   iconTheme: IconThemeData(color: Colors.white70),
                   centerTitle: false,
@@ -369,23 +369,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                     ),
                   ),
                 ),
-                bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  selectedItemColor: MyColors.primaryColor,
-                  unselectedItemColor: Colors.blueGrey,
-                  selectedFontSize: 15.0,
-                  unselectedFontSize: 14.0,
-                  onTap: _onItemTap,
-                  currentIndex: _bottomBarIndex,
-                  items: [
-                    BottomNavigationBarItem(
-                        icon: new Icon(Icons.home), label: 'Home'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.post_add), label: 'Create Post'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.search), label: 'Search Post'),
-                  ],
-                ),
+                bottomNavigationBar: _createBottomNavigationBar(),
               ),
             );
           },
@@ -430,5 +414,36 @@ class _MainPostsPageState extends State<MainPostsPage> {
         ),
       );
     }
+  }
+
+  Widget _createBottomNavigationBar() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.black54, MyColors.primaryColor],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [0.0, 0.8],
+          tileMode: TileMode.clamp,
+        ),
+      ),
+      child: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: MyColors.primaryColor,
+        unselectedItemColor: Colors.white,
+        selectedFontSize: 15.0,
+        unselectedFontSize: 14.0,
+        onTap: _onItemTap,
+        currentIndex: _bottomBarIndex,
+        backgroundColor: Colors.transparent,
+        items: [
+          BottomNavigationBarItem(icon: new Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.post_add), label: 'Create Post'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search), label: 'Search Post'),
+        ],
+      ),
+    );
   }
 }
