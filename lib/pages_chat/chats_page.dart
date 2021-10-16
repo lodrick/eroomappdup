@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:eRoomApp/constants.dart';
+import 'package:eRoomApp/pages/profile_page_user_detail_save.dart';
 import 'package:eRoomApp/pages_chat/all_users_page.dart';
 import 'package:eRoomApp/theme.dart';
+import 'package:eRoomApp/widgets/dialog_box_exit_app.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
@@ -11,9 +13,11 @@ import 'package:eRoomApp/widgets_chat/chat_header_widget.dart';
 class ChatsPage extends StatefulWidget {
   final String contactNumber;
   final String currentIdUser;
+  final String currentImageUrl;
   ChatsPage({
     @required this.contactNumber,
     @required this.currentIdUser,
+    @required this.currentImageUrl,
     Key key,
   }) : super(key: key);
   @override
@@ -43,23 +47,66 @@ class _ChatsPageState extends State<ChatsPage> {
             ),
           ),
           actions: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: choiceAction,
-              itemBuilder: (BuildContext context) {
-                return Constants.choices.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(
-                      choice,
-                      style: TextStyle(
-                        color: MyColors.primaryColor,
-                      ),
-                    ),
-                  );
-                }).toList();
-              },
-              elevation: 0.0,
-            ),
+            
+            Container(
+              child: PopupMenuButton(
+                elevation: 0.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                onSelected: (value) {
+                  switch (value) {
+                    case IconsMenu.PROFILE:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePageUserDetailSave(
+                            imageUrl: widget.currentImageUrl,
+                            currentIdUser: widget.currentIdUser,
+                          ),
+                        ),
+                      );
+                      break;
+                    default:
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomDialogBox(
+                          title: 'Exit App',
+                          descriptions:
+                              'Are you sure you want to exit the app?',
+                          text: 'bluh bluh',
+                          imgUrl: widget.currentImageUrl ??
+                              'assets/img/black-house-01.jpeg',
+                        ),
+                      );
+                      break;
+                  }
+                },
+                itemBuilder: (context) => IconsMenu.items
+                    .map((item) => PopupMenuItem<IconMenu>(
+                          value: item,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: Icon(item.iconData,
+                                    size: 25.0, color: MyColors.sidebar),
+                                title: Text(
+                                  item.text,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      color: MyColors.sidebar,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Divider(
+                                color: MyColors.primaryColorLight,
+                              )
+                            ],
+                          ),
+                        ))
+                    .toList(),
+              ),
+            )
           ],
         ),
         body: SafeArea(

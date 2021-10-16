@@ -91,18 +91,19 @@ class CustomDialogBox extends StatelessWidget {
                       },
                       child: Text(
                         'Cancel'.toUpperCase(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                            fontSize: 18, color: MyColors.primaryColor),
                       ),
                     ),
                     SizedBox(width: 10.0),
                     FlatButton(
+                      color: MyColors.primaryColor,
                       onPressed: () {
                         loginStore.signOut(context);
                       },
                       child: Text(
                         'Yes'.toUpperCase(),
-                        style: TextStyle(
-                            fontSize: 18, color: MyColors.primaryColor),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],

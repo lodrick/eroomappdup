@@ -1,6 +1,7 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/constants.dart';
+
 import 'package:eRoomApp/models/user_model.dart';
 
 import 'package:eRoomApp/pages/contact_us.dart';
@@ -127,25 +128,69 @@ class _MainPostsPageState extends State<MainPostsPage> {
                       ),
                       child: Icon(Icons.search, size: 25.0),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: choiceAction,
-                      itemBuilder: (BuildContext context) {
-                        return Constants.choices.map(
-                          (String choice) {
-                            return PopupMenuItem<String>(
-                              value: choice,
-                              child: Text(
-                                choice,
-                                style: TextStyle(
-                                  color: MyColors.primaryColor,
+                    Container(
+                      child: PopupMenuButton(
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0)),
+                        onSelected: (value) {
+                          switch (value) {
+                            case IconsMenu.PROFILE:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfilePageUserDetailSave(
+                                    imageUrl: currentImageUrl,
+                                    currentIdUser: currentIdUser,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ).toList();
-                      },
-                      elevation: 0.0,
-                    ),
+                              );
+                              break;
+                            default:
+                              showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                  title: 'Exit App',
+                                  descriptions:
+                                      'Are you sure you want to exit the app?',
+                                  text: 'bluh bluh',
+                                  imgUrl: currentImageUrl ??
+                                      'assets/img/black-house-01.jpeg',
+                                ),
+                              );
+                              break;
+                          }
+                        },
+                        itemBuilder: (context) => IconsMenu.items
+                            .map((item) => PopupMenuItem<IconMenu>(
+                                  value: item,
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        leading: Icon(item.iconData,
+                                            size: 25.0,
+                                            color: MyColors.sidebar),
+                                        title: Text(
+                                          item.text,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                              color: MyColors.sidebar,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Divider(
+                                        color: MyColors.primaryColorLight,
+                                      )
+                                    ],
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    )
+
+                    //elevation: 0.0,
                   ],
                 ),
                 body: SafeArea(
@@ -291,6 +336,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         widget: ChatsPage(
                                           contactNumber: contactNumber,
                                           currentIdUser: currentIdUser,
+                                          currentImageUrl: currentImageUrl,
                                         ),
                                       ),
                                       MyButton(

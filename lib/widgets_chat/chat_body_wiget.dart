@@ -74,7 +74,8 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
                 },
                 leading: CircleAvatar(
                   radius: 25,
-                  backgroundImage: NetworkImage(user.imageUrl),
+                  backgroundImage: NetworkImage(user.imageUrl ??
+                      'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png'),
                 ),
                 title: Text(names),
               ),
