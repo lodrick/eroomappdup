@@ -128,7 +128,6 @@ class FirebaseApi {
       'surname': user.surname,
       'email': user.email,
       'password': user.password,
-      'passwordConf': user.passwordConf,
       'country': user.country,
       'contactNumber': user.contactNumber,
       'userType': user.userType,

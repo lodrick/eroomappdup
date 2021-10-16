@@ -611,8 +611,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                             : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
                                         lastMessageTime: DateTime.now(),
                                         password: 'password',
-                                        passwordConf: 'password',
-                                        userType: 'user',
+                                        userType: 'client',
                                       );
 
                                       FirebaseApi.updateUser(userDataToUpdate,
@@ -678,8 +677,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                             : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
                                         lastMessageTime: DateTime.now(),
                                         password: 'password',
-                                        passwordConf: 'password',
-                                        userType: 'user',
+                                        userType: 'client',
                                       );
 
                                       FirebaseApi.addUser(user).then((result) {

@@ -14,7 +14,6 @@ class User {
   @required
   final String email;
   final String password;
-  final String passwordConf;
   final String country;
   @required
   final String contactNumber;
@@ -34,7 +33,6 @@ class User {
       this.surname,
       this.email,
       this.password,
-      this.passwordConf,
       this.country,
       this.contactNumber,
       this.userType,
@@ -50,7 +48,6 @@ class User {
     String surname,
     String email,
     String password,
-    String passwordConf,
     String country,
     String contactNumber,
     String userType,
@@ -66,7 +63,6 @@ class User {
         surname: surname ?? this.surname,
         email: email ?? this.email,
         password: password ?? this.password,
-        passwordConf: passwordConf ?? this.passwordConf,
         country: country ?? this.country,
         contactNumber: contactNumber ?? this.contactNumber,
         userType: userType ?? this.userType,
@@ -83,7 +79,6 @@ class User {
         surname: json['surname'],
         email: json['email'],
         password: json['password'],
-        passwordConf: json['passwordConf'],
         country: json['country'],
         contactNumber: json['contactNumber'],
         userType: json['userType'],
@@ -100,7 +95,6 @@ class User {
         'surname': surname,
         'email': email,
         'password': password,
-        'passwordConf': passwordConf,
         'country': country,
         'contactNumber': contactNumber,
         'userType': userType,
