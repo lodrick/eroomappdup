@@ -161,6 +161,10 @@ class FirebaseApi {
     result.docs.forEach((res) {
       documentSnapshot = res;
     });
+
+    if (documentSnapshot == null) {
+      return null;
+    }
     return User.fromJson(documentSnapshot.data());
   }
 

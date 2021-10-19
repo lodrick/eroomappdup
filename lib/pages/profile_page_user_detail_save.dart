@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as Path;
 
 class ProfilePageUserDetailSave extends StatefulWidget {
   final String imageUrl;
@@ -58,7 +60,6 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
   }
 
   _uploadImageFromCamera() async {
-    final _firebaseStorage = FirebaseStorage.instance;
     final _imagePicker = ImagePicker();
     PickedFile image;
 
@@ -73,19 +74,23 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
       var file = File(image.path);
       String fileName = image.path.split('/').last;
       print(fileName);
-      if (image != null) {
+      if (file != null) {
         //Upload to Firebase
-        var snapshot = await _firebaseStorage
+        String fileName = Path.basename(file.path);
+        Uint8List fileByte = file.readAsBytesSync();
+
+        var snapshot = await FirebaseStorage.instance
             .ref()
-            .child('images/${widget.currentIdUser}/$fileName')
-            .putFile(file);
+            .child('profiles/${widget.currentIdUser}/$fileName')
+            .putData(fileByte);
+
         var downLoadUrl = await snapshot.ref.getDownloadURL();
+
         setState(() {
           imageUrl = downLoadUrl;
           FirebaseApi.uploadImageUrl(downLoadUrl, widget.currentIdUser);
           userUpdateInfo.photoUrl = downLoadUrl;
           firebaseUser.updateProfile(userUpdateInfo);
-          //FirebaseUser user
         });
       } else {
         print('No Image Path Received');
@@ -96,7 +101,6 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
   }
 
   _uploadImageFromLocal() async {
-    final _firebaseStorage = FirebaseStorage.instance;
     final _imagePicker = ImagePicker();
     PickedFile image;
 
@@ -109,18 +113,19 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
       //Select Image
       image = await _imagePicker.getImage(source: ImageSource.gallery);
       var file = File(image.path);
-      String fileName = image.path.split('/').last;
-      print(fileName);
-      if (image != null) {
-        //Upload to Firebase
-        var snapshot = await _firebaseStorage
+
+      if (file != null) {
+        String fileName = Path.basename(file.path);
+        Uint8List fileByte = file.readAsBytesSync();
+
+        var snapshot = await FirebaseStorage.instance
             .ref()
-            .child('images/${widget.currentIdUser}/$fileName')
-            .putFile(file);
+            .child('profiles/${widget.currentIdUser}/$fileName')
+            .putData(fileByte);
+
         var downLoadUrl = await snapshot.ref.getDownloadURL();
         setState(() {
           imageUrl = downLoadUrl;
-
           FirebaseApi.uploadImageUrl(downLoadUrl, widget.currentIdUser);
 
           userUpdateInfo.photoUrl = downLoadUrl;
@@ -253,16 +258,20 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                           'Something Went Wrong Try again later, ' +
                               snapshot.error.toString());
                     } else {
-                      if (snapshot.data.name.isNotEmpty)
-                        firstNameController.text =
-                            snapshot.data.name.toString();
+                      if (snapshot.data != null) {
+                        if (snapshot.data.name.isNotEmpty) {
+                          firstNameController.text =
+                              snapshot.data.name.toString();
+                        }
 
-                      if (snapshot.data.surname.isNotEmpty)
-                        lastNameController.text =
-                            snapshot.data.surname.toString();
+                        if (snapshot.data.surname.isNotEmpty) {
+                          lastNameController.text =
+                              snapshot.data.surname.toString();
+                        }
 
-                      if (snapshot.data.email.isNotEmpty) {
-                        emailController.text = snapshot.data.email.toString();
+                        if (snapshot.data.email.isNotEmpty) {
+                          emailController.text = snapshot.data.email.toString();
+                        }
                       }
 
                       return Scaffold(
@@ -581,7 +590,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                         floatingActionButton: FloatingActionButton(
                           onPressed: _disableButton
                               ? () {
-                                  showAlert(context);
+                                  //showAlert(context);
                                   if (firstNameController.text.isNotEmpty &&
                                       lastNameController.text.isNotEmpty &&
                                       emailController.text.isNotEmpty) {
@@ -613,6 +622,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                         password: 'password',
                                         userType: 'client',
                                       );
+                                      print(snapshot.data.idUser);
 
                                       FirebaseApi.updateUser(userDataToUpdate,
                                               snapshot.data.idUser)
@@ -629,28 +639,41 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                       });
                                       print('Hey this user exits');
 
-                                      /*BusinessApi.authenticate(loginStore
-                                              .firebaseUser.phoneNumber
-                                              .toString())
-                                          .then((res) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MainPostsPage(
-                                              firstName: res.firstName,
-                                              lastName: res.lastName,
-                                              email: res.email,
-                                              authToken: res.authToken,
-                                              contactNumber: res.phoneNumber,
-                                              id: res.id,
-                                            ),
-                                          ),
-                                        );
-                                      }).catchError((e) {
-                                        print(
-                                            'Error loging in: ' + e.toString());
-                                      });*/
-
+                                      FutureBuilder(
+                                        future: FirebaseApi.updateUser(
+                                            userDataToUpdate,
+                                            snapshot.data.idUser),
+                                        builder: (context, snapUser) {
+                                          if (snapUser.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Container(
+                                              color: Colors.transparent,
+                                              child: showAlert(context),
+                                            );
+                                          } else if (snapUser.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapUser.hasError) {
+                                            } else if (snapUser.hasData) {
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MainPostsPage(
+                                                  firstName: snapUser.data.name,
+                                                  lastName:
+                                                      snapUser.data.surname,
+                                                  email: snapUser.data.email,
+                                                  contactNumber: snapUser
+                                                      .data.contactNumber,
+                                                  idUser: snapUser.data.idUser,
+                                                ),
+                                              );
+                                            }
+                                          }
+                                          return Container(
+                                            color: Colors.transparent,
+                                            child: showAlert(context),
+                                          );
+                                        },
+                                      );
                                     } else {
                                       print('This user does not exit.');
                                       User user = User(
@@ -699,43 +722,41 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                           'Error adding a user from firestore: ' +
                                               e.toString()));
 
-                                      //business logic endpoint
-                                      /*BusinessApi.signUp(user).then((res) {
-                                        print('Res for business data');
-                                        FirebaseApi.addUser(user).then((res) {
-                                          print('Res for firestore data');
-
-                                          BusinessApi.authenticate(loginStore
-                                                  .firebaseUser.phoneNumber
-                                                  .toString())
-                                              .then((res) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainPostsPage(
-                                                  firstName: res.firstName,
-                                                  lastName: res.lastName,
-                                                  email: res.email,
-                                                  authToken: res.authToken,
-                                                  contactNumber:
-                                                      res.phoneNumber,
-                                                  id: res.id,
+                                      FutureBuilder(
+                                        future: FirebaseApi.addUser(user),
+                                        builder: (context, snapUser) {
+                                          if (snapUser.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return showAlert(context);
+                                          } else if (snapUser.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapUser.hasError) {
+                                            } else if (snapUser.hasData) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MainPostsPage(
+                                                    firstName:
+                                                        snapUser.data.name,
+                                                    lastName:
+                                                        snapUser.data.surname,
+                                                    email: snapUser.data.email,
+                                                    contactNumber: snapUser
+                                                        .data.contactNumber,
+                                                    idUser:
+                                                        snapUser.data.idUser,
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          }).catchError((e) {
-                                            print('Error loging in: ' +
-                                                e.toString());
-                                          });
-                                        }).catchError((e) {
-                                          print(
-                                              'Error adding a user from firestore: ' +
-                                                  e.toString());
-                                        });
-                                      }).catchError((e) {
-                                        print('error sign up: ' + e.toString());
-                                      });*/
+                                              );
+                                            }
+                                          }
+                                          return Container(
+                                            color: Colors.transparent,
+                                            child: showAlert(context),
+                                          );
+                                        },
+                                      );
                                     }
                                   }
                                   clear();
@@ -758,7 +779,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
     );
   }
 
-  void showAlert(BuildContext context) {
+  Widget showAlert(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => Center(

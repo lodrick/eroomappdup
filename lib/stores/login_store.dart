@@ -148,6 +148,7 @@ abstract class LoginStoreBase with Store {
     if (firebaseUser.phoneNumber != null ||
         firebaseUser.phoneNumber.isNotEmpty) {
       FirebaseApi.retriveUser(firebaseUser.phoneNumber).then((user) {
+        print(user);
         if (user != null) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
