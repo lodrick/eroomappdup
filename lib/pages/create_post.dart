@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:eRoomApp/api/fire_business_api.dart';
+import 'package:eRoomApp/api/province_api.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
@@ -267,42 +269,64 @@ class _CreatePostState extends State<CreatePost> {
                       color: Colors.amber.shade50,
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    child: DropdownButton(
-                      dropdownColor: Colors.white,
-                      underline: SizedBox(),
-                      value: _city,
-                      hint: Text(
-                        'Select City',
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      items: StaticData.cities.map(
-                        (val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(
-                              val,
+                    child: FutureBuilder(
+                      future: ProvinceApi.getProvinces(_province),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          List<Province> provincies = snapshot.data;
+                          if (provincies == null) {
+                            provincies = List<Province>();
+                            provincies.add(
+                              new Province(
+                                city: 'Select your provice',
+                                lat: '-26.2044',
+                                lng: '28.0416',
+                                country: 'South Africa',
+                                iso2: 'ZA',
+                                adminName: 'Gauteng',
+                                capital: 'admin',
+                                population: '4434827',
+                                populationProper: '4434827',
+                              ),
+                            );
+                          }
+                          return DropdownButton(
+                            dropdownColor: Colors.white,
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            iconSize: 30.0,
+                            hint: Text(
+                              'Select City',
                               style: TextStyle(
                                 color: Colors.blueGrey,
                                 fontSize: 16.0,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
+                            items: provincies.map((value) {
+                              return DropdownMenuItem<dynamic>(
+                                value: value.city,
+                                child: Text(
+                                  value.city,
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                _city = val;
+                                print('Yeah: ' + _city);
+                              });
+                            },
                           );
-                        },
-                      ).toList(),
-                      onChanged: (val) {
-                        setState(() {
-                          _city = val;
-                        });
+                        }
                       },
                     ),
                   ),

@@ -89,4 +89,4 @@ flutter:
 
   assets:
     - assets/img/
-    - assets/za.json
+    - assets/res/za.json

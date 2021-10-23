@@ -1,4 +1,5 @@
 import 'package:eRoomApp/api/business_api.dart';
+import 'package:eRoomApp/api/province_api.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
@@ -32,6 +33,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
     suburbController.dispose();
     maxPriceControler.dispose();
     minPriceController.dispose();
+    ProvinceApi.getProvinces('Gauteng');
   }
 
   @override
