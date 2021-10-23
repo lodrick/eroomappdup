@@ -4,6 +4,7 @@ import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MainSearchPostPage extends StatefulWidget {
   final String contactNumber;
@@ -102,8 +103,11 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                           ),
                                         ),
                                         filled: false,
-                                        hintStyle: new TextStyle(
-                                            color: Colors.grey[800]),
+                                        /*hintStyle: new TextStyle(
+                                          color: Colors.grey[800],
+                                        ),*/
+                                        hintStyle: GoogleFonts.lato(
+                                            color: Colors.grey[700]),
                                         hintText: 'R1',
                                         labelText: 'Min',
                                         border: InputBorder.none,

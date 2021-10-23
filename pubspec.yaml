@@ -52,6 +52,7 @@ dependencies:
   share: any
   uuid: any
   footer: any
+  google_fonts:
   
 
   #ETC

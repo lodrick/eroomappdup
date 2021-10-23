@@ -104,6 +104,8 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
                 controller: _controller,
                 textCapitalization: TextCapitalization.sentences,
                 autocorrect: true,
+                minLines: 3,
+                maxLines: 10,
                 enableSuggestions: true,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Send a message...',

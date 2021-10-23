@@ -117,7 +117,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                   ),
                   elevation: 0.0,
                   actions: <Widget>[
-                    GestureDetector(
+                    /*GestureDetector(
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -127,7 +127,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                         ),
                       ),
                       child: Icon(Icons.search, size: 25.0),
-                    ),
+                    ),*/
                     Container(
                       child: PopupMenuButton(
                         elevation: 0.0,
