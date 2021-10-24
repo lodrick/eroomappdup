@@ -1,5 +1,6 @@
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/app_launcher_utils.dart';
+import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/pages_chat/chat_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/theme.dart';
@@ -7,36 +8,16 @@ import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
 class PostInfo extends StatefulWidget {
-  final String idAd;
-  final String title;
-  final String description;
-  final String province;
-  final String city;
-  final String suburb;
-  final String status;
-  final String price;
-  final String userId;
-  final String updatedAt;
   final String contactNumber;
   final bool isLiked;
-  final List<String> imageUrls;
+  final Advert advert;
 
   PostInfo({
-    @required this.idAd,
-    @required this.title,
-    @required this.description,
-    @required this.province,
-    @required this.city,
-    @required this.suburb,
-    @required this.price,
-    @required this.status,
-    @required this.userId,
-    @required this.updatedAt,
-    @required this.imageUrls,
+    @required this.advert,
     @required this.isLiked,
     @required this.contactNumber,
   });
@@ -46,7 +27,7 @@ class PostInfo extends StatefulWidget {
 }
 
 class _PostInfoState extends State<PostInfo> {
-  String authToken;
+  //String authToken;
   String currentUserId;
   List<String> imageUrls;
   /*final List<String> images = [
@@ -58,13 +39,6 @@ class _PostInfoState extends State<PostInfo> {
     'https://images.unsplash.com/photo-1586951144438-26d4e072b891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
     'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
   ];*/
-
-  void authForToken() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      authToken = preferences.getString('auth_token');
-    });
-  }
 
   void currentUser() async {
     SharedPrefs.getContactNumber().then((currentUserPhone) {
@@ -78,10 +52,15 @@ class _PostInfoState extends State<PostInfo> {
 
   void addPostFramecallback() {
     imageUrls = List<String>();
-    if (widget.imageUrls.isNotEmpty && widget.imageUrls.length > 0) {
+
+    widget.advert.photosUrl.forEach((e) {
+      imageUrls.add(e['photoUrl']);
+    });
+
+    if (imageUrls.isNotEmpty && imageUrls.length > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (widget.imageUrls.isNotEmpty) {
-          widget.imageUrls.forEach((imageUrl) {
+        if (imageUrls.isNotEmpty) {
+          imageUrls.forEach((imageUrl) {
             precacheImage(NetworkImage(imageUrl), context);
           });
         }
@@ -166,7 +145,7 @@ class _PostInfoState extends State<PostInfo> {
                               padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
                               child: Container(
                                 child: CarouselSlider.builder(
-                                  itemCount: widget.imageUrls.length,
+                                  itemCount: imageUrls.length,
                                   options: CarouselOptions(
                                       autoPlay: false,
                                       aspectRatio: 2.1,
@@ -175,7 +154,7 @@ class _PostInfoState extends State<PostInfo> {
                                     return Container(
                                       child: Center(
                                         child: Image.network(
-                                          widget.imageUrls[index],
+                                          imageUrls[index],
                                           fit: BoxFit.cover,
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -197,71 +176,40 @@ class _PostInfoState extends State<PostInfo> {
                                           right: 32.0,
                                           top: 18.0),
                                       child: titleSection(
-                                        title: widget.title ?? '',
-                                        description: widget.description ?? '',
-                                        updatedAt: widget.updatedAt ?? '',
+                                        title: widget.advert.title ?? '',
+                                        description:
+                                            widget.advert.decription ?? '',
+                                        updatedAt: DateFormat('dd-MM-yyy')
+                                                .format(DateTime.parse(widget
+                                                    .advert.updatedAt
+                                                    .toDate()
+                                                    .toString())) ??
+                                            '',
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 32.0, bottom: 20.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              buildText(
-                                                  text: 'Province:',
-                                                  color: Colors.grey.shade900,
-                                                  fontWeight: FontWeight.bold),
-                                              buildText(
-                                                  text: 'City:',
-                                                  color: Colors.grey.shade900,
-                                                  fontWeight: FontWeight.bold),
-                                              buildText(
-                                                  text: 'Suburb:',
-                                                  color: Colors.grey.shade900,
-                                                  fontWeight: FontWeight.bold),
-                                              buildText(
-                                                  text: 'Price:',
-                                                  color: Colors.grey.shade900,
-                                                  fontWeight: FontWeight.bold),
-                                              buildText(
-                                                  text: 'Status:',
-                                                  color: Colors.grey.shade900,
-                                                  fontWeight: FontWeight.bold),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 40.0,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              buildText(
-                                                  text: widget.province ?? '',
-                                                  color: Colors.grey[700]),
-                                              buildText(
-                                                  text: widget.city ?? '',
-                                                  color: Colors.grey[700]),
-                                              buildText(
-                                                  text: widget.suburb ?? '',
-                                                  color: Colors.grey[700]),
-                                              buildText(
-                                                  text:
-                                                      'R ' + widget.price ?? '',
-                                                  color: Colors.grey[700]),
-                                              buildText(
-                                                  text: widget.status ?? '',
-                                                  color: Colors.grey[700]),
-                                            ],
-                                          ),
+                                        left: 32.0,
+                                        bottom: 20.0,
+                                        right: 32.0,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          buildPostInfo(
+                                              desc: 'City:',
+                                              data: widget.advert.city),
+                                          Divider(color: MyColors.primaryColor),
+                                          buildPostInfo(
+                                              desc: 'Suburb:',
+                                              data: widget.advert.suburb),
+                                          Divider(color: MyColors.primaryColor),
+                                          buildPostInfo(
+                                              desc: 'Price:',
+                                              data: 'R ${widget.advert.price}'),
+                                          Divider(color: MyColors.primaryColor),
+                                          buildPostInfo(
+                                              desc: 'Status:',
+                                              data: '${widget.advert.status}'),
                                         ],
                                       ),
                                     ),
@@ -390,6 +338,25 @@ class _PostInfoState extends State<PostInfo> {
       ),
     );
   }
+
+  Widget buildPostInfo({String desc, String data}) => Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText(
+                  text: desc,
+                  color: Colors.grey.shade900,
+                  fontWeight: FontWeight.bold),
+              SizedBox(
+                width: 50.0,
+              ),
+              buildText(text: data, color: Colors.grey.shade900),
+            ],
+          ),
+        ],
+      );
 
   Widget buildText({String text, Color color, FontWeight fontWeight}) =>
       Container(

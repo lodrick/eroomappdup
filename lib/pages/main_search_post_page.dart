@@ -1,10 +1,12 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/province_api.dart';
+import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainSearchPostPage extends StatefulWidget {
@@ -25,6 +27,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
 
   bool isMenuOpen = false;
   String url = BusinessApi.url;
+  String _province;
   String _city;
 
   @override
@@ -163,9 +166,9 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                           child: DropdownButton(
                             dropdownColor: Colors.white,
                             underline: SizedBox(),
-                            value: _city,
+                            value: _province,
                             hint: Text(
-                              'Select City',
+                              'Select Province',
                               style: TextStyle(
                                 color: Colors.blueGrey,
                                 fontSize: 16.0,
@@ -177,7 +180,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                             style: TextStyle(
                               color: Colors.white,
                             ),
-                            items: StaticData.cities.map(
+                            items: StaticData.provinces.map(
                               (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -194,9 +197,79 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                             ).toList(),
                             onChanged: (val) {
                               setState(() {
-                                _city = val;
-                                print('Yeah: ' + _city);
+                                _province = val;
                               });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 2.0),
+                          decoration: BoxDecoration(
+                            color: Colors.amber.shade50,
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          child: FutureBuilder(
+                            future: ProvinceApi.getProvinces(_province),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                List<Province> provincies = snapshot.data;
+                                if (provincies == null) {
+                                  provincies = List<Province>();
+                                  provincies.add(
+                                    new Province(
+                                      city: 'Select your provice',
+                                      lat: '-26.2044',
+                                      lng: '28.0416',
+                                      country: 'South Africa',
+                                      iso2: 'ZA',
+                                      adminName: 'Gauteng',
+                                      capital: 'admin',
+                                      population: '4434827',
+                                      populationProper: '4434827',
+                                    ),
+                                  );
+                                }
+                                return DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  underline: SizedBox(),
+                                  isExpanded: true,
+                                  iconSize: 30.0,
+                                  value: _city,
+                                  hint: Text(
+                                    'Select City',
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  items: provincies.map((value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value.city,
+                                      child: Text(
+                                        value.city,
+                                        style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _city = val;
+                                      print('_City: $_city');
+                                    });
+                                  },
+                                );
+                              }
                             },
                           ),
                         ),
@@ -223,18 +296,27 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PostSearchResultsDisplay(
-                minPrice: double.parse(minPriceController.text.toString()),
-                maxPrice: double.parse(maxPriceControler.text.toString()),
-                suburb: suburbController.text,
-                contactNumber: widget.contactNumber,
-                city: _city,
+          if (minPriceController.text.isNotEmpty &&
+              maxPriceControler.text.isNotEmpty &&
+              suburbController.text.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PostSearchResultsDisplay(
+                  minPrice: double.parse(minPriceController.text.toString()),
+                  maxPrice: double.parse(maxPriceControler.text.toString()),
+                  suburb: suburbController.text,
+                  contactNumber: widget.contactNumber,
+                  city: _city,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            Fluttertoast.showToast(
+                backgroundColor: Colors.black38.withOpacity(0.8),
+                msg:
+                    'Some of your fields are empty, please make sure all required info are field.');
+          }
         },
         child: Icon(
           Icons.search,

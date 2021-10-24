@@ -298,6 +298,7 @@ class _CreatePostState extends State<CreatePost> {
                             underline: SizedBox(),
                             isExpanded: true,
                             iconSize: 30.0,
+                            value: _city,
                             hint: Text(
                               'Select City',
                               style: TextStyle(
@@ -322,7 +323,7 @@ class _CreatePostState extends State<CreatePost> {
                             onChanged: (val) {
                               setState(() {
                                 _city = val;
-                                print('Yeah: ' + _city);
+                                print('City: $_city');
                               });
                             },
                           );
@@ -524,7 +525,6 @@ class _CreatePostState extends State<CreatePost> {
                 suburb: suburbController.text.toString(),
                 userId: widget.idUser,
                 status: 'pending',
-                //advertUrl: imageUrls.first,
               );
 
               FireBusinessApi.addAdvert(advert, imageFiles).then((result) {

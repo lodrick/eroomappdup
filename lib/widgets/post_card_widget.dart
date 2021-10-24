@@ -40,6 +40,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
           imageUrls = new List<String>();
+          String _url = '';
           String _updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
 
@@ -53,12 +54,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
             }
             print('index: $_index');
           }
-          isLiked = advert.likes[_index][advert.userId];
-          String _url = '';
-          advert.photosUrl.forEach((e) {
-            imageUrls.add(e['photoUrl']);
-            _url = e['photoUrl'];
-          });
+          isLiked = advert.likes[_index ?? 1][advert.userId];
+
+          if (advert.photosUrl != null) {
+            advert.photosUrl.forEach((e) {
+              _url = e['photoUrl'];
+            });
+          }
 
           return GestureDetector(
             onTap: () {
@@ -66,22 +68,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => PostInfo(
-                    idAd: advert.id,
-                    title: advert.title,
-                    description: advert.decription,
-                    province: advert.province,
-                    city: advert.city,
-                    suburb: advert.suburb,
-                    price: advert.price.toString(),
-                    status: advert.status,
-                    userId: advert.userId,
-                    updatedAt: _updatedAt,
-                    imageUrls: imageUrls,
                     isLiked: isLiked,
                     contactNumber: widget.contactNumber,
+                    advert: advert,
                   ),
                 ),
               );
+              //imageUrls = new List<String>();
             },
             child: Container(
               height: MediaQuery.of(context).size.height / 2.2,

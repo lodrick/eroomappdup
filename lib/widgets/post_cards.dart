@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 
 class PostCards extends StatefulWidget {
   final String contactNumber;
-  //final String currentIdUser;
 
   PostCards({
     @required this.contactNumber,
-    //this.currentIdUser,
     Key key,
   }) : super(key: key);
 

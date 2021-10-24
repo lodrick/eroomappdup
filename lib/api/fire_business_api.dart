@@ -37,10 +37,10 @@ class FireBusinessApi {
           double minprice, double maxPrice, String suburb, String city) =>
       FirebaseFirestore.instance
           .collection('adverts')
-          .orderBy(AdvertField.updatedAt, descending: true)
-          .where('price', isGreaterThan: maxPrice)
-          .where('price', isLessThan: minprice)
+          .where('price', isGreaterThan: minprice)
+          .where('price', isLessThan: maxPrice)
           .where('suburb', isEqualTo: suburb)
+          .where('status', isEqualTo: 'approved')
           .where('city', isEqualTo: city)
           .snapshots()
           .transform(Utils.transformer(Advert.fromJson));
@@ -70,9 +70,7 @@ class FireBusinessApi {
           FirebaseFirestore.instance
               .collection('adverts')
               .doc(advertRuslt.id)
-              .update(
-                Advert.adPhotos(id: advertRuslt.id, photoUrl: path),
-              )
+              .update(Advert.adPhotos(id: advertRuslt.id, photoUrl: path))
               .then((res) {})
               .catchError((e) => print(e.toString()));
         }).catchError((e) => print(e.toString()));
@@ -152,17 +150,13 @@ class FireBusinessApi {
 
   static Future<void> removeLikes(
       {String idAd, String idUser, bool like}) async {
-    FirebaseFirestore.instance
-        .collection('adverts')
-        .doc(idAd)
-        .update(
-            /*{
+    FirebaseFirestore.instance.collection('adverts').doc(idAd).update(
+        /*{
       'likes': FieldValue.arrayRemove([
         {idUser: like}
       ])
     }*/
-            Advert.removeLike(idUser: idUser, like: like))
-        .then((result) {
+        Advert.removeLike(idUser: idUser, like: like)).then((result) {
       print('Item removed');
     }).catchError((e) => print(e.toString()));
   }
