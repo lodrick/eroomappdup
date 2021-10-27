@@ -56,6 +56,7 @@ class FireBusinessApi {
       'city': advert.city,
       'suburb': advert.suburb,
       'userId': advert.userId,
+      'email': advert.email,
       'createdAt': DateTime.now(),
       'updatedAt': DateTime.now(),
       'status': advert.status,

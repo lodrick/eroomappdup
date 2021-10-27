@@ -21,7 +21,6 @@ class PostCardWidget extends StatefulWidget {
 }
 
 class _PostCardWidgetState extends State<PostCardWidget> {
-  List<String> imageUrls;
   bool isLiked = false;
   int _index = 0;
   Map<String, bool> testLike = Map<String, bool>();
@@ -39,7 +38,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemCount: widget.adverts.length,
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
-          imageUrls = new List<String>();
           String _url = '';
           String _updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
@@ -47,14 +45,14 @@ class _PostCardWidgetState extends State<PostCardWidget> {
           if (advert.likes.isNotEmpty) {
             for (int x = 0; x < advert.likes.length; x++) {
               if (advert.likes[x][advert.userId]) {
-                print(advert.likes[x][advert.userId]);
                 _index = x;
                 break;
               }
             }
-            print('index: $_index');
           }
-          isLiked = advert.likes[_index ?? 1][advert.userId];
+          if (advert.likes.isNotEmpty) {
+            isLiked = advert.likes[_index ?? 1][advert.userId];
+          }
 
           if (advert.photosUrl != null) {
             advert.photosUrl.forEach((e) {
@@ -74,7 +72,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                   ),
                 ),
               );
-              //imageUrls = new List<String>();
             },
             child: Container(
               height: MediaQuery.of(context).size.height / 2.2,
@@ -230,7 +227,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                         : Colors.black54,
                                   ),
                                 ),
-                                Text('1'),
                               ],
                             ),
                           ),

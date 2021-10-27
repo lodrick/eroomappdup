@@ -15,6 +15,7 @@ class Advert {
   final String city;
   final String suburb;
   final String userId;
+  final String email;
   final createdAt;
   final updatedAt;
   final String status;
@@ -31,6 +32,7 @@ class Advert {
     this.city,
     this.suburb,
     this.userId,
+    this.email,
     this.createdAt,
     this.updatedAt,
     this.status,
@@ -48,6 +50,7 @@ class Advert {
     String city,
     String suburb,
     String userId,
+    String email,
     String createdAt,
     String updatedAt,
     String status,
@@ -64,6 +67,7 @@ class Advert {
         city: city ?? this.city,
         suburb: suburb ?? this.suburb,
         userId: userId ?? this.userId,
+        email: email ?? this.email,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         status: status ?? this.status,
@@ -80,6 +84,7 @@ class Advert {
         city: json['city'],
         suburb: json['suburb'],
         userId: json['userId'],
+        email: json['email'],
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt'],
         status: json['status'],
@@ -97,6 +102,7 @@ class Advert {
         'city': city,
         'suburb': suburb,
         'userId': userId,
+        'email': email,
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'status': status,

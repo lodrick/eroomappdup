@@ -524,6 +524,7 @@ class _CreatePostState extends State<CreatePost> {
                 city: _city,
                 suburb: suburbController.text.toString(),
                 userId: widget.idUser,
+                email: widget.email,
                 status: 'pending',
               );
 

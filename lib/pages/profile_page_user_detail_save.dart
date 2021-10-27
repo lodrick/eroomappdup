@@ -45,7 +45,6 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
 
   @override
   void initState() {
-    print(widget.currentIdUser);
     super.initState();
   }
 
@@ -235,6 +234,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
   @override
   Widget build(BuildContext context) {
     bool _disableButton = true;
+
     String userShortDesc = 'User availability status description...';
 
     return Consumer<LoginStore>(
@@ -445,7 +445,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                                             .primaryColor,
                                                       ),
                                                       onTap: () {
-                                                        print('Status edited');
+                                                        //print('Status edited');
                                                         SharedPrefs.saveUserSatus(
                                                             userShortDescriptionController
                                                                 .text
@@ -552,6 +552,14 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                               child: TextFormField(
                                                 controller: emailController
                                                   ..text,
+                                                /*onEditingComplete: () {},
+                                                validator: (value) {
+                                                  if (!EmailValidator.validate(
+                                                      value)) {
+                                                    return 'Please enter valid email';
+                                                  }
+                                                  return null;
+                                                },*/
                                                 decoration: InputDecoration(
                                                   contentPadding:
                                                       EdgeInsets.symmetric(
