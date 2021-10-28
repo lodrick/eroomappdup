@@ -1,5 +1,8 @@
 import 'package:eRoomApp/api/fire_business_api.dart';
+import 'package:eRoomApp/api/province_api.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/models/province.dart';
+import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
@@ -31,6 +34,7 @@ class _PostAdEditState extends State<PostAdEdit> {
   bool isSwitched = false;
 
   String _province;
+  String _city;
   String _roomType;
 
   TextEditingController priceController = TextEditingController();
@@ -43,17 +47,6 @@ class _PostAdEditState extends State<PostAdEdit> {
     'Select Room/Cattage',
     'Cattage',
     'Room',
-  ];
-  List<String> _provinces = [
-    'Gauteng',
-    'KwaZulu-Natal',
-    'Eastern Cape',
-    'Free State',
-    'Limpopo',
-    'Mpumalanga',
-    'Northern Cape',
-    'North West',
-    'Western Cape'
   ];
 
   @override
@@ -99,26 +92,26 @@ class _PostAdEditState extends State<PostAdEdit> {
         ),
         elevation: 0.0,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 0.0, left: 0.0, right: 0.0),
-                        child: Expanded(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 0.0, left: 0.0, right: 0.0),
                           child: Column(
                             children: <Widget>[
                               isSwitched == true
@@ -234,13 +227,12 @@ class _PostAdEditState extends State<PostAdEdit> {
                                       ),
                                       controller: descriptionController,
                                     ),
-                                    Container(
+                                    /*Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 20.0, vertical: 2.0),
                                       decoration: BoxDecoration(
                                         color: Colors.amber.shade50,
-                                        borderRadius:
-                                            BorderRadius.circular(25.0),
+                                        borderRadius: BorderRadius.circular(25.0),
                                       ),
                                       child: DropdownButton(
                                         dropdownColor: MyColors.primaryColor,
@@ -281,9 +273,8 @@ class _PostAdEditState extends State<PostAdEdit> {
                                           });
                                         },
                                       ),
-                                    ),
-                                    SizedBox(height: 4.0),
-                                    CustomTextField(
+                                    ),*/
+                                    /*CustomTextField(
                                       hintTxt: 'Johannesburg',
                                       labelTxt: 'City',
                                       icon: Icon(
@@ -291,6 +282,130 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: cityController,
+                                    ),*/
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 2.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber.shade50,
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      child: DropdownButton(
+                                        dropdownColor: Colors.white,
+                                        underline: SizedBox(),
+                                        value: _province,
+                                        hint: Text(
+                                          'Select Province',
+                                          style: TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        isExpanded: true,
+                                        iconSize: 30.0,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        items: StaticData.provinces.map(
+                                          (val) {
+                                            return DropdownMenuItem<String>(
+                                              value: val,
+                                              child: Text(
+                                                val,
+                                                style: TextStyle(
+                                                  color: Colors.blueGrey,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ).toList(),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            _province = val;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(height: 10.0),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 2.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber.shade50,
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      child: FutureBuilder(
+                                        future:
+                                            ProvinceApi.getProvinces(_province),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          } else {
+                                            List<Province> provincies =
+                                                snapshot.data;
+                                            if (provincies == null) {
+                                              provincies = List<Province>();
+                                              provincies.add(
+                                                new Province(
+                                                  city: 'Select your provice',
+                                                  lat: '-26.2044',
+                                                  lng: '28.0416',
+                                                  country: 'South Africa',
+                                                  iso2: 'ZA',
+                                                  adminName: 'Gauteng',
+                                                  capital: 'admin',
+                                                  population: '4434827',
+                                                  populationProper: '4434827',
+                                                ),
+                                              );
+                                            }
+                                            return DropdownButton(
+                                              dropdownColor: Colors.white,
+                                              underline: SizedBox(),
+                                              isExpanded: true,
+                                              iconSize: 30.0,
+                                              value: _city,
+                                              hint: Text(
+                                                'Select City',
+                                                style: TextStyle(
+                                                  color: Colors.blueGrey,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              items: provincies.map((value) {
+                                                return DropdownMenuItem<
+                                                    dynamic>(
+                                                  value: value.city,
+                                                  child: Text(
+                                                    value.city,
+                                                    style: TextStyle(
+                                                      color: Colors.blueGrey,
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  _city = val;
+                                                  print('City: $_city');
+                                                });
+                                              },
+                                            );
+                                          }
+                                        },
+                                      ),
                                     ),
                                     CustomTextField(
                                       hintTxt: 'Midrand',
@@ -311,8 +426,8 @@ class _PostAdEditState extends State<PostAdEdit> {
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
