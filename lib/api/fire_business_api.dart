@@ -152,13 +152,29 @@ class FireBusinessApi {
   static Future<void> removeLikes(
       {String idAd, String idUser, bool like}) async {
     FirebaseFirestore.instance.collection('adverts').doc(idAd).update(
-        /*{
-      'likes': FieldValue.arrayRemove([
-        {idUser: like}
-      ])
-    }*/
+        
         Advert.removeLike(idUser: idUser, like: like)).then((result) {
       print('Item removed');
     }).catchError((e) => print(e.toString()));
+  }
+
+  static Stream<List<Advert>> getFavAdverts(List<String> advertsIds) async* {
+    List<Advert> adverts = List<Advert>();
+    QueryDocumentSnapshot documentSnapshot;
+
+    for (String advertsId in advertsIds) {
+      var result = await FirebaseFirestore.instance
+          .collection('adverts')
+          .where('id', isEqualTo: advertsId)
+          .get();
+      result.docs.forEach((res) {
+        documentSnapshot = res;
+      });
+      if (documentSnapshot != null) {
+        adverts.add(Advert.fromJson(documentSnapshot.data()));
+      }
+    }
+
+    yield adverts;
   }
 }

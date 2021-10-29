@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
 class PostInfo extends StatefulWidget {
   final String contactNumber;
-  final bool isLiked;
+
   final Advert advert;
 
   PostInfo({
     @required this.advert,
-    @required this.isLiked,
     @required this.contactNumber,
   });
 
@@ -28,8 +28,10 @@ class PostInfo extends StatefulWidget {
 
 class _PostInfoState extends State<PostInfo> {
   //String authToken;
+  bool isLiked = false;
   String currentUserId;
   List<String> imageUrls;
+  List<String> bookMarkedFavourates;
   /*final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -68,11 +70,27 @@ class _PostInfoState extends State<PostInfo> {
     }
   }
 
+  void getBookMarkFavourates() async {
+    bookMarkedFavourates = List<String>();
+    SharedPrefs.getBookMarkFavourates().then((result) {
+      setState(() {
+        bookMarkedFavourates = result;
+        for (String data in result) {
+          if (data.contains(widget.advert.id)) {
+            isLiked = true;
+          }
+        }
+      });
+    });
+    //bookMarkedFavourates
+  }
+
   @override
   void initState() {
+    super.initState();
     currentUser();
     addPostFramecallback();
-    super.initState();
+    getBookMarkFavourates();
   }
 
   @override
@@ -110,13 +128,31 @@ class _PostInfoState extends State<PostInfo> {
               padding: EdgeInsets.only(right: 15.0),
               child: GestureDetector(
                 onTap: () {
-                  /*BusinessApi.createFavouriteAdvert(
-                      widget.userId, widget.idAd, widget.authToken);
-                  print('Like');*/
+                  String msg = '';
+                  setState(() {
+                    if (isLiked) {
+                      bookMarkedFavourates.remove(widget.advert.id);
+                      isLiked = false;
+                      SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
+                      msg = 'Post removed from your favorite bookmark...';
+                    } else {
+                      isLiked = true;
+                      bookMarkedFavourates.add(widget.advert.id);
+                      SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
+                      msg = 'Post added to your favorite bookmark...';
+                    }
+                  });
+
+                  Fluttertoast.showToast(
+                    msg: msg,
+                    fontSize: 18.0,
+                    backgroundColor: Colors.black87.withOpacity(.7),
+                    textColor: Colors.white,
+                  );
                 },
                 child: Icon(
-                  widget.isLiked ? Icons.favorite : Icons.favorite_border,
-                  color: widget.isLiked ? Colors.pink[400] : Colors.white70,
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: isLiked ? Colors.pink[400] : Colors.white70,
                   size: 22.0,
                 ),
               ),
@@ -213,7 +249,7 @@ class _PostInfoState extends State<PostInfo> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 35.0),
+                                    SizedBox(height: 5.0),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -405,7 +441,7 @@ class _PostInfoState extends State<PostInfo> {
                       color: Colors.grey[500],
                     ),
                     softWrap: true,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.fade,
                   ),
                 ],
               ),

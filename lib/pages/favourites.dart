@@ -1,6 +1,7 @@
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/pages/post_ad_edit.dart';
+import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/dialog_box_stats.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,24 @@ class Favourites extends StatefulWidget {
 }
 
 class _FavouritesState extends State<Favourites> {
+  List<String> bookMarkedFavourates;
+  @override
+  void initState() {
+    super.initState();
+    getBookMarkFavourates();
+  }
+
+  void getBookMarkFavourates() async {
+    bookMarkedFavourates = List<String>();
+    SharedPrefs.getBookMarkFavourates().then((result) {
+      setState(() {
+        bookMarkedFavourates = result;
+        print(bookMarkedFavourates.length);
+      });
+    });
+    //bookMarkedFavourates
+  }
+
   @override
   Widget build(BuildContext context) {
     bool _status = false;
@@ -54,7 +73,7 @@ class _FavouritesState extends State<Favourites> {
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, top: 8.0),
           child: StreamBuilder<List<Advert>>(
-            stream: FireBusinessApi.getFavouriteAdvert(widget.idUser, true),
+            stream: FireBusinessApi.getFavAdverts(bookMarkedFavourates),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -78,6 +97,51 @@ class _FavouritesState extends State<Favourites> {
                           itemCount: adverts.length,
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = adverts[index];
+                            List<String> _imageUrls = new List<String>();
+                            String _imageUrl = '';
+                            print('advert.status: ' + advert.status);
+
+                            advert.photosUrl.forEach((e) {
+                              _imageUrls.add(e['photoUrl']);
+                              _imageUrl = e['photoUrl'];
+                            });
+
+                            String description = '';
+                            Icon icons = Icon(
+                              Icons.deck,
+                              color: Colors.yellow[500],
+                              size: 45.0,
+                            );
+
+                            Color colors = MyColors.primaryColor;
+                            if (advert.status == 'pending') {
+                              description =
+                                  'Your post is under review, you will receive an email when it has been approved or declined';
+                              icons = Icon(
+                                Icons.hourglass_top_rounded,
+                                color: Colors.yellow[500],
+                                size: 45.0,
+                              );
+                              colors = Colors.yellow[500];
+                            } else if (advert.status == 'approved') {
+                              description =
+                                  'Your post has been Accepted and can be viewed online';
+                              icons = Icon(
+                                Icons.check,
+                                color: MyColors.primaryColor,
+                                size: 45.0,
+                              );
+                              colors = MyColors.primaryColor;
+                            } else {
+                              description =
+                                  'Your post has been declined, please check your email why it was declined';
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.red[500],
+                                size: 45.0,
+                              );
+                              colors = Colors.red[500];
+                            }
                             return GestureDetector(
                               onTap: () => Navigator.push(
                                 context,
@@ -114,7 +178,9 @@ class _FavouritesState extends State<Favourites> {
                                         CircleAvatar(
                                           radius: 35.0,
                                           backgroundImage: NetworkImage(
-                                            'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                                            _imageUrl.isNotEmpty
+                                                ? _imageUrl
+                                                : 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
                                           ),
                                         ),
                                         SizedBox(width: 10.0),
@@ -152,14 +218,14 @@ class _FavouritesState extends State<Favourites> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        String statusDescription = 'pending';
                                         if (advert.status == 'approved')
                                           _status = true;
 
                                         showDialog(
                                           context: context,
                                           builder: (context) => DialogAdReview(
-                                            title: statusDescription,
+                                            title: advert.status,
+                                            imageUrl: _imageUrl,
                                             descrition:
                                                 'You are doing a great job please keep it up you are the best',
                                           ),
@@ -168,48 +234,23 @@ class _FavouritesState extends State<Favourites> {
                                       child: Container(
                                         child: Column(
                                           children: <Widget>[
-                                            _status
-                                                ? Column(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.check,
-                                                        color: MyColors
-                                                            .primaryColor,
-                                                        size: 45.0,
-                                                      ),
-                                                      Text(
-                                                        'Approved',
-                                                        style: TextStyle(
-                                                          color: MyColors
-                                                              .primaryColor,
-                                                          fontSize: 13.5,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Column(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons
-                                                            .hourglass_top_rounded,
-                                                        color:
-                                                            Colors.yellow[500],
-                                                        size: 45.0,
-                                                      ),
-                                                      Text(
-                                                        'Pending',
-                                                        style: TextStyle(
-                                                          color:
-                                                              Colors.blueGrey,
-                                                          fontSize: 13.5,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
+                                            Column(
+                                              children: <Widget>[
+                                                icons,
+                                                Text(
+                                                  advert.status
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      advert.status
+                                                          .substring(1),
+                                                  style: TextStyle(
+                                                    color: colors,
+                                                    fontSize: 13.5,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ),

@@ -1,5 +1,5 @@
-import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/shared/sharedPreferences.dart';
 
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_info_widget.dart';
@@ -22,7 +22,29 @@ class PostCardWidget extends StatefulWidget {
 
 class _PostCardWidgetState extends State<PostCardWidget> {
   bool isLiked = false;
-  int _index = 0;
+  List<String> bookMarkedFavourates;
+
+  @override
+  void initState() {
+    super.initState();
+    getBookMarkFavourates();
+  }
+
+  void getBookMarkFavourates() async {
+    bookMarkedFavourates = List<String>();
+    SharedPrefs.getBookMarkFavourates().then((result) {
+      setState(() {
+        bookMarkedFavourates = result;
+        /*for (String data in result) {
+          if (data.contains(widget.advert.id)) {
+            isLiked = true;
+          }
+        }*/
+      });
+    });
+    //bookMarkedFavourates
+  }
+
   Map<String, bool> testLike = Map<String, bool>();
   @override
   Widget build(BuildContext context) {
@@ -39,10 +61,17 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         itemBuilder: (context, index) {
           Advert advert = widget.adverts[index];
           String _url = '';
+          isLiked = false;
           String _updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
 
-          if (advert.likes.isNotEmpty) {
+          for (String likedId in bookMarkedFavourates) {
+            if (likedId.contains(advert.id)) {
+              isLiked = true;
+            }
+          }
+
+          /*if (advert.likes.isNotEmpty) {
             for (int x = 0; x < advert.likes.length; x++) {
               if (advert.likes[x][advert.userId]) {
                 _index = x;
@@ -52,7 +81,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
           }
           if (advert.likes.isNotEmpty) {
             isLiked = advert.likes[_index ?? 1][advert.userId];
-          }
+          }*/
 
           if (advert.photosUrl != null) {
             advert.photosUrl.forEach((e) {
@@ -66,7 +95,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => PostInfo(
-                    isLiked: isLiked,
                     contactNumber: widget.contactNumber,
                     advert: advert,
                   ),
@@ -172,52 +200,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 ),
                                 SizedBox(width: 18.0),
                                 GestureDetector(
-                                  onTap: () {
-                                    bool _isLiked = false;
-                                    if (advert.likes.isNotEmpty) {
-                                      _isLiked =
-                                          advert.likes[_index][advert.userId];
-                                    }
-                                    if (_isLiked) {
-                                      FireBusinessApi.updateLikes(
-                                        idAd: advert.id,
-                                        idUser: advert.userId,
-                                        like: false,
-                                      );
-                                      FireBusinessApi.removeLikes(
-                                        idAd: advert.id,
-                                        idUser: advert.userId,
-                                        like: true,
-                                      );
-
-                                      setState(() {
-                                        isLiked = false;
-                                        if (advert.likes.isNotEmpty) {
-                                          advert.likes[_index][advert.userId] =
-                                              false;
-                                        }
-                                      });
-                                    } else {
-                                      FireBusinessApi.updateLikes(
-                                        idAd: advert.id,
-                                        idUser: advert.userId,
-                                        like: true,
-                                      );
-                                      FireBusinessApi.removeLikes(
-                                        idAd: advert.id,
-                                        idUser: advert.userId,
-                                        like: false,
-                                      );
-
-                                      setState(() {
-                                        isLiked = true;
-                                        if (advert.likes.isNotEmpty) {
-                                          advert.likes[_index][advert.userId] =
-                                              true;
-                                        }
-                                      });
-                                    }
-                                  },
+                                  onTap: null,
                                   child: Icon(
                                     isLiked
                                         ? Icons.favorite

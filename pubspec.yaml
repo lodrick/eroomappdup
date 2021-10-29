@@ -55,6 +55,7 @@ dependencies:
   google_fonts:
   email_validator:
   flutter_hooks:
+  hovering:
   
 
   #ETC

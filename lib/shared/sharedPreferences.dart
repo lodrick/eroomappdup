@@ -51,4 +51,14 @@ class SharedPrefs {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString('userShortDescription');
   }
+
+  static Future bookMarkFavourates(List<String> idPosts) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setStringList('idposts', idPosts);
+  }
+
+  static Future<List<String>> getBookMarkFavourates() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getStringList('idposts');
+  }
 }
