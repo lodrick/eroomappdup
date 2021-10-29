@@ -42,12 +42,10 @@ class _FavouritesState extends State<Favourites> {
         print(bookMarkedFavourates.length);
       });
     });
-    //bookMarkedFavourates
   }
 
   @override
   Widget build(BuildContext context) {
-    bool _status = false;
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
       appBar: AppBar(
@@ -106,7 +104,6 @@ class _FavouritesState extends State<Favourites> {
                               _imageUrl = e['photoUrl'];
                             });
 
-                            String description = '';
                             Icon icons = Icon(
                               Icons.deck,
                               color: Colors.yellow[500],
@@ -115,8 +112,6 @@ class _FavouritesState extends State<Favourites> {
 
                             Color colors = MyColors.primaryColor;
                             if (advert.status == 'pending') {
-                              description =
-                                  'Your post is under review, you will receive an email when it has been approved or declined';
                               icons = Icon(
                                 Icons.hourglass_top_rounded,
                                 color: Colors.yellow[500],
@@ -124,8 +119,6 @@ class _FavouritesState extends State<Favourites> {
                               );
                               colors = Colors.yellow[500];
                             } else if (advert.status == 'approved') {
-                              description =
-                                  'Your post has been Accepted and can be viewed online';
                               icons = Icon(
                                 Icons.check,
                                 color: MyColors.primaryColor,
@@ -133,8 +126,6 @@ class _FavouritesState extends State<Favourites> {
                               );
                               colors = MyColors.primaryColor;
                             } else {
-                              description =
-                                  'Your post has been declined, please check your email why it was declined';
                               Icon(
                                 Icons.cancel,
                                 color: Colors.red[500],
@@ -218,9 +209,6 @@ class _FavouritesState extends State<Favourites> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        if (advert.status == 'approved')
-                                          _status = true;
-
                                         showDialog(
                                           context: context,
                                           builder: (context) => DialogAdReview(
