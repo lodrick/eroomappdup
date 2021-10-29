@@ -54,7 +54,9 @@ class _PostAdEditState extends State<PostAdEdit> {
     super.initState();
     setState(() {
       print(widget.advert.status);
-      if (widget.advert != null) isSwitched = true;
+      if (widget.advert != null) {
+        if (widget.advert.status.contains('approved')) isSwitched = true;
+      }
 
       priceController.text = widget.advert.price.toString();
       titleController.text = widget.advert.title;
@@ -139,12 +141,17 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         ),
                                         Switch(
                                           value: isSwitched,
-                                          onChanged: (value) {
+                                          /*onChanged: (value) {
                                             setState(() {
                                               isSwitched = value;
                                               print(isSwitched);
                                             });
-                                          },
+                                          },*/
+                                          onChanged: null,
+                                          //inactiveThumbColor:
+                                          //    MyColors.primaryColor,
+                                          inactiveTrackColor:
+                                              Colors.tealAccent.withOpacity(.5),
                                           activeColor: MyColors.primaryColor,
                                           activeTrackColor:
                                               MyColors.primaryColorLight,
@@ -160,8 +167,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                             BorderRadius.circular(25.0),
                                       ),
                                       child: DropdownButton(
-                                        dropdownColor: Colors.blueGrey[100]
-                                            .withOpacity(0.6),
+                                        dropdownColor: Colors.blueGrey[100],
                                         underline: SizedBox(),
                                         hint: Text(
                                           'Seelect Room/Type',
@@ -227,62 +233,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                       ),
                                       controller: descriptionController,
                                     ),
-                                    /*Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 2.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber.shade50,
-                                        borderRadius: BorderRadius.circular(25.0),
-                                      ),
-                                      child: DropdownButton(
-                                        dropdownColor: MyColors.primaryColor,
-                                        underline: SizedBox(),
-                                        value: _province,
-                                        hint: Text(
-                                          'Select Country',
-                                          style: TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        isExpanded: true,
-                                        iconSize: 30.0,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        items: _provinces.map(
-                                          (val) {
-                                            return DropdownMenuItem<String>(
-                                              value: val,
-                                              child: Text(
-                                                val,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ).toList(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            _province = val;
-                                            print('Yeah: ' + _province);
-                                          });
-                                        },
-                                      ),
-                                    ),*/
-                                    /*CustomTextField(
-                                      hintTxt: 'Johannesburg',
-                                      labelTxt: 'City',
-                                      icon: Icon(
-                                        Icons.location_city,
-                                        color: MyColors.primaryColor,
-                                      ),
-                                      controller: cityController,
-                                    ),*/
                                     Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 20.0, vertical: 2.0),
@@ -292,7 +242,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                             BorderRadius.circular(25.0),
                                       ),
                                       child: DropdownButton(
-                                        dropdownColor: Colors.white,
+                                        dropdownColor: Colors.blueGrey[100],
                                         underline: SizedBox(),
                                         value: _province,
                                         hint: Text(
@@ -316,7 +266,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                                 val,
                                                 style: TextStyle(
                                                   color: Colors.blueGrey,
-                                                  fontSize: 16.0,
+                                                  fontSize: 18.0,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),
@@ -368,7 +318,8 @@ class _PostAdEditState extends State<PostAdEdit> {
                                               );
                                             }
                                             return DropdownButton(
-                                              dropdownColor: Colors.white,
+                                              dropdownColor:
+                                                  Colors.blueGrey[100],
                                               underline: SizedBox(),
                                               isExpanded: true,
                                               iconSize: 30.0,
@@ -377,7 +328,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                                 'Select City',
                                                 style: TextStyle(
                                                   color: Colors.blueGrey,
-                                                  fontSize: 16.0,
+                                                  fontSize: 18.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
