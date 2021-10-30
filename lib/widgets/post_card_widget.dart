@@ -102,9 +102,11 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               );
             },
             child: Container(
-              height: MediaQuery.of(context).size.height / 2.2,
+              height: MediaQuery.of(context).size.height / 2.1,
+              padding: EdgeInsets.only(bottom: 12.0),
               child: Card(
                 clipBehavior: Clip.antiAlias,
+                elevation: 7.0,
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -158,6 +160,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     Padding(
                       padding: const EdgeInsets.only(right: 16.0, left: 16.0),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
