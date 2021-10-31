@@ -1,6 +1,6 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/province_api.dart';
-import 'package:eRoomApp/models/province.dart';
+//import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
@@ -198,12 +198,55 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                             onChanged: (val) {
                               setState(() {
                                 _province = val;
+                                print('_province $_province');
                               });
                             },
                           ),
                         ),
                         SizedBox(height: 10.0),
                         Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 2.0),
+                          decoration: BoxDecoration(
+                            color: Colors.amber.shade50,
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          child: DropdownButton(
+                            dropdownColor: Colors.blueGrey[100],
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            iconSize: 30.0,
+                            value: _city,
+                            hint: Text(
+                              'Select City',
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            items: StaticData.cities.map((value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                this._city = val;
+                                print('City: $_city');
+                              });
+                            },
+                          ),
+                        ),
+                        /*Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.0, vertical: 2.0),
                           decoration: BoxDecoration(
@@ -272,7 +315,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               }
                             },
                           ),
-                        ),
+                        ),*/
                         SizedBox(
                           height: 4.0,
                         ),

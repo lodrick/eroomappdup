@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:eRoomApp/api/fire_business_api.dart';
-import 'package:eRoomApp/api/province_api.dart';
+//import 'package:eRoomApp/api/province_api.dart';
 import 'package:eRoomApp/models/advert.dart';
-import 'package:eRoomApp/models/province.dart';
+//import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
@@ -269,6 +269,49 @@ class _CreatePostState extends State<CreatePost> {
                       color: Colors.amber.shade50,
                       borderRadius: BorderRadius.circular(25.0),
                     ),
+                    child: DropdownButton(
+                      dropdownColor: Colors.blueGrey[100],
+                      underline: SizedBox(),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      value: _city,
+                      hint: Text(
+                        'Select City',
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      items: StaticData.cities.map((value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          this._city = val;
+                          print('City: $_city');
+                        });
+                      },
+                    ),
+                  ),
+
+                  /*Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade50,
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
                     child: FutureBuilder(
                       future: ProvinceApi.getProvinces(_province),
                       builder: (context, snapshot) {
@@ -330,7 +373,7 @@ class _CreatePostState extends State<CreatePost> {
                         }
                       },
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: 4.0),
                   CustomTextField(
                     hintTxt: 'Midrand',
