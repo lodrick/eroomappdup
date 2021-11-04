@@ -78,7 +78,7 @@ class FireBusinessApi {
       }
       //removeLikes(idAd: advertRuslt.id, idUser: advert.userId);
 
-      updateLikes(idAd: advertRuslt.id, idUser: advert.userId, like: false);
+      //updateLikes(idAd: advertRuslt.id, idUser: advert.userId, like: false);
     });
   }
 
@@ -139,7 +139,7 @@ class FireBusinessApi {
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
 
-  static Future<void> updateLikes(
+  /*static Future<void> updateLikes(
       {String idAd, String idUser, bool like}) async {
     FirebaseFirestore.instance
         .collection('adverts')
@@ -147,16 +147,18 @@ class FireBusinessApi {
         .update(Advert.updateLike(idUser: idUser, like: like))
         .then((result) {})
         .catchError((e) => print(e.toString()));
-  }
+  }*/
 
-  static Future<void> removeLikes(
+  /*static Future<void> removeLikes(
       {String idAd, String idUser, bool like}) async {
-    FirebaseFirestore.instance.collection('adverts').doc(idAd).update(
-        
-        Advert.removeLike(idUser: idUser, like: like)).then((result) {
+    FirebaseFirestore.instance
+        .collection('adverts')
+        .doc(idAd)
+        .update(Advert.removeLike(idUser: idUser, like: like))
+        .then((result) {
       print('Item removed');
     }).catchError((e) => print(e.toString()));
-  }
+  }*/
 
   static Stream<List<Advert>> getFavAdverts(List<String> advertsIds) async* {
     List<Advert> adverts = List<Advert>();

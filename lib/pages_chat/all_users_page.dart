@@ -22,7 +22,6 @@ class _AllUsersChatState extends State<AllUsersChat> {
   String contactNumber;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SharedPrefs.getContactNumber().then((res) {
       setState(() {

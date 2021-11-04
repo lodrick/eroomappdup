@@ -108,7 +108,20 @@ class DialogBoxPost extends StatelessWidget {
                       splashColor: Colors.blueGrey,
                       color: MyColors.primaryColor,
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => MainPostsPage(
+                              firstName: firstName,
+                              lastName: lastName,
+                              contactNumber: contactNumber,
+                              email: email,
+                              idUser: idUser,
+                            ),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => MainPostsPage(
@@ -119,7 +132,7 @@ class DialogBoxPost extends StatelessWidget {
                               idUser: idUser,
                             ),
                           ),
-                        );
+                        );*/
                       },
                       child: Text(
                         'Done'.toUpperCase(),

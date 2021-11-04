@@ -27,7 +27,6 @@ class ChatsPage extends StatefulWidget {
 class _ChatsPageState extends State<ChatsPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -47,7 +46,6 @@ class _ChatsPageState extends State<ChatsPage> {
             ),
           ),
           actions: <Widget>[
-            
             Container(
               child: PopupMenuButton(
                 elevation: 0.0,

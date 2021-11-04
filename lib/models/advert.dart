@@ -132,15 +132,4 @@ class Advert {
       ]),
     };
   }
-
-  static Map<String, dynamic> updateLike(
-      {@required String idUser, @required bool like}) {
-    return {
-      'likes': FieldValue.arrayUnion([
-        {
-          idUser: like,
-        }
-      ]),
-    };
-  }
 }

@@ -3,9 +3,10 @@ import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 //import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
-import 'package:eRoomApp/pages/main_posts_page.dart';
+//import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
+import 'package:eRoomApp/widgets/dialog_box_post_confirm.dart';
 import 'package:eRoomApp/widgets/post_ad_details_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,6 +37,8 @@ class _PostAdEditState extends State<PostAdEdit> {
   String _province;
   String _city;
   String _roomType;
+  String _status, _textStatus;
+  Color _color;
   //List<Province> _cities = List<Province>();
 
   TextEditingController priceController = TextEditingController();
@@ -45,8 +48,8 @@ class _PostAdEditState extends State<PostAdEdit> {
   TextEditingController suburbController = TextEditingController();
 
   List<String> _roomTypesCottage = [
-    'Select Room/Cattage',
-    'Cattage',
+    'Select Room/Cottage',
+    'Cottage',
     'Room',
   ];
 
@@ -56,7 +59,18 @@ class _PostAdEditState extends State<PostAdEdit> {
     setState(() {
       print(widget.advert.status);
       if (widget.advert != null) {
-        if (widget.advert.status.contains('approved')) isSwitched = true;
+        //if (widget.advert.status.contains('approved')) isSwitched = true;
+
+        if (widget.advert.status.contains('approved')) {
+          _textStatus = 'Post Active';
+          _color = Color(0xFF26ED41);
+        } else if (widget.advert.status.contains('pending')) {
+          _textStatus = 'Post Pending';
+          _color = Colors.amberAccent;
+        } else {
+          _textStatus = 'Post Active';
+          _color = Colors.redAccent.shade200;
+        }
       }
 
       priceController.text = widget.advert.price.toString();
@@ -117,15 +131,8 @@ class _PostAdEditState extends State<PostAdEdit> {
                               top: 0.0, left: 0.0, right: 0.0),
                           child: Column(
                             children: <Widget>[
-                              isSwitched == true
-                                  ? PostAdDetailStatus(
-                                      color: Color(0xFF26ED41),
-                                      textStatus: 'post is approved',
-                                    )
-                                  : PostAdDetailStatus(
-                                      color: Colors.amber,
-                                      textStatus: 'post is pending',
-                                    ),
+                              PostAdDetailStatus(
+                                  color: _color, textStatus: _textStatus),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 16.0, right: 16.0),
@@ -142,13 +149,23 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         ),
                                         Switch(
                                           value: isSwitched,
-                                          /*onChanged: (value) {
+                                          onChanged: (value) {
                                             setState(() {
                                               isSwitched = value;
                                               print(isSwitched);
+                                              if (isSwitched) {
+                                                _status = 'pending';
+                                                _textStatus = 'Activating Post';
+                                                _color = Color(0xFF26ED41);
+                                              } else {
+                                                _status = 'decined';
+                                                _textStatus = 'Closing Post';
+                                                _color =
+                                                    Colors.redAccent.shade200;
+                                              }
                                             });
-                                          },*/
-                                          onChanged: null,
+                                          },
+
                                           //inactiveThumbColor:
                                           //    MyColors.primaryColor,
                                           inactiveTrackColor:
@@ -171,7 +188,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         dropdownColor: Colors.blueGrey[100],
                                         underline: SizedBox(),
                                         hint: Text(
-                                          'Seelect Room/Type',
+                                          'Select Room/Type',
                                           style: TextStyle(
                                             color: Colors.blueGrey,
                                             fontSize: 16.0,
@@ -438,11 +455,24 @@ class _PostAdEditState extends State<PostAdEdit> {
             province: _province,
             city: cityController.text.toString(),
             suburb: suburbController.text.toString(),
-            status: 'pending',
+            status: _status ?? 'pending',
           );
 
           FireBusinessApi.updateAdvert(advert, widget.advert.id).then((resut) {
-            Navigator.of(context).pushAndRemoveUntil(
+            showDialog(
+              context: context,
+              builder: (context) => DialogBoxPost(
+                title: advert.title,
+                descrition:
+                    'Your post is under review, you will receive an email when it has been declined or approved',
+                firstName: widget.firstName,
+                lastName: widget.lastName,
+                email: widget.email,
+                contactNumber: widget.contactNumber,
+                idUser: widget.idUser,
+              ),
+            );
+            /*Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (context) => MainPostsPage(
                   firstName: widget.firstName,
@@ -453,16 +483,16 @@ class _PostAdEditState extends State<PostAdEdit> {
                 ),
               ),
               (Route<dynamic> route) => false,
-            );
+            );*/
             Fluttertoast.showToast(
               msg: 'Post updated.',
-              backgroundColor: MyColors.primaryColor,
+              backgroundColor: Colors.black12.withOpacity(.7),
               textColor: Colors.white,
             );
           }).catchError(
             (e) => Fluttertoast.showToast(
               msg: 'Unable to update the post.',
-              backgroundColor: MyColors.primaryColor,
+              backgroundColor: Colors.black12.withOpacity(.7),
               textColor: Colors.white,
             ),
           );
