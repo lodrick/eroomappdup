@@ -1,3 +1,4 @@
+import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/models/advert.dart';
@@ -29,9 +30,10 @@ class PostInfo extends StatefulWidget {
 class _PostInfoState extends State<PostInfo> {
   //String authToken;
   bool isLiked = false;
+  int likeCount = 0;
   String currentUserId;
   List<String> imageUrls;
-  List<String> bookMarkedFavourates;
+  List<String> bookMarkedFavourates = [];
   /*final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -52,8 +54,14 @@ class _PostInfoState extends State<PostInfo> {
     });
   }
 
+  void likeCounts()async {
+    if(widget.advert.likes != null) {
+      likeCount = widget.advert.likes;
+    }
+  }
+
   void addPostFramecallback() {
-    imageUrls = List<String>();
+    imageUrls = [];
 
     widget.advert.photosUrl.forEach((e) {
       imageUrls.add(e['photoUrl']);
@@ -71,7 +79,7 @@ class _PostInfoState extends State<PostInfo> {
   }
 
   void getBookMarkFavourates() async {
-    bookMarkedFavourates = List<String>();
+    bookMarkedFavourates = [];
     SharedPrefs.getBookMarkFavourates().then((result) {
       setState(() {
         bookMarkedFavourates = result;
@@ -105,6 +113,7 @@ class _PostInfoState extends State<PostInfo> {
       child: Scaffold(
         backgroundColor: MyColors.primaryColor,
         appBar: AppBar(
+          backgroundColor: MyColors.primaryColor,
           iconTheme: IconThemeData(color: Colors.white70),
           centerTitle: false,
           title: Text(
@@ -131,12 +140,25 @@ class _PostInfoState extends State<PostInfo> {
                   String msg = '';
                   setState(() {
                     if (isLiked) {
+                      if(bookMarkedFavourates == null){
+                        bookMarkedFavourates = [];
+                      }
                       bookMarkedFavourates.remove(widget.advert.id);
                       isLiked = false;
+                      if(likeCount != 0){
+                        likeCount -=1;
+                      }
+
+                      FireBusinessApi.updateLikes(widget.advert.id, likeCount);
                       SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
                       msg = 'Post removed from your favorite bookmark...';
                     } else {
+                      if(bookMarkedFavourates == null){
+                        bookMarkedFavourates = [];
+                      }
                       isLiked = true;
+                      likeCount +=1;
+                      FireBusinessApi.updateLikes(widget.advert.id, likeCount);
                       bookMarkedFavourates.add(widget.advert.id);
                       SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
                       msg = 'Post added to your favorite bookmark...';
@@ -144,7 +166,7 @@ class _PostInfoState extends State<PostInfo> {
                   });
 
                   Fluttertoast.showToast(
-                    msg: msg,
+                    msg: msg + ' ${likeCount}',
                     fontSize: 18.0,
                     backgroundColor: Colors.black87.withOpacity(.7),
                     textColor: Colors.white,

@@ -107,6 +107,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                 appBar: AppBar(
                   iconTheme: IconThemeData(color: Colors.white70),
                   centerTitle: false,
+                  backgroundColor: MyColors.primaryColor,
                   title: Text(
                     'eRoom',
                     style: TextStyle(

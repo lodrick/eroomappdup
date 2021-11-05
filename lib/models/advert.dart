@@ -19,7 +19,7 @@ class Advert {
   final createdAt;
   final updatedAt;
   final String status;
-  final dynamic likes;
+  final int likes;
   final dynamic photosUrl;
 
   Advert({
@@ -54,7 +54,7 @@ class Advert {
     String createdAt,
     String updatedAt,
     String status,
-    dynamic likes,
+    int likes,
     dynamic photosUrl,
   }) =>
       Advert(
@@ -122,14 +122,10 @@ class Advert {
     };
   }
 
-  static Map<String, dynamic> removeLike(
-      {@required String idUser, @required bool like}) {
+  static Map<String, dynamic> updateLikes(
+      {@required String adId, @required int like}) {
     return {
-      'likes': FieldValue.arrayRemove([
-        {
-          idUser: like,
-        }
-      ]),
+      'likes': like,
     };
   }
 }

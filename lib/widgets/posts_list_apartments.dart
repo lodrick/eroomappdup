@@ -87,7 +87,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                   } else {
                     var adverts = snapshot.data;
                     String _imageUrl = '';
-                    List<String> _imageUrls = new List<String>();
+                    List<String> _imageUrls = [];
                     if (adverts.isEmpty) {
                       return buildText('No Adverts Found');
                     } else {

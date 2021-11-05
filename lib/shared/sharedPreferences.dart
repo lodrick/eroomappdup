@@ -17,7 +17,6 @@ class SharedPrefs {
   static Future<String> getContactNumber() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     contactNumber = (preferences.getString('contactNumber') ?? '0');
-    print('contactNumber: ' + contactNumber);
     return contactNumber;
   }
 

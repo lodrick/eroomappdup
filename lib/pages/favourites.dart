@@ -35,7 +35,7 @@ class _FavouritesState extends State<Favourites> {
   }
 
   void getBookMarkFavourates() async {
-    bookMarkedFavourates = List<String>();
+    bookMarkedFavourates = [];
     SharedPrefs.getBookMarkFavourates().then((result) {
       setState(() {
         bookMarkedFavourates = result;
@@ -95,7 +95,7 @@ class _FavouritesState extends State<Favourites> {
                           itemCount: adverts.length,
                           itemBuilder: (BuildContext context, int index) {
                             final Advert advert = adverts[index];
-                            List<String> _imageUrls = new List<String>();
+                            List<String> _imageUrls = [];
                             String _imageUrl = '';
                             print('advert.status: ' + advert.status);
 

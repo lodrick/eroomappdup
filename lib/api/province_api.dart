@@ -5,7 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class ProvinceApi {
   static Future<List<Province>> getProvinces(String provinceName) async {
-    List<Province> countries = List<Province>();
+    List<Province> countries = [];
     final data = await getFileData('assets/res/za.json');
     final parsedJson = jsonDecode(data);
 

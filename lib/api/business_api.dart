@@ -115,8 +115,8 @@ class BusinessApi {
   }
 
   static Stream<List<Advert>> requestAdverts(String authToken) async* {
-    List<Advert> adverts = new List<Advert>();
-    List<AdvertImage> advertsTpUrl = new List<AdvertImage>();
+    List<Advert> adverts = [];
+    List<AdvertImage> advertsTpUrl = [];
     var response = await http.get(Uri.encodeFull(url + 'adverts'), headers: {
       'Accept': 'application/json',
       'Authorization': authToken,
@@ -140,7 +140,7 @@ class BusinessApi {
       }
       //advert.advertImages = advertsTpUrl;
       adverts.add(advert);
-      advertsTpUrl = new List<AdvertImage>();
+      advertsTpUrl = [];
     }
 
     yield adverts;
@@ -185,7 +185,7 @@ class BusinessApi {
 
   static Future<List<dynamic>> uploadAdvert(
       List<File> imageFiles, Advert advert, String authToken) async {
-    List<MultipartFile> newImageList = new List<MultipartFile>();
+    List<MultipartFile> newImageList = [];
 
     for (File file in imageFiles) {
       final mimeTypeData =
@@ -250,8 +250,8 @@ class BusinessApi {
   }
 
   static Stream<List<Advert>> getFavouriteAdvert(userId, authToken) async* {
-    List<Advert> adverts = new List<Advert>();
-    List<AdvertImage> advertsTpUrl = new List<AdvertImage>();
+    List<Advert> adverts = [];
+    List<AdvertImage> advertsTpUrl = [];
     var response = await http
         .get(Uri.encodeFull(url + '/users/' + userId + '/adverts'), headers: {
       'Accept': 'application/json',

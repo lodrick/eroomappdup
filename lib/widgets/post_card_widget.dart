@@ -31,7 +31,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   }
 
   void getBookMarkFavourates() async {
-    bookMarkedFavourates = List<String>();
+    bookMarkedFavourates = [];
     SharedPrefs.getBookMarkFavourates().then((result) {
       setState(() {
         bookMarkedFavourates = result;
@@ -65,23 +65,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
           String _updatedAt = DateFormat('dd-MM-yyy')
               .format(DateTime.parse(advert.updatedAt.toDate().toString()));
 
-          for (String likedId in bookMarkedFavourates) {
-            if (likedId.contains(advert.id)) {
-              isLiked = true;
-            }
-          }
-
-          /*if (advert.likes.isNotEmpty) {
-            for (int x = 0; x < advert.likes.length; x++) {
-              if (advert.likes[x][advert.userId]) {
-                _index = x;
-                break;
+          if (bookMarkedFavourates != null) {
+            for (String likedId in bookMarkedFavourates) {
+              if (likedId.contains(advert.id)) {
+                isLiked = true;
               }
             }
           }
-          if (advert.likes.isNotEmpty) {
-            isLiked = advert.likes[_index ?? 1][advert.userId];
-          }*/
 
           if (advert.photosUrl != null) {
             advert.photosUrl.forEach((e) {
@@ -212,6 +202,17 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                     color: isLiked
                                         ? Colors.pink[400]
                                         : Colors.black54,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4.0,
+                                ),
+                                Text(
+                                  '${advert.likes}',
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ],

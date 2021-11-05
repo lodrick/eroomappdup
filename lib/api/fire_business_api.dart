@@ -60,9 +60,9 @@ class FireBusinessApi {
       'createdAt': DateTime.now(),
       'updatedAt': DateTime.now(),
       'status': advert.status,
-      'likes': FieldValue.arrayUnion([])
+      'likes': 0
     }).then((advertRuslt) {
-      List<String> urlImages = List<String>();
+      List<String> urlImages = [];
 
       for (File file in files) {
         getAdvertImageUrl(file: file, userId: advert.userId).then((path) {
@@ -138,6 +138,15 @@ class FireBusinessApi {
           .where('advertId', isEqualTo: advertId)
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
+  
+  static Future<void> updateLikes(String adId, int like) async {
+    FirebaseFirestore.instance
+        .collection('adverts')
+        .doc(adId)
+        .update(Advert.updateLikes(adId: adId, like: like))
+        .then((value) => print('you like this post'))
+        .catchError((onError) =>print(onError.toString()));
+  }
 
   /*static Future<void> updateLikes(
       {String idAd, String idUser, bool like}) async {
@@ -161,7 +170,7 @@ class FireBusinessApi {
   }*/
 
   static Stream<List<Advert>> getFavAdverts(List<String> advertsIds) async* {
-    List<Advert> adverts = List<Advert>();
+    List<Advert> adverts = [];
     QueryDocumentSnapshot documentSnapshot;
 
     for (String advertsId in advertsIds) {

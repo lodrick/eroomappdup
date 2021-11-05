@@ -68,7 +68,7 @@ class _CreatePostState extends State<CreatePost> {
     String error = 'No Error Detected';
     final _imagePicker = ImagePicker();
     if (imageFiles == null) {
-      imageFiles = List<File>();
+      imageFiles = [];
     }
 
     PickedFile image;
@@ -101,7 +101,7 @@ class _CreatePostState extends State<CreatePost> {
   void filesPicker() async {
     Navigator.of(context).pop();
     if (imageFiles == null) {
-      imageFiles = List<File>();
+      imageFiles = [];
     }
     FilePickerResult result =
         await FilePicker.platform.pickFiles(allowMultiple: true);

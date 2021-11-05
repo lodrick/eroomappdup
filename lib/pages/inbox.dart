@@ -54,7 +54,7 @@ class Inbox extends StatelessWidget {
                     if (adverts.isEmpty) {
                       return buildText('No Adverts Found');
                     } else {
-                      List<Advert> myAdverts = List<Advert>();
+                      List<Advert> myAdverts = [];
                       for (var advert in adverts) {
                         if (advert.userId == idUser) {
                           myAdverts.add(advert);
