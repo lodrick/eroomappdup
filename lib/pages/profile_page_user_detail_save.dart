@@ -2,9 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:eRoomApp/api/firebase_api.dart';
+import 'package:eRoomApp/commons/custom_formfield.dart';
+import 'package:eRoomApp/commons/my_info.dart';
+import 'package:eRoomApp/commons/opague_image.dart';
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/stores/login_store.dart';
+import 'package:eRoomApp/text_style.dart';
 import 'package:eRoomApp/widgets/loader_hud.dart';
 import 'package:eRoomApp/widgets/popover.dart';
 import 'package:firebase_auth/firebase_auth.dart';
