@@ -51,6 +51,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         iconTheme: IconThemeData(color: Colors.white70),
         title: Text(
           'My Post',
@@ -137,7 +138,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                             } else {
                               description =
                                   'Your post has been declined, please check your email why it was declined';
-                              Icon(
+                              icons = Icon(
                                 Icons.cancel,
                                 color: Colors.red[500],
                                 size: 45.0,

@@ -4,6 +4,7 @@ import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/pages_chat/chat_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -54,8 +55,8 @@ class _PostInfoState extends State<PostInfo> {
     });
   }
 
-  void likeCounts()async {
-    if(widget.advert.likes != null) {
+  void likeCounts() async {
+    if (widget.advert.likes != null) {
       likeCount = widget.advert.likes;
     }
   }
@@ -140,24 +141,24 @@ class _PostInfoState extends State<PostInfo> {
                   String msg = '';
                   setState(() {
                     if (isLiked) {
-                      if(bookMarkedFavourates == null){
+                      if (bookMarkedFavourates == null) {
                         bookMarkedFavourates = [];
                       }
                       bookMarkedFavourates.remove(widget.advert.id);
                       isLiked = false;
-                      if(likeCount != 0){
-                        likeCount -=1;
+                      if (likeCount != 0) {
+                        likeCount -= 1;
                       }
 
                       FireBusinessApi.updateLikes(widget.advert.id, likeCount);
                       SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
                       msg = 'Post removed from your favorite bookmark...';
                     } else {
-                      if(bookMarkedFavourates == null){
+                      if (bookMarkedFavourates == null) {
                         bookMarkedFavourates = [];
                       }
                       isLiked = true;
-                      likeCount +=1;
+                      likeCount += 1;
                       FireBusinessApi.updateLikes(widget.advert.id, likeCount);
                       bookMarkedFavourates.add(widget.advert.id);
                       SharedPrefs.bookMarkFavourates(bookMarkedFavourates);
@@ -433,10 +434,10 @@ class _PostInfoState extends State<PostInfo> {
 
   Widget titleSection({String title, String description, String updatedAt}) =>
       Container(
-        padding: const EdgeInsets.only(bottom: 3.5),
+        padding: const EdgeInsets.only(bottom: 3.5, right: 10),
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: Colors.grey.shade800, width: 2.0),
+            bottom: BorderSide(color: Colors.grey.shade800, width: 2.0.w),
           ),
         ),
         child: Row(
@@ -451,7 +452,7 @@ class _PostInfoState extends State<PostInfo> {
                       title ?? '',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
+                        fontSize: 20.0.sp,
                       ),
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
@@ -461,6 +462,7 @@ class _PostInfoState extends State<PostInfo> {
                     description ?? '',
                     style: TextStyle(
                       color: Colors.grey[500],
+                      fontSize: 16.sp,
                     ),
                     softWrap: true,
                     overflow: TextOverflow.fade,
@@ -472,7 +474,17 @@ class _PostInfoState extends State<PostInfo> {
               Icons.access_time_sharp,
               color: Colors.red[500],
             ),
-            Text(updatedAt),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Text(
+                updatedAt,
+                style: TextStyle(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w400,
+                  color: MyColors.primaryTextColor,
+                ),
+              ),
+            ),
           ],
         ),
       );

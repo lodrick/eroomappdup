@@ -1,5 +1,6 @@
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_info_widget.dart';
@@ -92,22 +93,22 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               );
             },
             child: Container(
-              height: MediaQuery.of(context).size.height / 2.1,
-              padding: EdgeInsets.only(bottom: 12.0),
+              height: MediaQuery.of(context).size.height.h / 2.1,
+              padding: EdgeInsets.only(bottom: 10.0),
               child: Card(
                 clipBehavior: Clip.antiAlias,
-                elevation: 7.0,
+                elevation: 4.0,
                 child: Column(
                   children: <Widget>[
                     Container(
                       alignment: Alignment.center,
                       child: Container(
-                        width: 400.0,
-                        height: 200.0,
+                        width: 400.w,
+                        height: 200.h,
                         decoration: BoxDecoration(
                           borderRadius: new BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
+                            topLeft: Radius.circular(10.r),
+                            topRight: Radius.circular(10.r),
                           ),
                           image: DecorationImage(
                             image: NetworkImage(_url != null || _url.isNotEmpty
@@ -122,33 +123,33 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       leading: Icon(
                         Icons.house,
                         color: MyColors.primaryColor,
-                        size: 30.0,
+                        size: 30.sp,
                       ),
                       title: Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width.w * 0.45,
                         child: Text(
                           advert.title,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 19.0,
+                            fontSize: 20.sp,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       subtitle: Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width.w * 0.45,
                         child: Text(
                           advert.decription,
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
-                            fontSize: 16.0,
+                            fontSize: 18.sp,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+                      padding: EdgeInsets.only(right: 16.0, left: 16.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -192,7 +193,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                     color: MyColors.primaryColor,
                                   ),
                                 ),
-                                SizedBox(width: 18.0),
+                                SizedBox(width: 18.w),
                                 GestureDetector(
                                   onTap: null,
                                   child: Icon(
@@ -205,13 +206,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 4.0,
+                                  width: 4.0.w,
                                 ),
                                 Text(
                                   '${advert.likes}',
                                   style: TextStyle(
                                     color: Colors.blueGrey,
-                                    fontSize: 18.0,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),

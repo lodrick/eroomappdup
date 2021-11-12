@@ -7,7 +7,6 @@ import 'package:eRoomApp/models/advert.dart';
 //import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/theme.dart';
-import 'package:eRoomApp/widgets/custom_dropdown.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:eRoomApp/widgets/dialog_box_post_confirm.dart';
 import 'package:eRoomApp/widgets/popover.dart';

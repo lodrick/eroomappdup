@@ -1,8 +1,8 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/constants.dart';
-
 import 'package:eRoomApp/models/user_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:eRoomApp/pages/contact_us.dart';
 import 'package:eRoomApp/pages/create_post.dart';
@@ -111,7 +111,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                   title: Text(
                     'eRoom',
                     style: TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white70,
                     ),
@@ -133,7 +133,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                       child: PopupMenuButton(
                         elevation: 0.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0)),
+                            borderRadius: BorderRadius.circular(16.r)),
                         onSelected: (value) {
                           switch (value) {
                             case IconsMenu.PROFILE:
@@ -171,7 +171,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       ListTile(
                                         contentPadding: EdgeInsets.zero,
                                         leading: Icon(item.iconData,
-                                            size: 25.0,
+                                            size: 25.sp,
                                             color: MyColors.sidebar),
                                         title: Text(
                                           item.text,
@@ -200,8 +200,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                     decoration: BoxDecoration(
                       color: MyColors.primaryColor,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
+                        topLeft: Radius.circular(30.r),
+                        topRight: Radius.circular(30.r),
                       ),
                     ),
                     child: _widgetOptions.elementAt(_bottomBarIndex),
@@ -246,11 +246,11 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                     child: Column(
                                       children: <Widget>[
                                         Container(
-                                          height: 105.0,
-                                          width: 105.0,
+                                          height: 105.h,
+                                          width: 105.h,
                                           decoration: new BoxDecoration(
                                             borderRadius: new BorderRadius.all(
-                                              Radius.circular(60.0),
+                                              Radius.circular(60.r),
                                             ),
                                             image: new DecorationImage(
                                               image: new AssetImage(
@@ -261,19 +261,19 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                           child: GestureDetector(
                                             onTap: _navigatorToprofile,
                                             child: CircleAvatar(
-                                              radius: 30.0,
+                                              radius: 30.r,
                                               backgroundImage: NetworkImage(
                                                   currentImageUrl ??
                                                       'assets/img/black-house-01.jpeg'),
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 10.0),
+                                        SizedBox(height: 10.h),
                                         Text(
                                           names ?? 'John Doe',
                                           style: TextStyle(
                                             color: Colors.white70,
-                                            fontSize: 18.0,
+                                            fontSize: 18.sp,
                                             fontWeight: FontWeight.w300,
                                           ),
                                         ),
@@ -281,7 +281,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                           email ?? 'johndoe@gmail.com',
                                           style: TextStyle(
                                             color: Colors.white60,
-                                            fontSize: 14.0,
+                                            fontSize: 14.sp,
                                             fontWeight: FontWeight.w300,
                                           ),
                                         ),
@@ -300,7 +300,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'Profile',
                                         iconData: Icons.person,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: ProfilePageUserDetailSave(
                                           imageUrl: currentImageUrl,
@@ -310,7 +310,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'Notifications',
                                         iconData: Icons.notifications,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: Inbox(
                                           idUser: widget.idUser,
@@ -319,7 +319,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'My Post',
                                         iconData: Icons.ad_units,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: PostsListApartments(
                                           contactNumber: widget.contactNumber,
@@ -332,7 +332,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'eRoom Chats',
                                         iconData: Icons.chat,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: ChatsPage(
                                           contactNumber: contactNumber,
@@ -343,7 +343,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'Favourites',
                                         iconData: Icons.favorite,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: Favourites(
                                           idUser: widget.idUser,
@@ -356,12 +356,12 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       MyButton(
                                         text: 'Contact Us',
                                         iconData: Icons.contact_phone,
-                                        textSize: 16.0,
+                                        textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: ContactUs(),
                                       ),
                                       Divider(
-                                        thickness: 1.0,
+                                        thickness: 1.sp,
                                         color: MyColors.primaryColor,
                                       ),
                                       FlatButton(
@@ -374,7 +374,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                               style: TextStyle(
                                                 color:
                                                     MyColors.primaryColorLight,
-                                                fontSize: 16.0,
+                                                fontSize: 16.sp,
                                                 shadows: [
                                                   Shadow(
                                                       color: Colors.black
@@ -473,6 +473,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
           stops: [0.0, 0.8],
           tileMode: TileMode.clamp,
         ),
+        color: Colors.white,
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

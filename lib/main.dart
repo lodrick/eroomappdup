@@ -23,20 +23,22 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: () => MultiProvider(
-        providers: [
-          Provider<LoginStore>(
-            create: (_) => LoginStore(),
-          )
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: CustomTheme.lightTheme,
-          home: SplashPage(),
+    return LayoutBuilder(builder: (context, constraints) {
+      return ScreenUtilInit(
+        builder: () => MultiProvider(
+          providers: [
+            Provider<LoginStore>(
+              create: (_) => LoginStore(),
+            )
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: CustomTheme.lightTheme,
+            home: SplashPage(),
+          ),
         ),
-      ),
-      designSize: const Size(360, 640),
-    );
+        designSize: Size(constraints.maxWidth, constraints.maxHeight),
+      );
+    });
   }
 }

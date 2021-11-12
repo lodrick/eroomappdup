@@ -30,6 +30,7 @@ class ContactUs extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         iconTheme: IconThemeData(color: Colors.white70),
         title: Text(
           'Contact Us',

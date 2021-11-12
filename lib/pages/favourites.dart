@@ -49,6 +49,7 @@ class _FavouritesState extends State<Favourites> {
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         iconTheme: IconThemeData(color: Colors.white70),
         title: Text(
           'Favourite Post',

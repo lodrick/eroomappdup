@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewMessageWidget extends StatefulWidget {
   final String idUser;
@@ -95,7 +96,7 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.photo),
-              iconSize: 25.0,
+              iconSize: 25.sp,
               color: MyColors.primaryColor,
               onPressed: getImage,
             ),
