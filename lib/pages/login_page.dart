@@ -1,4 +1,5 @@
 import 'package:eRoomApp/shared/sharedPreferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -16,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController phoneController = TextEditingController();
   String phoneNumber = '';
+  bool _checkBoxValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               body: SafeArea(
                 child: SingleChildScrollView(
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
+                    height: MediaQuery.of(context).size.height.h,
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -38,34 +40,34 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 20),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 20.h),
                                 child: Stack(
                                   children: <Widget>[
                                     Center(
                                       child: Container(
-                                        height: 240,
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 500,
+                                        height: 240.h,
+                                        constraints: BoxConstraints(
+                                          maxWidth: 500.w,
                                         ),
                                         margin: const EdgeInsets.only(
                                           top: 100,
                                         ),
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
                                           //color: Color(0xFFE1E0F5),
                                           borderRadius: BorderRadius.all(
-                                            Radius.circular(30),
+                                            Radius.circular(30.r),
                                           ),
                                         ),
                                       ),
                                     ),
                                     Center(
                                       child: Container(
-                                        constraints: const BoxConstraints(
-                                          maxHeight: 340,
+                                        constraints: BoxConstraints(
+                                          maxHeight: 300.h,
                                         ),
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 8.0, vertical: 5.0),
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 8.0.w, vertical: 5.0.h),
                                         child: Image.asset(
                                             'assets/img/eroom_logo.jpeg'),
                                         alignment: Alignment.center,
@@ -74,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
-                              Container(
+                              /*Container(
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 10,
                                 ),
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                              )
+                              )*/
                             ],
                           ),
                         ),
@@ -95,11 +97,11 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 500,
+                                constraints: BoxConstraints(
+                                  maxWidth: 400.w,
                                 ),
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 10,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 10.w,
                                 ),
                                 child: RichText(
                                   textAlign: TextAlign.center,
@@ -127,23 +129,23 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               Container(
-                                height: 40,
-                                constraints: const BoxConstraints(
-                                  maxWidth: 500,
+                                height: 40.h,
+                                constraints: BoxConstraints(
+                                  maxWidth: 400.w,
                                 ),
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 10,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
                                 ),
                                 child: CupertinoTextField(
                                   enableInteractiveSelection: true,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
                                   ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(4),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(4.r),
                                     ),
                                   ),
                                   controller: phoneController,
@@ -155,73 +157,79 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 10,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
                                 ),
-                                constraints: const BoxConstraints(
-                                  maxWidth: 500,
+                                constraints: BoxConstraints(
+                                  maxWidth: 500.w,
                                 ),
                                 child: RaisedButton(
-                                  onPressed: () {
-                                    if (phoneController.text.isNotEmpty) {
-                                      if (phoneController.text
-                                          .startsWith('+27')) {
-                                        phoneNumber =
-                                            phoneController.text.toString();
-                                      } else if (phoneController.text
-                                          .startsWith('0')) {
-                                        phoneNumber = phoneController.text
-                                            .replaceFirst('0', '+27');
-                                        print(phoneNumber);
-                                      } else {
-                                        loginStore.loginScaffoldKey.currentState
-                                            .showSnackBar(
-                                          SnackBar(
-                                            behavior: SnackBarBehavior.floating,
-                                            backgroundColor:
-                                                Colors.black.withOpacity(0.8),
-                                            content: Text(
-                                              'Please enter a correct phone number formart',
-                                              style: TextStyle(
-                                                color: Colors.white
-                                                    .withOpacity(0.7),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
+                                  onPressed: _checkBoxValue
+                                      ? () {
+                                          if (phoneController.text.isNotEmpty) {
+                                            if (phoneController.text
+                                                .startsWith('+27')) {
+                                              phoneNumber = phoneController.text
+                                                  .toString();
+                                            } else if (phoneController.text
+                                                .startsWith('0')) {
+                                              phoneNumber = phoneController.text
+                                                  .replaceFirst('0', '+27');
+                                              print(phoneNumber);
+                                            } else {
+                                              loginStore
+                                                  .loginScaffoldKey.currentState
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  backgroundColor: Colors.black
+                                                      .withOpacity(0.8),
+                                                  content: Text(
+                                                    'Please enter a correct phone number formart',
+                                                    style: TextStyle(
+                                                      color: Colors.white
+                                                          .withOpacity(0.7),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
 
-                                      loginStore.getCodeWithPhoneNumber(
-                                          context, phoneNumber);
-                                      SharedPrefs.saveContactNumber(
-                                          phoneNumber);
-                                    } else {
-                                      loginStore.loginScaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor:
-                                            Colors.black.withOpacity(0.8),
-                                        content: Text(
-                                          'Please enter a phone number',
-                                          style: TextStyle(
-                                            color:
-                                                Colors.white.withOpacity(0.7),
-                                          ),
-                                        ),
-                                      ));
-                                    }
-                                  },
+                                            loginStore.getCodeWithPhoneNumber(
+                                                context, phoneNumber);
+                                            SharedPrefs.saveContactNumber(
+                                                phoneNumber);
+                                          } else {
+                                            loginStore
+                                                .loginScaffoldKey.currentState
+                                                .showSnackBar(SnackBar(
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.black.withOpacity(0.8),
+                                              content: Text(
+                                                'Please enter a phone number',
+                                                style: TextStyle(
+                                                  color: Colors.white
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ));
+                                          }
+                                        }
+                                      : null,
                                   color: MyColors.primaryColor,
-                                  shape: const RoundedRectangleBorder(
+                                  shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
-                                      Radius.circular(14),
+                                      Radius.circular(14.r),
                                     ),
                                   ),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                      horizontal: 8,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 8.h,
+                                      horizontal: 8.w,
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -234,23 +242,58 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         ),
                                         Container(
-                                          padding: const EdgeInsets.all(8),
+                                          padding: EdgeInsets.all(8.r),
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(20),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20.r),
                                             ),
                                             color: MyColors.primaryColorLight,
                                           ),
                                           child: Icon(
                                             Icons.arrow_forward_ios,
                                             color: Colors.white,
-                                            size: 16,
+                                            size: 16.sp,
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                        value: _checkBoxValue,
+                                        onChanged: (onChanged) {
+                                          setState(() {
+                                            _checkBoxValue = onChanged;
+                                          });
+                                        }),
+                                    SizedBox(width: 10.w),
+                                    Column(
+                                      //alignment: WrapAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          'By signing in to eRoom you agree to our',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: MyColors.lightTextColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          'terms and conditions',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: MyColors.purpleColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               )
                             ],

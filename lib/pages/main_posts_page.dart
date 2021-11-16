@@ -1,5 +1,6 @@
 import 'package:eRoomApp/api/business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
+import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/constants.dart';
 import 'package:eRoomApp/models/user_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -359,6 +360,42 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         textSize: 16.sp,
                                         height: (menuContainerHeight) / 8,
                                         widget: ContactUs(),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => AppLauncherUtils.openLink(
+                                            url: 'https://flutter.dev/'),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Icon(
+                                              Icons.edit_sharp,
+                                              color: MyColors.primaryColor,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text(
+                                              'terms and conditions',
+                                              style: TextStyle(
+                                                  shadows: [
+                                                    Shadow(
+                                                        color: Colors.black
+                                                            .withOpacity(0.8),
+                                                        offset:
+                                                            Offset(8.0, 6.0),
+                                                        blurRadius: 15.0),
+                                                  ],
+                                                  color: MyColors
+                                                      .primaryColorLight,
+                                                  fontSize: 16.sp),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       Divider(
                                         thickness: 1.sp,

@@ -6,6 +6,8 @@ class CustomTextField extends StatelessWidget {
   final Icon icon;
   final String initialValue;
   final TextEditingController controller;
+  final String errorText;
+  final TextInputType textInputType;
 
   CustomTextField({
     this.hintTxt,
@@ -13,6 +15,8 @@ class CustomTextField extends StatelessWidget {
     this.icon,
     this.initialValue,
     this.controller,
+    this.errorText,
+    this.textInputType,
   });
 
   @override
@@ -27,6 +31,16 @@ class CustomTextField extends StatelessWidget {
           autocorrect: true,
           enableInteractiveSelection: true,
           initialValue: initialValue,
+          validator: (value) {
+            if ((value == null && value.isEmpty) ||
+                !RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
+              //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
+
+              return errorText;
+            }
+            return null;
+          },
+          keyboardType: textInputType,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
               vertical: 5.0,

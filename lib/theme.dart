@@ -11,4 +11,8 @@ class MyColors {
   static const Color tertiaryTextColor = Color(0xFFB5ADAC);
   static Color greenColor = Colors.green.shade400;
   static const Color blueColor = Colors.lightBlueAccent;
+
+  static const textFieldColor = Color(0xffE7EBEC);
+  static const purpleColor = Color(0xff6688FF);
+  static const lightTextColor = Color(0xff999999);
 }
