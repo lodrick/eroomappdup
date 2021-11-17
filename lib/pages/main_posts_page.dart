@@ -401,6 +401,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         thickness: 1.sp,
                                         color: MyColors.primaryColor,
                                       ),
+                                      // ignore: deprecated_member_use
                                       FlatButton(
                                         child: Row(
                                           mainAxisAlignment:

@@ -75,6 +75,7 @@ class DialogAdReview extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     SizedBox(width: 8.0),
+                    // ignore: deprecated_member_use
                     FlatButton(
                       color: MyColors.primaryColor,
                       onPressed: () {

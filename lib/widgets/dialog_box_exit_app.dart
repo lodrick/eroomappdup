@@ -85,6 +85,7 @@ class CustomDialogBox extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
+                    // ignore: deprecated_member_use
                     FlatButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -96,6 +97,7 @@ class CustomDialogBox extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10.0),
+                    // ignore: deprecated_member_use
                     FlatButton(
                       color: MyColors.primaryColor,
                       onPressed: () {

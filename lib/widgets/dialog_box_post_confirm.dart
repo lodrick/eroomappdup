@@ -89,6 +89,7 @@ class DialogBoxPost extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     SizedBox(width: 8.0),
+                    // ignore: deprecated_member_use
                     FlatButton(
                       splashColor: Colors.blueGrey,
                       color: Colors.white,
@@ -104,6 +105,7 @@ class DialogBoxPost extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 3.0),
+                    // ignore: deprecated_member_use
                     FlatButton(
                       splashColor: Colors.blueGrey,
                       color: MyColors.primaryColor,

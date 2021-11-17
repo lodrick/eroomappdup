@@ -76,6 +76,7 @@ class _OtpPageState extends State<OtpPage> {
                 ),
                 elevation: 0,
                 backgroundColor: Colors.white,
+                // ignore: deprecated_member_use
                 brightness: Brightness.light,
               ),
               body: SafeArea(
@@ -132,6 +133,7 @@ class _OtpPageState extends State<OtpPage> {
                             constraints: const BoxConstraints(
                               maxWidth: 500,
                             ),
+                            // ignore: deprecated_member_use
                             child: RaisedButton(
                               onPressed: () {
                                 loginStore.validateOtpAndLogin(context, text);

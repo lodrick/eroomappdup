@@ -53,6 +53,7 @@ abstract class LoginStoreBase with Store {
               print('Authentication successful');
               onAuthenticationSuccessful(context: context, result: value);
             } else {
+              // ignore: deprecated_member_use
               loginScaffoldKey.currentState.showSnackBar(
                 SnackBar(
                   behavior: SnackBarBehavior.floating,
@@ -67,6 +68,7 @@ abstract class LoginStoreBase with Store {
           },
         ).catchError(
           (error) {
+            // ignore: deprecated_member_use
             loginScaffoldKey.currentState.showSnackBar(
               SnackBar(
                 behavior: SnackBarBehavior.floating,
@@ -84,6 +86,7 @@ abstract class LoginStoreBase with Store {
       },
       verificationFailed: (AuthException authException) {
         print('Error message: ' + authException.message);
+        // ignore: deprecated_member_use
         loginScaffoldKey.currentState.showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
@@ -118,6 +121,7 @@ abstract class LoginStoreBase with Store {
 
     await _auth.signInWithCredential(_authCredential).catchError((error) {
       isOtpLoading = false;
+      // ignore: deprecated_member_use
       otpScaffoldKey.currentState.showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,

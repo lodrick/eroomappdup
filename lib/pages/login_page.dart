@@ -164,6 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                                 constraints: BoxConstraints(
                                   maxWidth: 500.w,
                                 ),
+                                // ignore: deprecated_member_use
                                 child: RaisedButton(
                                   onPressed: _checkBoxValue
                                       ? () {
@@ -180,6 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                                             } else {
                                               loginStore
                                                   .loginScaffoldKey.currentState
+                                                  // ignore: deprecated_member_use
                                                   .showSnackBar(
                                                 SnackBar(
                                                   behavior:
@@ -204,6 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                                           } else {
                                             loginStore
                                                 .loginScaffoldKey.currentState
+                                                // ignore: deprecated_member_use
                                                 .showSnackBar(SnackBar(
                                               behavior:
                                                   SnackBarBehavior.floating,

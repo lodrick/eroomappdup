@@ -33,12 +33,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
     print(yPosition);
   }
 
-  OverlayEntry __createFloatingDropdownInit() {
-    return OverlayEntry(builder: (context) {
-      return Positioned(child: Container());
-    });
-  }
-
   OverlayEntry _createFloatingDropdown() {
     return OverlayEntry(builder: (context) {
       return Positioned(

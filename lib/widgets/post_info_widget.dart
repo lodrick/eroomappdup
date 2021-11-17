@@ -167,7 +167,7 @@ class _PostInfoState extends State<PostInfo> {
                   });
 
                   Fluttertoast.showToast(
-                    msg: msg + ' ${likeCount}',
+                    msg: msg,
                     fontSize: 18.0,
                     backgroundColor: Colors.black87.withOpacity(.7),
                     textColor: Colors.white,
@@ -319,6 +319,7 @@ class _PostInfoState extends State<PostInfo> {
                                                           ),
                                                         );
                                                         Scaffold.of(context)
+                                                            // ignore: deprecated_member_use
                                                             .showSnackBar(
                                                           snackBar,
                                                         );
