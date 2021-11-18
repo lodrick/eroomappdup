@@ -786,7 +786,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                         .toString();
                                     return Padding(
                                       padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
+                                        horizontal: 16.w,
                                         vertical: 8.h,
                                       ),
                                       child: snapshot.data != null

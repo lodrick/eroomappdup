@@ -108,9 +108,6 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                           ),
                                         ),
                                         filled: false,
-                                        /*hintStyle: new TextStyle(
-                                          color: Colors.grey[800],
-                                        ),*/
                                         hintStyle: GoogleFonts.lato(
                                             color: Colors.grey[700]),
                                         hintText: 'R1',
@@ -143,8 +140,8 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                           ),
                                         ),
                                         filled: false,
-                                        hintStyle: new TextStyle(
-                                            color: Colors.grey[800]),
+                                        hintStyle: GoogleFonts.lato(
+                                            color: Colors.grey[700]),
                                         hintText: 'R500',
                                         labelText: 'Max',
                                         border: InputBorder.none,
@@ -171,7 +168,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               'Select Province',
                               style: TextStyle(
                                 color: Colors.blueGrey,
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -188,7 +185,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                     val,
                                     style: TextStyle(
                                       color: Colors.blueGrey,
-                                      fontSize: 16.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
