@@ -41,14 +41,14 @@ class SharedPrefs {
     preferences.setString('email', token.email);
   }
 
-  static saveUserSatus(String userShortDescription) async {
+  static saveUserSatus(String userStatus) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('userShortDescription', userShortDescription);
+    preferences.setString('userStatus', userStatus);
   }
 
   static Future<String> getUserStatus() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString('userShortDescription');
+    return preferences.getString('userStatus');
   }
 
   static Future bookMarkFavourates(List<String> idPosts) async {

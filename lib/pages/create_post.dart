@@ -203,7 +203,7 @@ class _CreatePostState extends State<CreatePost> {
                         color: MyColors.primaryColor,
                       ),
                       controller: priceController,
-                      errorText: 'Please enter the correct price*',
+                      errorText: 'Please enter the correct price',
                       textInputType: TextInputType.number,
                     ),
                     CustomTextField(
@@ -214,7 +214,7 @@ class _CreatePostState extends State<CreatePost> {
                         color: MyColors.primaryColor,
                       ),
                       controller: titleController,
-                      errorText: 'Please fill in the title*',
+                      errorText: 'Please fill in the title',
                       textInputType: TextInputType.text,
                     ),
                     CustomTextField(
@@ -225,7 +225,7 @@ class _CreatePostState extends State<CreatePost> {
                         color: MyColors.primaryColor,
                       ),
                       controller: decriptionController,
-                      errorText: 'Please fill in the description*',
+                      errorText: 'Please fill in the description',
                       textInputType: TextInputType.text,
                     ),
                     SizedBox(height: 4.0),
@@ -403,7 +403,7 @@ class _CreatePostState extends State<CreatePost> {
                         color: MyColors.primaryColor,
                       ),
                       controller: suburbController,
-                      errorText: 'Please fill in the suburb*',
+                      errorText: 'Please fill in the suburb',
                       textInputType: TextInputType.streetAddress,
                     ),
                     SizedBox(height: 3.0),
@@ -423,8 +423,8 @@ class _CreatePostState extends State<CreatePost> {
                               child: Padding(
                                 padding: EdgeInsets.zero,
                                 child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 3.8,
+                                  height: MediaQuery.of(context).size.height /
+                                      3.8.h,
                                   child: ListView.builder(
                                     physics: BouncingScrollPhysics(
                                         parent: BouncingScrollPhysics()),

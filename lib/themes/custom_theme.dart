@@ -5,7 +5,7 @@ class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: MyColors.primaryColor,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: MyColors.kBackgroundColor,
       textTheme: ThemeData.light().textTheme,
       colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber)
           .copyWith(secondary: Colors.amber),

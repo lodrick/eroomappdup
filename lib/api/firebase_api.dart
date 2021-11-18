@@ -185,6 +185,21 @@ class FirebaseApi {
     return retriveUser(userToupdate.contactNumber);
   }
 
+  static Future<User> updateUserByField({
+    String field,
+    String value,
+    String idUser,
+  }) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(idUser)
+        .update({
+          field: value,
+        })
+        .then((value) => print('user updated'))
+        .catchError((error) => print('Failed to update $error'));
+  }
+
   static Future uploadImageUrl(String imageUrl, idUser) {
     var user = FirebaseFirestore.instance.collection('users');
     return user
