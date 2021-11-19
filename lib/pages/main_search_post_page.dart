@@ -6,7 +6,7 @@ import 'package:eRoomApp/pages/post_search_results_display.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainSearchPostPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
   TextEditingController suburbController = TextEditingController();
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceControler = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   bool isMenuOpen = false;
   String url = BusinessApi.url;
@@ -43,146 +44,223 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.primaryColor,
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
                 ),
-              ),
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 30.0),
-                    child: Column(
-                      children: <Widget>[
-                        Center(
-                          child: Text(
-                            'Price Range',
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontFamily: 'OpenSans',
-                              color: Colors.blueGrey[600],
-                              fontWeight: FontWeight.w400,
-                              shadows: [
-                                Shadow(
-                                    color: Colors.black.withOpacity(0.5),
-                                    offset: Offset(2.0, 4.0),
-                                    blurRadius: 10.0),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16.0, top: 30.0),
+                      child: Column(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              'Price Range',
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontFamily: 'OpenSans',
+                                color: Colors.blueGrey[600],
+                                fontWeight: FontWeight.w400,
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: Offset(2.0, 4.0),
+                                      blurRadius: 10.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFFF8E1),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                      child: TextFormField(
+                                        controller: minPriceController,
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          if ((value == null &&
+                                                  value.isEmpty) ||
+                                              !RegExp(r'^[A-Za-z0-9]+$')
+                                                  .hasMatch(value)) {
+                                            return 'Minimum price is required.';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 5.0,
+                                          ),
+                                          prefixIcon: Padding(
+                                            padding: const EdgeInsets.all(0.0),
+                                            child: Icon(
+                                              Icons.location_pin,
+                                              color: MyColors.primaryColor,
+                                            ),
+                                          ),
+                                          filled: false,
+                                          hintStyle: GoogleFonts.lato(
+                                              color: Colors.grey[700]),
+                                          hintText: 'R1',
+                                          labelText: 'Min',
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFFF8E1),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                      child: TextFormField(
+                                        controller: maxPriceControler,
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          if ((value == null &&
+                                                  value.isEmpty) ||
+                                              !RegExp(r'^[A-Za-z0-9]+$')
+                                                  .hasMatch(value)) {
+                                            return 'Maximum price is required.';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 5.0,
+                                          ),
+                                          prefixIcon: Padding(
+                                            padding: const EdgeInsets.all(0.0),
+                                            child: Icon(
+                                              Icons.location_pin,
+                                              color: MyColors.primaryColor,
+                                            ),
+                                          ),
+                                          filled: false,
+                                          hintStyle: GoogleFonts.lato(
+                                              color: Colors.grey[700]),
+                                          hintText: 'R500',
+                                          labelText: 'Max',
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFFFF8E1),
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: TextFormField(
-                                      controller: minPriceController,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5.0,
-                                        ),
-                                        prefixIcon: Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Icon(
-                                            Icons.location_pin,
-                                            color: MyColors.primaryColor,
-                                          ),
-                                        ),
-                                        filled: false,
-                                        hintStyle: GoogleFonts.lato(
-                                            color: Colors.grey[700]),
-                                        hintText: 'R1',
-                                        labelText: 'Min',
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                              vertical: 2.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.amber.shade50,
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            child: DropdownButtonFormField(
+                              dropdownColor: Colors.white,
+                              decoration:
+                                  InputDecoration.collapsed(hintText: ''),
+                              value: _province,
+                              hint: Text(
+                                'Select Province',
+                                style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFFFF8E1),
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: TextFormField(
-                                      controller: maxPriceControler,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5.0,
-                                        ),
-                                        prefixIcon: Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Icon(
-                                            Icons.location_pin,
-                                            color: MyColors.primaryColor,
-                                          ),
-                                        ),
-                                        filled: false,
-                                        hintStyle: GoogleFonts.lato(
-                                            color: Colors.grey[700]),
-                                        hintText: 'R500',
-                                        labelText: 'Max',
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 2.0),
-                          decoration: BoxDecoration(
-                            color: Colors.amber.shade50,
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          child: DropdownButton(
-                            dropdownColor: Colors.white,
-                            underline: SizedBox(),
-                            value: _province,
-                            hint: Text(
-                              'Select Province',
+                              isExpanded: true,
+                              iconSize: 30.0,
                               style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
+                              validator: (value) => value == null
+                                  ? 'Province is required*'
+                                  : null,
+                              items: StaticData.provinces.map(
+                                (val) {
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(
+                                      val,
+                                      style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  _province = val;
+                                  print('_province $_province');
+                                });
+                              },
                             ),
-                            isExpanded: true,
-                            iconSize: 30.0,
-                            style: TextStyle(
-                              color: Colors.white,
+                          ),
+                          SizedBox(height: 10.0),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 2.0),
+                            decoration: BoxDecoration(
+                              color: Colors.amber.shade50,
+                              borderRadius: BorderRadius.circular(25.0),
                             ),
-                            items: StaticData.provinces.map(
-                              (val) {
+                            child: DropdownButtonFormField(
+                              dropdownColor: Colors.blueGrey[100],
+                              decoration:
+                                  InputDecoration.collapsed(hintText: ''),
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              value: _city,
+                              hint: Text(
+                                'Select City',
+                                style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              validator: (value) =>
+                                  value == null ? 'City is required*' : null,
+                              items: StaticData.cities.map((value) {
                                 return DropdownMenuItem<String>(
-                                  value: val,
+                                  value: value,
                                   child: Text(
-                                    val,
+                                    value,
                                     style: TextStyle(
                                       color: Colors.blueGrey,
                                       fontSize: 18.0,
@@ -190,155 +268,39 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                     ),
                                   ),
                                 );
+                              }).toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  this._city = val;
+                                  print('City: $_city');
+                                });
                               },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                _province = val;
-                                print('_province $_province');
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 2.0),
-                          decoration: BoxDecoration(
-                            color: Colors.amber.shade50,
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          child: DropdownButton(
-                            dropdownColor: Colors.blueGrey[100],
-                            underline: SizedBox(),
-                            isExpanded: true,
-                            iconSize: 30.0,
-                            value: _city,
-                            hint: Text(
-                              'Select City',
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                              ),
                             ),
-                            items: StaticData.cities.map((value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                this._city = val;
-                                print('City: $_city');
-                              });
-                            },
                           ),
-                        ),
-                        /*Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 2.0),
-                          decoration: BoxDecoration(
-                            color: Colors.amber.shade50,
-                            borderRadius: BorderRadius.circular(25.0),
+                          SizedBox(height: 4.0),
+                          CustomTextField(
+                            errorText: 'Suburb is required.',
+                            controller: suburbController,
+                            hintTxt: 'Centurion',
+                            labelTxt: 'Suburb',
+                            icon: Icon(
+                              Icons.location_city,
+                              color: MyColors.primaryColor,
+                            ),
                           ),
-                          child: FutureBuilder(
-                            future: ProvinceApi.getProvinces(_province),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              } else {
-                                List<Province> provincies = snapshot.data;
-                                if (provincies == null) {
-                                  provincies = List<Province>();
-                                  provincies.add(
-                                    new Province(
-                                      city: 'Select your provice',
-                                      lat: '-26.2044',
-                                      lng: '28.0416',
-                                      country: 'South Africa',
-                                      iso2: 'ZA',
-                                      adminName: 'Gauteng',
-                                      capital: 'admin',
-                                      population: '4434827',
-                                      populationProper: '4434827',
-                                    ),
-                                  );
-                                }
-                                return DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  underline: SizedBox(),
-                                  isExpanded: true,
-                                  iconSize: 30.0,
-                                  value: _city,
-                                  hint: Text(
-                                    'Select City',
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  items: provincies.map((value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value.city,
-                                      child: Text(
-                                        value.city,
-                                        style: TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      _city = val;
-                                      print('_City: $_city');
-                                    });
-                                  },
-                                );
-                              }
-                            },
-                          ),
-                        ),*/
-                        SizedBox(
-                          height: 4.0,
-                        ),
-                        CustomTextField(
-                          controller: suburbController,
-                          hintTxt: 'Centurion',
-                          labelTxt: 'Suburb',
-                          icon: Icon(
-                            Icons.location_city,
-                            color: MyColors.primaryColor,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (minPriceController.text.isNotEmpty &&
-              maxPriceControler.text.isNotEmpty &&
-              suburbController.text.isNotEmpty) {
+          if (formKey.currentState.validate()) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -351,11 +313,6 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                 ),
               ),
             );
-          } else {
-            Fluttertoast.showToast(
-                backgroundColor: Colors.black38.withOpacity(0.8),
-                msg:
-                    'Some of your fields are empty, please make sure all required info are field.');
           }
         },
         child: Icon(
