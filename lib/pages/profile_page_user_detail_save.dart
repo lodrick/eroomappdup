@@ -168,7 +168,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8.0.r),
           borderSide: const BorderSide(color: Colors.transparent, width: 0),
         ),
         enabledBorder: OutlineInputBorder(
@@ -233,7 +233,10 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
                             child: Container(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 8.h,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30.r),
@@ -274,22 +277,25 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(8.0),
+                                                  BorderRadius.circular(8.0.r),
                                               borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 0),
+                                                color: Colors.transparent,
+                                                width: 0,
+                                              ),
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
                                               borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 0),
+                                                color: Colors.transparent,
+                                                width: 0,
+                                              ),
                                             ),
                                             contentPadding:
                                                 EdgeInsets.symmetric(
-                                                    horizontal: 16.w,
-                                                    vertical: 14.h),
+                                              horizontal: 16.w,
+                                              vertical: 14.h,
+                                            ),
                                             filled: true,
                                             fillColor: MyColors.textFieldColor,
                                             //-hintText: 'hint',
@@ -402,7 +408,10 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                       ),
                       child: Container(
                         height: MediaQuery.of(context).size.height * .16.h,
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 8.h,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.r),
@@ -521,7 +530,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
           child: Padding(
             padding: EdgeInsets.zero,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 3.8,
+              height: MediaQuery.of(context).size.height / 3.8.h,
               child: ListView.builder(
                 physics: BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                 itemCount: 1,
@@ -535,7 +544,9 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
+                          Radius.circular(
+                            5.0.r,
+                          ),
                         ),
                       ),
                       child: Container(
@@ -544,7 +555,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                           Text(
                             'Profile Picture',
                             style: TextStyle(
-                              fontSize: 24.0,
+                              fontSize: 24.0.sp,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -622,38 +633,40 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
           title: Text(
             'User Details',
             style: TextStyle(
-              fontSize: 22.0,
+              fontSize: 22.0.sp,
               fontWeight: FontWeight.w600,
               color: Colors.white70,
             ),
           ),
-          elevation: 0.00,
+          elevation: 0.0,
         ),
         body: SafeArea(
           child: Container(
             decoration: new BoxDecoration(
               color: MyColors.kBackgroundColor,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+                topLeft: Radius.circular(30.0.r),
+                topRight: Radius.circular(30.0.r),
               ),
             ),
             child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height.h,
                 child: Column(
                   children: [
                     Stack(
                       children: <Widget>[
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          padding:
-                              const EdgeInsets.only(left: 17.0, right: 17.0),
+                          height: MediaQuery.of(context).size.height * 0.25.h,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 17.w,
+                            vertical: 17.h,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
+                              topLeft: Radius.circular(30.0.r),
+                              topRight: Radius.circular(30.0.r),
                             ),
                             image: new DecorationImage(
                               image: new AssetImage(
@@ -668,7 +681,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                           child: GestureDetector(
                             child: CircleAvatar(
                               backgroundColor: MyColors.primaryColor,
-                              radius: 50.0,
+                              radius: 50.0.r,
                               backgroundImage: NetworkImage(
                                 widget.imageUrl ??
                                     imageUrl ??
@@ -678,14 +691,17 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                             //onTap: uploadImage,
                             onTap: _handleFABPressed,
                           ),
-                          top: 105.0,
-                          left: 16.0,
-                          right: 16.0,
+                          top: 105.0.h,
+                          left: 16.0.w,
+                          right: 16.0.w,
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 8.h,
+                      ),
                       child: new Column(
                         children: <Widget>[
                           Container(

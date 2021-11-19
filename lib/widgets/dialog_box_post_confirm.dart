@@ -1,6 +1,7 @@
 import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*
 firstName: widget.firstName,
                       lastName: widget.lastName,
@@ -104,7 +105,7 @@ class DialogBoxPost extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 3.0),
+                    SizedBox(width: 3.0.w),
                     // ignore: deprecated_member_use
                     FlatButton(
                       splashColor: Colors.blueGrey,
@@ -122,19 +123,6 @@ class DialogBoxPost extends StatelessWidget {
                           ),
                           (Route<dynamic> route) => false,
                         );
-
-                        /*Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainPostsPage(
-                              firstName: firstName,
-                              lastName: lastName,
-                              contactNumber: contactNumber,
-                              email: email,
-                              idUser: idUser,
-                            ),
-                          ),
-                        );*/
                       },
                       child: Text(
                         'Done'.toUpperCase(),

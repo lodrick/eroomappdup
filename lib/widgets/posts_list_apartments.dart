@@ -4,6 +4,7 @@ import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/dialog_box_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/pages/post_ad_edit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PostsListApartments extends StatefulWidget {
   final String idUser;
@@ -56,7 +57,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
         title: Text(
           'My Post',
           style: TextStyle(
-            fontSize: 22.0,
+            fontSize: 22.0.sp,
             fontWeight: FontWeight.w600,
             color: Colors.white70,
           ),
@@ -68,12 +69,12 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+            topLeft: Radius.circular(30.0.r),
+            topRight: Radius.circular(30.0.r),
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 8.0),
+          padding: EdgeInsets.only(left: 16.0.w, top: 8.0.h),
           child: StreamBuilder<List<Advert>>(
             stream: FireBusinessApi.getMyAdverts(widget.idUser),
             builder: (context, snapshot) {
@@ -94,8 +95,8 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                     } else {
                       return ClipRRect(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
+                          topLeft: Radius.circular(30.0.r),
+                          topRight: Radius.circular(30.0.r),
                         ),
                         child: ListView.builder(
                           controller: _controller,
@@ -113,7 +114,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                             Icon icons = Icon(
                               Icons.deck,
                               color: Colors.yellow[500],
-                              size: 45.0,
+                              size: 45.0.sp,
                             );
 
                             Color colors = MyColors.primaryColor;
@@ -123,7 +124,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               icons = Icon(
                                 Icons.hourglass_top_rounded,
                                 color: Colors.yellow[500],
-                                size: 45.0,
+                                size: 45.0.sp,
                               );
                               colors = Colors.yellow[500];
                             } else if (advert.status == 'approved') {
@@ -132,7 +133,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               icons = Icon(
                                 Icons.check,
                                 color: MyColors.primaryColor,
-                                size: 45.0,
+                                size: 45.0.sp,
                               );
                               colors = MyColors.primaryColor;
                             } else {
@@ -141,7 +142,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               icons = Icon(
                                 Icons.cancel,
                                 color: Colors.red[500],
-                                size: 45.0,
+                                size: 45.0.sp,
                               );
                               colors = Colors.red[500];
                             }
@@ -162,14 +163,19 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    top: 5.0, bottom: 5.0, right: 20.0),
+                                  top: 5.0.h,
+                                  bottom: 5.0.h,
+                                  right: 20.0.w,
+                                ),
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10.0),
+                                  horizontal: 10.0.w,
+                                  vertical: 10.0.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Color(0xFFFFEFEE),
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    topRight: Radius.circular(20.0),
+                                    topLeft: Radius.circular(20.0.r),
+                                    topRight: Radius.circular(20.0.r),
                                   ),
                                 ),
                                 child: Row(
@@ -179,7 +185,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                     Row(
                                       children: <Widget>[
                                         CircleAvatar(
-                                          radius: 35.0,
+                                          radius: 35.0.r,
                                           backgroundImage: NetworkImage(
                                             _imageUrl.isNotEmpty
                                                 ? _imageUrl
@@ -188,7 +194,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                           backgroundColor:
                                               MyColors.primaryColor,
                                         ),
-                                        SizedBox(width: 10.0),
+                                        SizedBox(width: 10.0.w),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -197,21 +203,21 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                               advert.title,
                                               style: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: 15.0,
+                                                fontSize: 15.0.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SizedBox(height: 5.0),
+                                            SizedBox(height: 5.0.h),
                                             Container(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.45,
+                                                  0.45.w,
                                               child: Text(
                                                 advert.decription,
                                                 style: TextStyle(
                                                   color: Colors.blueGrey,
-                                                  fontSize: 15.0,
+                                                  fontSize: 15.0.sp,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                                 overflow: TextOverflow.ellipsis,
@@ -249,7 +255,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                                           .substring(1),
                                                   style: TextStyle(
                                                     color: colors,
-                                                    fontSize: 13.5,
+                                                    fontSize: 13.5.sp,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
@@ -279,7 +285,10 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
   Widget buildText(String text) => Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 24, color: Colors.blueGrey[300]),
+          style: TextStyle(
+            fontSize: 24.sp,
+            color: Colors.blueGrey[300],
+          ),
         ),
       );
 }

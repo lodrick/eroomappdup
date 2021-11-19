@@ -1,5 +1,6 @@
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DialogAdReview extends StatelessWidget {
   final String title;
@@ -21,7 +22,7 @@ class DialogAdReview extends StatelessWidget {
       body: Container(
         child: Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(16.0.r),
           ),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
@@ -36,20 +37,20 @@ class DialogAdReview extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(
-            top: 100.0,
-            bottom: 16.0,
-            left: 16.0,
-            right: 16.0,
+            top: 100.0.h,
+            bottom: 16.0.h,
+            left: 16.0.w,
+            right: 16.0.w,
           ),
-          margin: EdgeInsets.only(top: 16.0),
+          margin: EdgeInsets.symmetric(vertical: 16.0.h),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(17.0),
+            borderRadius: BorderRadius.circular(17.0.r),
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
-                blurRadius: 10.0,
+                blurRadius: 10.0.r,
                 offset: Offset(0.0, 10.0),
               ),
             ],
@@ -60,21 +61,24 @@ class DialogAdReview extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 26.0,
+                  fontSize: 26.0.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.blueGrey,
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(descrition, style: TextStyle(fontSize: 16.0)),
-              SizedBox(height: 24.0),
+              SizedBox(height: 16.0.h),
+              Text(
+                descrition,
+                style: TextStyle(fontSize: 16.0.sp),
+              ),
+              SizedBox(height: 24.0.h),
               Align(
                 alignment: Alignment.bottomRight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    SizedBox(width: 8.0),
+                    SizedBox(width: 8.0.w),
                     // ignore: deprecated_member_use
                     FlatButton(
                       color: MyColors.primaryColor,

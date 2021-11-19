@@ -84,6 +84,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
       builder: (_, loginStore, __) {
         String names = '';
         String email = '';
+        String name = '';
+        String surname = '';
 
         return FutureBuilder<User>(
           future: FirebaseApi.retriveUser(
@@ -100,362 +102,363 @@ class _MainPostsPageState extends State<MainPostsPage> {
                   (snapshot.data.email.toString().isNotEmpty)) {
                 contactNumber = snapshot.data.contactNumber;
                 currentIdUser = snapshot.data.idUser;
+                name = snapshot.data.name;
+                surname = snapshot.data.surname;
               }
             }
-            return SafeArea(
-              child: Scaffold(
-                //backgroundColor: MyColors.primaryColor,
-                appBar: AppBar(
-                  iconTheme: IconThemeData(color: Colors.white70),
-                  centerTitle: false,
-                  backgroundColor: MyColors.primaryColor,
-                  title: Text(
-                    'eRoom',
-                    style: TextStyle(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white70,
-                    ),
+            return Scaffold(
+              //backgroundColor: MyColors.primaryColor,
+              appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.white70),
+                centerTitle: false,
+                backgroundColor: MyColors.primaryColor,
+                title: Text(
+                  'eRoom',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white70,
                   ),
-                  elevation: 0.0,
-                  actions: <Widget>[
-                    /*GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainSearchPostPage(
-                            contactNumber: contactNumber,
-                          ),
+                ),
+                elevation: 0.0,
+                actions: <Widget>[
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Favourites(
+                          firstName: name,
+                          lastName: surname,
+                          idUser: currentIdUser,
+                          email: email,
+                          contactNumber: contactNumber,
                         ),
                       ),
-                      child: Icon(Icons.search, size: 25.0),
-                    ),*/
-                    Container(
-                      child: PopupMenuButton(
-                        elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r)),
-                        onSelected: (value) {
-                          switch (value) {
-                            case IconsMenu.PROFILE:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfilePageUserDetailSave(
-                                    imageUrl: currentImageUrl,
-                                    currentIdUser: currentIdUser,
-                                  ),
+                    ),
+                    child: Icon(Icons.favorite, size: 25.0.sp),
+                  ),
+                  Container(
+                    child: PopupMenuButton(
+                      elevation: 0.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.r)),
+                      onSelected: (value) {
+                        switch (value) {
+                          case IconsMenu.PROFILE:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfilePageUserDetailSave(
+                                  imageUrl: currentImageUrl,
+                                  currentIdUser: currentIdUser,
                                 ),
-                              );
-                              break;
-                            default:
-                              showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                  title: 'Exit App',
-                                  descriptions:
-                                      'Are you sure you want to exit the app?',
-                                  text: 'bluh bluh',
-                                  imgUrl: currentImageUrl ??
-                                      'assets/img/black-house-01.jpeg',
-                                ),
-                              );
-                              break;
-                          }
-                        },
-                        itemBuilder: (context) => IconsMenu.items
-                            .map((item) => PopupMenuItem<IconMenu>(
-                                  value: item,
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        contentPadding: EdgeInsets.zero,
-                                        leading: Icon(item.iconData,
-                                            size: 25.sp,
-                                            color: MyColors.sidebar),
-                                        title: Text(
-                                          item.text,
-                                          softWrap: true,
-                                          style: TextStyle(
-                                              color: MyColors.sidebar,
-                                              fontWeight: FontWeight.w500),
+                              ),
+                            );
+                            break;
+                          default:
+                            showDialog(
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                title: 'Exit App',
+                                descriptions:
+                                    'Are you sure you want to exit the app?',
+                                text: 'bluh bluh',
+                                imgUrl: currentImageUrl ??
+                                    'assets/img/black-house-01.jpeg',
+                              ),
+                            );
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) => IconsMenu.items
+                          .map((item) => PopupMenuItem<IconMenu>(
+                                value: item,
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: Icon(item.iconData,
+                                          size: 25.sp, color: MyColors.sidebar),
+                                      title: Text(
+                                        item.text,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          color: MyColors.sidebar,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      Divider(
-                                        color: MyColors.primaryColorLight,
-                                      )
-                                    ],
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    )
-
-                    //elevation: 0.0,
-                  ],
-                ),
-                body: SafeArea(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      color: MyColors.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.r),
-                        topRight: Radius.circular(30.r),
-                      ),
-                    ),
-                    child: _widgetOptions.elementAt(_bottomBarIndex),
-                  ),
-                ),
-                drawer: Drawer(
-                  child: SingleChildScrollView(
-                    physics:
-                        BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                    child: Stack(
-                      alignment: Alignment.bottomLeft,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'assets/img/black-house-01.jpeg',
-                                bundle: null,
-                              ),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Colors.black54,
-                                      MyColors.primaryColor
-                                    ],
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 25.0, bottom: 25.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          height: 105.h,
-                                          width: 105.h,
-                                          decoration: new BoxDecoration(
-                                            borderRadius: new BorderRadius.all(
-                                              Radius.circular(60.r),
-                                            ),
-                                            image: new DecorationImage(
-                                              image: new AssetImage(
-                                                  'assets/img/black-house-01.jpeg'),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                          child: GestureDetector(
-                                            onTap: _navigatorToprofile,
-                                            child: CircleAvatar(
-                                              radius: 30.r,
-                                              backgroundImage: NetworkImage(
-                                                  currentImageUrl ??
-                                                      'assets/img/black-house-01.jpeg'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10.h),
-                                        Text(
-                                          names ?? 'John Doe',
-                                          style: TextStyle(
-                                            color: Colors.white70,
-                                            fontSize: 18.sp,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                        Text(
-                                          email ?? 'johndoe@gmail.com',
-                                          style: TextStyle(
-                                            color: Colors.white60,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                      ],
                                     ),
-                                  ),
+                                    Divider(
+                                      color: MyColors.primaryColorLight,
+                                    )
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  )
+
+                  //elevation: 0.0,
+                ],
+              ),
+              body: SafeArea(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    color: MyColors.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.r),
+                      topRight: Radius.circular(30.r),
+                    ),
+                  ),
+                  child: _widgetOptions.elementAt(_bottomBarIndex),
+                ),
+              ),
+              drawer: Drawer(
+                child: SingleChildScrollView(
+                  physics:
+                      BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/img/black-house-01.jpeg',
+                              bundle: null,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.black54,
+                                    MyColors.primaryColor
+                                  ],
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: menuContainerHeight * 1.45,
+                              child: Center(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 25.h),
                                   child: Column(
                                     children: <Widget>[
-                                      MyButton(
-                                        text: 'Profile',
-                                        iconData: Icons.person,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: ProfilePageUserDetailSave(
-                                          imageUrl: currentImageUrl,
-                                          currentIdUser: currentIdUser,
+                                      Container(
+                                        height: 105.h,
+                                        width: 105.h,
+                                        decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.all(
+                                            Radius.circular(60.r),
+                                          ),
+                                          image: new DecorationImage(
+                                            image: new AssetImage(
+                                                'assets/img/black-house-01.jpeg'),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: _navigatorToprofile,
+                                          child: CircleAvatar(
+                                            radius: 30.r,
+                                            backgroundImage: NetworkImage(
+                                                currentImageUrl ??
+                                                    'assets/img/black-house-01.jpeg'),
+                                          ),
                                         ),
                                       ),
-                                      MyButton(
-                                        text: 'Notifications',
-                                        iconData: Icons.notifications,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: Inbox(
-                                          idUser: widget.idUser,
+                                      SizedBox(height: 10.h),
+                                      Text(
+                                        names ?? 'John Doe',
+                                        style: TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w300,
                                         ),
                                       ),
-                                      MyButton(
-                                        text: 'My Post',
-                                        iconData: Icons.ad_units,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: PostsListApartments(
-                                          contactNumber: widget.contactNumber,
-                                          email: widget.email,
-                                          firstName: widget.firstName,
-                                          lastName: widget.lastName,
-                                          idUser: widget.idUser,
+                                      Text(
+                                        email ?? 'johndoe@gmail.com',
+                                        style: TextStyle(
+                                          color: Colors.white60,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w300,
                                         ),
-                                      ),
-                                      MyButton(
-                                        text: 'eRoom Chats',
-                                        iconData: Icons.chat,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: ChatsPage(
-                                          contactNumber: contactNumber,
-                                          currentIdUser: currentIdUser,
-                                          currentImageUrl: currentImageUrl,
-                                        ),
-                                      ),
-                                      MyButton(
-                                        text: 'Favourites',
-                                        iconData: Icons.favorite,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: Favourites(
-                                          idUser: widget.idUser,
-                                          contactNumber: widget.contactNumber,
-                                          email: widget.email,
-                                          firstName: widget.firstName,
-                                          lastName: widget.lastName,
-                                        ),
-                                      ),
-                                      MyButton(
-                                        text: 'Contact Us',
-                                        iconData: Icons.contact_phone,
-                                        textSize: 16.sp,
-                                        height: (menuContainerHeight) / 8,
-                                        widget: ContactUs(),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () => AppLauncherUtils.openLink(
-                                            url: 'https://flutter.dev/'),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Icon(
-                                              Icons.edit_sharp,
-                                              color: MyColors.primaryColor,
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Text(
-                                              'terms and conditions',
-                                              style: TextStyle(
-                                                  shadows: [
-                                                    Shadow(
-                                                        color: Colors.black
-                                                            .withOpacity(0.8),
-                                                        offset:
-                                                            Offset(8.0, 6.0),
-                                                        blurRadius: 15.0),
-                                                  ],
-                                                  color: MyColors
-                                                      .primaryColorLight,
-                                                  fontSize: 16.sp),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Divider(
-                                        thickness: 1.sp,
-                                        color: MyColors.primaryColor,
-                                      ),
-                                      // ignore: deprecated_member_use
-                                      FlatButton(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Logout',
-                                              style: TextStyle(
-                                                color:
-                                                    MyColors.primaryColorLight,
-                                                fontSize: 16.sp,
-                                                shadows: [
-                                                  Shadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.8),
-                                                      offset: Offset(8.0, 6.0),
-                                                      blurRadius: 15),
-                                                ],
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.logout,
-                                              color: MyColors.primaryColorLight,
-                                            ),
-                                          ],
-                                        ),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) =>
-                                                CustomDialogBox(
-                                              title: 'Exit App',
-                                              descriptions:
-                                                  'Are you sure you want to exit the app?',
-                                              text: '',
-                                              imgUrl: currentImageUrl ??
-                                                  'assets/img/black-house-01.jpeg',
-                                            ),
-                                          );
-                                        },
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
+                              child: Container(
+                                width: double.infinity,
+                                height: menuContainerHeight * 1.45.h,
+                                child: Column(
+                                  children: <Widget>[
+                                    MyButton(
+                                      text: 'Profile',
+                                      iconData: Icons.person,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: ProfilePageUserDetailSave(
+                                        imageUrl: currentImageUrl,
+                                        currentIdUser: currentIdUser,
+                                      ),
+                                    ),
+                                    MyButton(
+                                      text: 'Notifications',
+                                      iconData: Icons.notifications,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: Inbox(
+                                        idUser: widget.idUser,
+                                      ),
+                                    ),
+                                    MyButton(
+                                      text: 'My Post',
+                                      iconData: Icons.ad_units,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: PostsListApartments(
+                                        contactNumber: widget.contactNumber,
+                                        email: widget.email,
+                                        firstName: widget.firstName,
+                                        lastName: widget.lastName,
+                                        idUser: widget.idUser,
+                                      ),
+                                    ),
+                                    MyButton(
+                                      text: 'eRoom Chats',
+                                      iconData: Icons.chat,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: ChatsPage(
+                                        contactNumber: contactNumber,
+                                        currentIdUser: currentIdUser,
+                                        currentImageUrl: currentImageUrl,
+                                      ),
+                                    ),
+                                    MyButton(
+                                      text: 'Favourites',
+                                      iconData: Icons.favorite,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: Favourites(
+                                        idUser: widget.idUser,
+                                        contactNumber: widget.contactNumber,
+                                        email: widget.email,
+                                        firstName: widget.firstName,
+                                        lastName: widget.lastName,
+                                      ),
+                                    ),
+                                    MyButton(
+                                      text: 'Contact Us',
+                                      iconData: Icons.contact_phone,
+                                      textSize: 16.sp,
+                                      height: (menuContainerHeight) / 8.h,
+                                      widget: ContactUs(),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => AppLauncherUtils.openLink(
+                                          url: 'https://flutter.dev/'),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Icon(
+                                            Icons.edit_sharp,
+                                            color: MyColors.primaryColor,
+                                          ),
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Text(
+                                            'terms and conditions',
+                                            style: TextStyle(
+                                              shadows: [
+                                                Shadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.8),
+                                                  offset: Offset(8.0, 6.0),
+                                                  blurRadius: 15.0.r,
+                                                ),
+                                              ],
+                                              color: MyColors.primaryColorLight,
+                                              fontSize: 16.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      thickness: 1.sp,
+                                      color: MyColors.primaryColor,
+                                    ),
+                                    // ignore: deprecated_member_use
+                                    FlatButton(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Logout',
+                                            style: TextStyle(
+                                              color: MyColors.primaryColorLight,
+                                              fontSize: 16.sp,
+                                              shadows: [
+                                                Shadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.8),
+                                                  offset: Offset(8.0, 6.0),
+                                                  blurRadius: 15,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.logout,
+                                            color: MyColors.primaryColorLight,
+                                          ),
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => CustomDialogBox(
+                                            title: 'Exit App',
+                                            descriptions:
+                                                'Are you sure you want to exit the app?',
+                                            text: '',
+                                            imgUrl: currentImageUrl ??
+                                                'assets/img/black-house-01.jpeg',
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                bottomNavigationBar: _createBottomNavigationBar(),
               ),
+              bottomNavigationBar: _createBottomNavigationBar(),
             );
           },
         );
@@ -517,17 +520,24 @@ class _MainPostsPageState extends State<MainPostsPage> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: MyColors.primaryColor,
         unselectedItemColor: Colors.white,
-        selectedFontSize: 15.0,
-        unselectedFontSize: 14.0,
+        selectedFontSize: 15.0.sp,
+        unselectedFontSize: 14.0.sp,
         onTap: _onItemTap,
         currentIndex: _bottomBarIndex,
         backgroundColor: Colors.transparent,
         items: [
-          BottomNavigationBarItem(icon: new Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.post_add), label: 'Create Post'),
+            icon: new Icon(Icons.dashboard),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: 'Search Post'),
+            icon: Icon(Icons.post_add),
+            label: 'Create Post',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search Post',
+          ),
         ],
       ),
     );

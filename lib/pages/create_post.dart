@@ -129,24 +129,29 @@ class _CreatePostState extends State<CreatePost> {
         child: SafeArea(
           //onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height.h,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+                topLeft: Radius.circular(30.0.r),
+                topRight: Radius.circular(30.0.r),
               ),
             ),
             child: SingleChildScrollView(
               child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 25.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(
+                  top: 25.0.h,
+                  left: 16.0.w,
+                  right: 16.0.w,
+                ),
                 child: Column(
                   children: <Widget>[
                     //CustomDropdown(text: 'Call to nothing'),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.0.w,
+                        vertical: 2.0.h,
+                      ),
                       decoration: BoxDecoration(
                         color: MyColors.textFieldColor,
                         borderRadius: BorderRadius.circular(8.0.r),
@@ -160,12 +165,12 @@ class _CreatePostState extends State<CreatePost> {
                           'Select Room/Type',
                           style: TextStyle(
                             color: Colors.blueGrey,
-                            fontSize: 18.0,
+                            fontSize: 18.0.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         isExpanded: true,
-                        iconSize: 30.0,
+                        iconSize: 30.0.sp,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -179,7 +184,7 @@ class _CreatePostState extends State<CreatePost> {
                                 val,
                                 style: TextStyle(
                                   color: Colors.blueGrey,
-                                  fontSize: 18.0,
+                                  fontSize: 18.0.sp,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -194,7 +199,7 @@ class _CreatePostState extends State<CreatePost> {
                         },
                       ),
                     ),
-                    SizedBox(height: 4.0),
+                    SizedBox(height: 4.0.h),
                     CustomTextField(
                       hintTxt: '4800.00',
                       labelTxt: 'Price',
@@ -228,10 +233,12 @@ class _CreatePostState extends State<CreatePost> {
                       errorText: 'Please fill in the description',
                       textInputType: TextInputType.text,
                     ),
-                    SizedBox(height: 4.0),
+                    SizedBox(height: 4.0.h),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.0.w,
+                        vertical: 2.0.h,
+                      ),
                       decoration: BoxDecoration(
                         color: MyColors.textFieldColor,
                         borderRadius: BorderRadius.circular(8.0.r),
@@ -245,12 +252,12 @@ class _CreatePostState extends State<CreatePost> {
                           'Select Province',
                           style: TextStyle(
                             color: Colors.blueGrey,
-                            fontSize: 18.0,
+                            fontSize: 18.0.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         isExpanded: true,
-                        iconSize: 30.0,
+                        iconSize: 30.0.sp,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -264,7 +271,7 @@ class _CreatePostState extends State<CreatePost> {
                                 val,
                                 style: TextStyle(
                                   color: Colors.blueGrey,
-                                  fontSize: 16.0,
+                                  fontSize: 16.0.sp,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -278,10 +285,12 @@ class _CreatePostState extends State<CreatePost> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 10.0.h),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.0.w,
+                        vertical: 2.0.h,
+                      ),
                       decoration: BoxDecoration(
                         color: MyColors.textFieldColor,
                         borderRadius: BorderRadius.circular(8.0.r),
@@ -291,13 +300,13 @@ class _CreatePostState extends State<CreatePost> {
                         //underline: SizedBox(),
                         decoration: InputDecoration.collapsed(hintText: ''),
                         isExpanded: true,
-                        iconSize: 30.0,
+                        iconSize: 30.0.sp,
                         value: _city,
                         hint: Text(
                           'Select City',
                           style: TextStyle(
                             color: Colors.blueGrey,
-                            fontSize: 18.0,
+                            fontSize: 18.0.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -310,7 +319,7 @@ class _CreatePostState extends State<CreatePost> {
                               value,
                               style: TextStyle(
                                 color: Colors.blueGrey,
-                                fontSize: 18.0,
+                                fontSize: 18.0.sp,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -324,7 +333,7 @@ class _CreatePostState extends State<CreatePost> {
                         },
                       ),
                     ),
-                    SizedBox(height: 4.0),
+                    SizedBox(height: 4.0.h),
                     CustomTextField(
                       hintTxt: 'Midrand',
                       labelTxt: 'Suburb',
@@ -336,12 +345,12 @@ class _CreatePostState extends State<CreatePost> {
                       errorText: 'Please fill in the suburb',
                       textInputType: TextInputType.streetAddress,
                     ),
-                    SizedBox(height: 3.0),
+                    SizedBox(height: 3.0.h),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.add_a_photo,
                         color: MyColors.primaryColor,
-                        size: 40.0,
+                        size: 40.0.sp,
                       ),
                       tooltip: 'Add Images',
                       onPressed: () {
@@ -357,19 +366,21 @@ class _CreatePostState extends State<CreatePost> {
                                       3.8.h,
                                   child: ListView.builder(
                                     physics: BouncingScrollPhysics(
-                                        parent: BouncingScrollPhysics()),
+                                      parent: BouncingScrollPhysics(),
+                                    ),
                                     itemCount: 1,
                                     itemBuilder: (BuildContext context, index) {
                                       return GestureDetector(
                                         onTap: () => Navigator.of(context)
                                             .pop(), // Closing the sheet.
                                         child: Container(
-                                          margin: EdgeInsets.all(5.0),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 0.0, vertical: 0.0),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 8.h,
+                                          ),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0),
+                                              Radius.circular(5.0.r),
                                             ),
                                           ),
                                           child: Container(
@@ -378,7 +389,7 @@ class _CreatePostState extends State<CreatePost> {
                                               Text(
                                                 'Upload Picture',
                                                 style: TextStyle(
-                                                  fontSize: 24.0,
+                                                  fontSize: 24.0.sp,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
@@ -433,15 +444,17 @@ class _CreatePostState extends State<CreatePost> {
                       },
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 24.h,
+                      ),
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           imageFiles != null
                               ? Container(
-                                  height: 70.0,
+                                  height: 70.0.h,
                                   padding: EdgeInsets.all(1.0),
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
@@ -463,14 +476,20 @@ class _CreatePostState extends State<CreatePost> {
                                         return SizedBox.shrink();
                                       } else {
                                         return Container(
-                                          padding: EdgeInsets.only(right: 5.0),
-                                          margin: EdgeInsets.only(right: 5.0),
-                                          width: 75.0,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 8.h,
+                                          ),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 8.h,
+                                          ),
+                                          width: 75.0.w,
                                           child: IconButton(
                                             splashColor: MyColors.primaryColor,
                                             icon: Icon(
                                               Icons.cancel_outlined,
-                                              size: 40,
+                                              size: 40.sp,
                                               color: Colors.black54,
                                             ),
                                             onPressed: () {

@@ -3,6 +3,7 @@ import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/post_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PostSearchResultsDisplay extends StatelessWidget {
   final double minPrice;
@@ -32,7 +33,7 @@ class PostSearchResultsDisplay extends StatelessWidget {
           title: Text(
             'Search Results',
             style: TextStyle(
-              fontSize: 22.0,
+              fontSize: 22.0.sp,
               fontWeight: FontWeight.w600,
               color: Colors.white70,
             ),
@@ -46,8 +47,8 @@ class PostSearchResultsDisplay extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
+                    topLeft: Radius.circular(20.0.r),
+                    topRight: Radius.circular(20.0.r),
                   ),
                 ),
                 child: Container(

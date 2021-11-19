@@ -128,14 +128,16 @@ class _PostInfoState extends State<PostInfo> {
           elevation: 0.0,
           actions: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 15.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: 15.w,
+              ),
               child: GestureDetector(
                 onTap: share,
-                child: Icon(Icons.share, size: 22.0),
+                child: Icon(Icons.share, size: 22.0.sp),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15.0),
+              padding: EdgeInsets.only(right: 15.0.w),
               child: GestureDetector(
                 onTap: () {
                   String msg = '';
@@ -168,7 +170,7 @@ class _PostInfoState extends State<PostInfo> {
 
                   Fluttertoast.showToast(
                     msg: msg,
-                    fontSize: 18.0,
+                    fontSize: 18.0.sp,
                     backgroundColor: Colors.black87.withOpacity(.7),
                     textColor: Colors.white,
                   );
@@ -192,8 +194,8 @@ class _PostInfoState extends State<PostInfo> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
+                          topLeft: Radius.circular(30.0.r),
+                          topRight: Radius.circular(30.0.r),
                         ),
                       ),
                       child: Container(
@@ -229,11 +231,10 @@ class _PostInfoState extends State<PostInfo> {
                                 child: Column(
                                   children: <Widget>[
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 32.0,
-                                          bottom: 20.0,
-                                          right: 32.0,
-                                          top: 18.0),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 32.w,
+                                        vertical: 20.h,
+                                      ),
                                       child: titleSection(
                                         title: widget.advert.title ?? '',
                                         description:
@@ -248,9 +249,9 @@ class _PostInfoState extends State<PostInfo> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                        left: 32.0,
-                                        bottom: 20.0,
-                                        right: 32.0,
+                                        left: 32.0.w,
+                                        bottom: 20.0.h,
+                                        right: 32.0.w,
                                       ),
                                       child: Column(
                                         children: [
@@ -272,7 +273,7 @@ class _PostInfoState extends State<PostInfo> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 5.0),
+                                    SizedBox(height: 5.0.h),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -343,10 +344,6 @@ class _PostInfoState extends State<PostInfo> {
                                                   );
                                                 },
                                               );
-                                              // }).catchError((e) {
-                                              //   print('BusinessApi.getUser: ' +
-                                              //       e.toString());
-                                              // });
                                             },
                                           ),
                                           'eRoom Chat',
@@ -410,9 +407,12 @@ class _PostInfoState extends State<PostInfo> {
                   color: Colors.grey.shade900,
                   fontWeight: FontWeight.bold),
               SizedBox(
-                width: 50.0,
+                width: 50.0.w,
               ),
-              buildText(text: data, color: Colors.grey.shade900),
+              buildText(
+                text: data,
+                color: Colors.grey.shade900,
+              ),
             ],
           ),
         ],
@@ -420,12 +420,12 @@ class _PostInfoState extends State<PostInfo> {
 
   Widget buildText({String text, Color color, FontWeight fontWeight}) =>
       Container(
-        padding: EdgeInsets.only(top: 5.0),
+        padding: EdgeInsets.only(top: 5.0.h),
         child: Text(
           text,
           style: TextStyle(
             fontWeight: fontWeight,
-            fontSize: 14.0,
+            fontSize: 14.0.sp,
             color: color,
           ),
           softWrap: true,
@@ -435,10 +435,13 @@ class _PostInfoState extends State<PostInfo> {
 
   Widget titleSection({String title, String description, String updatedAt}) =>
       Container(
-        padding: const EdgeInsets.only(bottom: 3.5, right: 10),
+        padding: EdgeInsets.only(bottom: 3.5.h, right: 10.w),
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: Colors.grey.shade800, width: 2.0.w),
+            bottom: BorderSide(
+              color: Colors.grey.shade800,
+              width: 2.0.w,
+            ),
           ),
         ),
         child: Row(
@@ -448,7 +451,7 @@ class _PostInfoState extends State<PostInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(bottom: 8.0),
+                    padding: EdgeInsets.only(bottom: 8.0.h),
                     child: Text(
                       title ?? '',
                       style: TextStyle(
@@ -498,11 +501,11 @@ class _PostInfoState extends State<PostInfo> {
       children: [
         iconButton,
         Container(
-          margin: const EdgeInsets.only(top: 8),
+          margin: EdgeInsets.only(top: 8.h),
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: color,
             ),
@@ -516,8 +519,10 @@ class _PostInfoState extends State<PostInfo> {
     String text = 'https://medium.com/@suryadevsingh24032000';
     String subject = 'follow me';
     final RenderBox box = context.findRenderObject();
-    Share.share(text,
-        subject: subject,
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    Share.share(
+      text,
+      subject: subject,
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+    );
   }
 }

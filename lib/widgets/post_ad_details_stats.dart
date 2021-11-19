@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PostAdDetailStatus extends StatelessWidget {
   final Color color;
@@ -11,13 +12,13 @@ class PostAdDetailStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.0,
+      height: 60.0.h,
       decoration: BoxDecoration(
         //color: Color(0xFF26ED41),
         color: color,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+          topLeft: Radius.circular(30.0.r),
+          topRight: Radius.circular(30.0.r),
         ),
       ),
       child: Center(
@@ -28,7 +29,7 @@ class PostAdDetailStatus extends StatelessWidget {
               textStatus.toUpperCase(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 20.0.sp,
                 //fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

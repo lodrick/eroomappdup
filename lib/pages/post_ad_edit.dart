@@ -1,14 +1,12 @@
 import 'package:eRoomApp/api/fire_business_api.dart';
-//import 'package:eRoomApp/api/province_api.dart';
 import 'package:eRoomApp/models/advert.dart';
-//import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
-//import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:eRoomApp/widgets/dialog_box_post_confirm.dart';
 import 'package:eRoomApp/widgets/post_ad_details_stats.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class PostAdEdit extends StatefulWidget {
@@ -103,7 +101,7 @@ class _PostAdEditState extends State<PostAdEdit> {
         title: Text(
           'Details',
           style: TextStyle(
-            fontSize: 22.0,
+            fontSize: 22.0.sp,
             color: Colors.white70,
           ),
         ),
@@ -113,29 +111,29 @@ class _PostAdEditState extends State<PostAdEdit> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+            topLeft: Radius.circular(30.0.r),
+            topRight: Radius.circular(30.0.r),
           ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height.h,
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: Center(
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0.0, left: 0.0, right: 0.0),
+                          padding: const EdgeInsets.all(0),
                           child: Column(
                             children: <Widget>[
                               PostAdDetailStatus(
                                   color: _color, textStatus: _textStatus),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, right: 16.0),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                ),
                                 child: Column(
                                   children: [
                                     Row(
@@ -144,8 +142,9 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         Text(
                                           'Availability',
                                           style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.blueGrey),
+                                            fontSize: 16.0.sp,
+                                            color: Colors.blueGrey,
+                                          ),
                                         ),
                                         Switch(
                                           value: isSwitched,
@@ -178,11 +177,13 @@ class _PostAdEditState extends State<PostAdEdit> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 2.0),
+                                        horizontal: 20.0.w,
+                                        vertical: 2.0.h,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: Colors.amber.shade50,
                                         borderRadius:
-                                            BorderRadius.circular(25.0),
+                                            BorderRadius.circular(25.0.r),
                                       ),
                                       child: DropdownButton(
                                         dropdownColor: Colors.blueGrey[100],
@@ -191,12 +192,12 @@ class _PostAdEditState extends State<PostAdEdit> {
                                           'Select Room/Type',
                                           style: TextStyle(
                                             color: Colors.blueGrey,
-                                            fontSize: 16.0,
+                                            fontSize: 18.0.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                         isExpanded: true,
-                                        iconSize: 30.0,
+                                        iconSize: 30.0.sp,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -208,7 +209,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                                 val,
                                                 style: TextStyle(
                                                   color: Colors.black54,
-                                                  fontSize: 18.0,
+                                                  fontSize: 18.0.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),
@@ -253,11 +254,13 @@ class _PostAdEditState extends State<PostAdEdit> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 2.0),
+                                        horizontal: 20.0.w,
+                                        vertical: 2.0.h,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: Colors.amber.shade50,
                                         borderRadius:
-                                            BorderRadius.circular(25.0),
+                                            BorderRadius.circular(25.0.r),
                                       ),
                                       child: DropdownButton(
                                         dropdownColor: Colors.blueGrey[100],
@@ -267,12 +270,12 @@ class _PostAdEditState extends State<PostAdEdit> {
                                           'Select Province',
                                           style: TextStyle(
                                             color: Colors.blueGrey,
-                                            fontSize: 16.0,
+                                            fontSize: 18.0.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                         isExpanded: true,
-                                        iconSize: 30.0,
+                                        iconSize: 30.0.sp,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -284,7 +287,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                                 val,
                                                 style: TextStyle(
                                                   color: Colors.blueGrey,
-                                                  fontSize: 18.0,
+                                                  fontSize: 18.0.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),
@@ -306,26 +309,28 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(height: 10.0),
+                                    SizedBox(height: 10.0.h),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 2.0),
+                                        horizontal: 20.0.w,
+                                        vertical: 2.0.h,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: Colors.amber.shade50,
                                         borderRadius:
-                                            BorderRadius.circular(25.0),
+                                            BorderRadius.circular(25.0.r),
                                       ),
                                       child: DropdownButton(
                                         dropdownColor: Colors.blueGrey[100],
                                         underline: SizedBox(),
                                         isExpanded: true,
-                                        iconSize: 30.0,
+                                        iconSize: 30.0.sp,
                                         value: _city,
                                         hint: Text(
                                           'Select City',
                                           style: TextStyle(
                                             color: Colors.blueGrey,
-                                            fontSize: 18.0,
+                                            fontSize: 18.0.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -336,7 +341,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                               value,
                                               style: TextStyle(
                                                 color: Colors.blueGrey,
-                                                fontSize: 18.0,
+                                                fontSize: 18.0.sp,
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
@@ -428,7 +433,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                       ),
                                       controller: suburbController,
                                     ),
-                                    SizedBox(height: 10.0),
+                                    SizedBox(height: 10.0.h),
                                   ],
                                 ),
                               ),
@@ -472,18 +477,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                 idUser: widget.idUser,
               ),
             );
-            /*Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => MainPostsPage(
-                  firstName: widget.firstName,
-                  lastName: widget.lastName,
-                  contactNumber: widget.contactNumber,
-                  email: widget.email,
-                  idUser: widget.idUser,
-                ),
-              ),
-              (Route<dynamic> route) => false,
-            );*/
+
             Fluttertoast.showToast(
               msg: 'Post updated.',
               backgroundColor: Colors.black12.withOpacity(.7),
@@ -501,7 +495,7 @@ class _PostAdEditState extends State<PostAdEdit> {
         },
         child: Icon(
           Icons.check,
-          size: 30.0,
+          size: 30.0.sp,
           color: Colors.white70,
         ),
         backgroundColor: MyColors.primaryColor,

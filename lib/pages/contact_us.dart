@@ -1,6 +1,7 @@
 import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class ContactUs extends StatelessWidget {
@@ -11,11 +12,11 @@ class ContactUs extends StatelessWidget {
       children: [
         Icon(icon, color: color),
         Container(
-          margin: const EdgeInsets.only(top: 8),
+          margin: EdgeInsets.only(top: 8.h),
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: color,
             ),
@@ -35,7 +36,7 @@ class ContactUs extends StatelessWidget {
         title: Text(
           'Contact Us',
           style: TextStyle(
-            fontSize: 20.0,
+            fontSize: 20.0.sp,
             color: Colors.white70,
           ),
         ),
@@ -51,8 +52,8 @@ class ContactUs extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(30.0.r),
+                    topRight: Radius.circular(30.0.r),
                   ),
                 ),
                 child: Padding(
@@ -60,11 +61,11 @@ class ContactUs extends StatelessWidget {
                   child: ListView(
                     children: [
                       Container(
-                        height: 240.0,
+                        height: 240.0.h,
                         decoration: new BoxDecoration(
                           borderRadius: new BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0),
+                            topLeft: Radius.circular(30.0.r),
+                            topRight: Radius.circular(30.0.r),
                           ),
                           image: new DecorationImage(
                             image: new AssetImage('assets/img/living_room.png'),
@@ -85,7 +86,7 @@ class ContactUs extends StatelessWidget {
       ),
       persistentFooterButtons: [
         Container(
-          width: 600.0,
+          width: 600.0.w,
           child: Text(
             'Copyright 2021, All Rights Reserved.',
             textAlign: TextAlign.center,
@@ -98,7 +99,7 @@ class ContactUs extends StatelessWidget {
         GestureDetector(
           onTap: () => AppLauncherUtils.openLink(url: 'https://flutter.dev/'),
           child: Container(
-            width: 600.0,
+            width: 600.0.w,
             child: Text(
               'Powered by ReaCode',
               textAlign: TextAlign.center,
@@ -115,7 +116,7 @@ class ContactUs extends StatelessWidget {
   }
 
   Widget titleSection = Container(
-    padding: const EdgeInsets.all(32.0),
+    padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.h),
     child: Row(
       children: [
         Expanded(
@@ -123,7 +124,7 @@ class ContactUs extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 8.0.h),
                 child: Text(
                   'eRoom for the win',
                   style: TextStyle(
@@ -151,30 +152,47 @@ class ContactUs extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
-          onTap: () =>
-              AppLauncherUtils.openPhoneCall(phoneNumber: '+27680308734'),
-          child: _buildButtonColumn(MyColors.primaryColor, Icons.call, 'CALL'),
+          onTap: () => AppLauncherUtils.openPhoneCall(
+            phoneNumber: '+27680308734',
+          ),
+          child: _buildButtonColumn(
+            MyColors.primaryColor,
+            Icons.call,
+            'CALL',
+          ),
         ),
         GestureDetector(
           onTap: () => AppLauncherUtils.openWhatsApp(
-              phoneNumber: '+27680308734', message: 'The room is available.'),
+            phoneNumber: '+27680308734',
+            message: 'The room is available.',
+          ),
           child: _buildButtonColumn(
-              MyColors.primaryColor, Icons.near_me, 'WHATSAPP'),
+            MyColors.primaryColor,
+            Icons.near_me,
+            'WHATSAPP',
+          ),
         ),
         GestureDetector(
           onTap: () => AppLauncherUtils.openEmail(
-              toEmail: 'lodrick.mpanze0@gmail.com',
-              subject: 'Subject',
-              body: 'Hi how are you.'),
-          child:
-              _buildButtonColumn(MyColors.primaryColor, Icons.email, 'Email'),
+            toEmail: 'lodrick.mpanze0@gmail.com',
+            subject: 'Subject',
+            body: 'Hi how are you.',
+          ),
+          child: _buildButtonColumn(
+            MyColors.primaryColor,
+            Icons.email,
+            'Email',
+          ),
         ),
       ],
     ),
   );
 
   Widget textSection = Container(
-    padding: const EdgeInsets.all(32.0),
+    padding: EdgeInsets.symmetric(
+      horizontal: 30.w,
+      vertical: 30.h,
+    ),
     child: Text(
       'Its a great platform that connects the property owners who have  '
       'available rooms or cottages for rental. '

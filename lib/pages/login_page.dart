@@ -50,8 +50,8 @@ class _LoginPageState extends State<LoginPage> {
                                         constraints: BoxConstraints(
                                           maxWidth: 500.w,
                                         ),
-                                        margin: const EdgeInsets.only(
-                                          top: 100,
+                                        margin: EdgeInsets.only(
+                                          top: 100.h,
                                         ),
                                         decoration: BoxDecoration(
                                           //color: Color(0xFFE1E0F5),
@@ -67,7 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                                           maxHeight: 300.h,
                                         ),
                                         margin: EdgeInsets.symmetric(
-                                            horizontal: 8.0.w, vertical: 5.0.h),
+                                          horizontal: 8.0.w,
+                                          vertical: 5.0.h,
+                                        ),
                                         child: Image.asset(
                                             'assets/img/eroom_logo.jpeg'),
                                         alignment: Alignment.center,
@@ -76,19 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
-                              /*Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                ),
-                                child: Text(
-                                  'eRoomApp',
-                                  style: TextStyle(
-                                    color: MyColors.primaryColor,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              )*/
                             ],
                           ),
                         ),

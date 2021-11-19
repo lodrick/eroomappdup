@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintTxt;
@@ -22,10 +23,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 3.w,
+        vertical: 3.h,
+      ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(25.0.r),
         ),
         child: TextFormField(
           autocorrect: true,
@@ -56,7 +60,7 @@ class CustomTextField extends StatelessWidget {
             border: InputBorder.none,
           ),
           style: TextStyle(
-            fontSize: 16.0,
+            fontSize: 16.0.sp,
           ),
           controller: controller,
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:provider/provider.dart';
 import 'package:eRoomApp/stores/login_store.dart';
@@ -26,24 +27,33 @@ class _OtpPageState extends State<OtpPage> {
   Widget otpNumberWidget(int position) {
     try {
       return Container(
-        height: 40,
-        width: 40,
+        height: 40.h,
+        width: 40.w,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 0),
-            borderRadius: const BorderRadius.all(Radius.circular(8))),
+          border: Border.all(color: Colors.black, width: 0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8.r),
+          ),
+        ),
         child: Center(
-            child: Text(
-          text[position],
-          style: TextStyle(color: Colors.black),
-        )),
+          child: Text(
+            text[position],
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
       );
     } catch (e) {
       return Container(
-        height: 40,
-        width: 40,
+        height: 40.h,
+        width: 40.w,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 0),
-            borderRadius: const BorderRadius.all(Radius.circular(8))),
+          border: Border.all(color: Colors.black, width: 0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8.r),
+          ),
+        ),
       );
     }
   }
@@ -61,15 +71,20 @@ class _OtpPageState extends State<OtpPage> {
               appBar: AppBar(
                 leading: IconButton(
                   icon: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 10.h,
+                    ),
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20.r),
+                      ),
                       color: MyColors.primaryColorLight.withAlpha(20),
                     ),
                     child: Icon(
                       Icons.arrow_back_ios,
                       color: MyColors.primaryColor,
-                      size: 16,
+                      size: 16.sp,
                     ),
                   ),
                   onPressed: () => Navigator.of(context).pop(),
@@ -88,42 +103,45 @@ class _OtpPageState extends State<OtpPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Text(
-                                    'Enter 6 digits verification code sent to your number',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w500,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                ),
+                                child: Wrap(
+                                  children: [
+                                    Text(
+                                      'Enter 6 digits verification code sent to your number',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 26.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                Container(
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 500.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      otpNumberWidget(0),
-                                      otpNumberWidget(1),
-                                      otpNumberWidget(2),
-                                      otpNumberWidget(3),
-                                      otpNumberWidget(4),
-                                      otpNumberWidget(5),
-                                    ],
-                                  ),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(
+                                  maxWidth: 500.0.w,
                                 ),
-                              ],
-                            ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    otpNumberWidget(0),
+                                    otpNumberWidget(1),
+                                    otpNumberWidget(2),
+                                    otpNumberWidget(3),
+                                    otpNumberWidget(4),
+                                    otpNumberWidget(5),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(

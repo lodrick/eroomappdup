@@ -7,6 +7,7 @@ import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainSearchPostPage extends StatefulWidget {
@@ -53,50 +54,54 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(30.0.r),
+                    topRight: Radius.circular(30.0.r),
                   ),
                 ),
                 child: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
                       height: MediaQuery.of(context).size.height,
-                      padding: const EdgeInsets.only(
-                          left: 16.0, right: 16.0, top: 30.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 30.h,
+                      ),
                       child: Column(
                         children: <Widget>[
                           Center(
                             child: Text(
                               'Price Range',
                               style: TextStyle(
-                                fontSize: 24.0,
+                                fontSize: 24.0.sp,
                                 fontFamily: 'OpenSans',
                                 color: Colors.blueGrey[600],
                                 fontWeight: FontWeight.w400,
                                 shadows: [
                                   Shadow(
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(2.0, 4.0),
-                                      blurRadius: 10.0),
+                                    color: Colors.black.withOpacity(0.5),
+                                    offset: Offset(2.0, 4.0),
+                                    blurRadius: 10.0.r,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 5.0),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w,
+                                    ),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Color(0xFFFFF8E1),
                                         borderRadius:
-                                            BorderRadius.circular(30.0),
+                                            BorderRadius.circular(30.0.r),
                                       ),
                                       child: TextFormField(
                                         controller: minPriceController,
@@ -134,12 +139,15 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                    ),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Color(0xFFFFF8E1),
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
+                                        borderRadius: BorderRadius.circular(
+                                          30.0.r,
+                                        ),
                                       ),
                                       child: TextFormField(
                                         controller: maxPriceControler,
@@ -180,12 +188,12 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 20.0,
-                              vertical: 2.0,
+                              horizontal: 20.0.w,
+                              vertical: 2.0.h,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.amber.shade50,
-                              borderRadius: BorderRadius.circular(25.0),
+                              borderRadius: BorderRadius.circular(25.0.r),
                             ),
                             child: DropdownButtonFormField(
                               dropdownColor: Colors.white,
@@ -196,12 +204,12 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                 'Select Province',
                                 style: TextStyle(
                                   color: Colors.blueGrey,
-                                  fontSize: 18.0,
+                                  fontSize: 18.0.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               isExpanded: true,
-                              iconSize: 30.0,
+                              iconSize: 30.0.sp,
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -216,7 +224,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                       val,
                                       style: TextStyle(
                                         color: Colors.blueGrey,
-                                        fontSize: 18.0,
+                                        fontSize: 18.0.sp,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -231,26 +239,28 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 10.0),
+                          SizedBox(height: 10.0.h),
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 2.0),
+                              horizontal: 20.0.w,
+                              vertical: 2.0.h,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.amber.shade50,
-                              borderRadius: BorderRadius.circular(25.0),
+                              borderRadius: BorderRadius.circular(25.0.r),
                             ),
                             child: DropdownButtonFormField(
                               dropdownColor: Colors.blueGrey[100],
                               decoration:
                                   InputDecoration.collapsed(hintText: ''),
                               isExpanded: true,
-                              iconSize: 30.0,
+                              iconSize: 30.0.sp,
                               value: _city,
                               hint: Text(
                                 'Select City',
                                 style: TextStyle(
                                   color: Colors.blueGrey,
-                                  fontSize: 18.0,
+                                  fontSize: 18.0.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -263,7 +273,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                                     value,
                                     style: TextStyle(
                                       color: Colors.blueGrey,
-                                      fontSize: 18.0,
+                                      fontSize: 18.0.sp,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -277,7 +287,7 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 4.0),
+                          SizedBox(height: 4.0.h),
                           CustomTextField(
                             errorText: 'Suburb is required.',
                             controller: suburbController,

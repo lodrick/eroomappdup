@@ -50,7 +50,10 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.w,
+        vertical: 10.h,
+      ),
       child: buildAdverts(),
     );
   }
@@ -93,8 +96,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               );
             },
             child: Container(
-              height: MediaQuery.of(context).size.height.h / 2.1,
-              padding: EdgeInsets.only(bottom: 10.0),
+              height: MediaQuery.of(context).size.height.h / 2.1.h,
+              padding: EdgeInsets.only(bottom: 10.0.h),
               child: Card(
                 clipBehavior: Clip.antiAlias,
                 elevation: 4.0,
@@ -149,7 +152,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(right: 16.0, left: 16.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -164,14 +167,11 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
-                              left: 10.0,
-                              right: 10.0,
-                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: Text(
                               'Available',
                               style: TextStyle(
-                                fontSize: 18.0,
+                                fontSize: 18.0.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.amberAccent,
                               ),
