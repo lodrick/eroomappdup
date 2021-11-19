@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessagesWidget extends StatefulWidget {
   final String peerId;
@@ -103,7 +104,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 24.sp,
             color: Colors.black.withOpacity(.6),
           ),
         ),

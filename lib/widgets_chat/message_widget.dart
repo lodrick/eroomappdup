@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets_chat/full_photo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageWidget extends StatelessWidget {
   final String peerAvatar;
@@ -18,7 +19,7 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = Radius.circular(12.0);
+    final radius = Radius.circular(12.0.r);
     final borderRadius = BorderRadius.all(radius);
     print(this.currentUserId);
     return Row(
@@ -28,12 +29,20 @@ class MessageWidget extends StatelessWidget {
       children: <Widget>[
         if (this.currentUserId != document.get('idFrom'))
           CircleAvatar(
-              radius: 16, backgroundImage: NetworkImage(this.peerAvatar)),
+            radius: 16.r,
+            backgroundImage: NetworkImage(this.peerAvatar),
+          ),
         document.get('type') == 0
             ? Container(
-                padding: EdgeInsets.all(9.0),
-                margin: EdgeInsets.all(8.0),
-                constraints: BoxConstraints(maxWidth: 250),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 9.0.w,
+                  vertical: 9.0.h,
+                ),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 8.w,
+                  vertical: 8.h,
+                ),
+                constraints: BoxConstraints(maxWidth: 250.w),
                 decoration: BoxDecoration(
                   color: this.currentUserId == document.get('idFrom')
                       ? MyColors.primaryColorLight
@@ -64,9 +73,15 @@ class MessageWidget extends StatelessWidget {
                 ),
               )
             : Container(
-                padding: EdgeInsets.all(9.0),
-                margin: EdgeInsets.all(8.0),
-                constraints: BoxConstraints(maxWidth: 250),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 9.0.w,
+                  vertical: 9.0.h,
+                ),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 8.0.w,
+                  vertical: 8.0.h,
+                ),
+                constraints: BoxConstraints(maxWidth: 250.w),
                 decoration: BoxDecoration(
                   color: this.currentUserId == document.get('idFrom')
                       ? MyColors.primaryColorLight
@@ -97,11 +112,11 @@ class MessageWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: MyColors.primaryColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8.0),
+                            Radius.circular(8.0.r),
                           ),
                         ),
-                        width: 200.0,
-                        height: 200.0,
+                        width: 200.0.w,
+                        height: 200.0.h,
                         child: Center(
                           child: CircularProgressIndicator(
                             //color: primaryColor,
@@ -118,8 +133,8 @@ class MessageWidget extends StatelessWidget {
                       return Material(
                         child: Image.asset(
                           'images/img_not_available.jpeg',
-                          width: 200.0,
-                          height: 200.0,
+                          width: 200.0.w,
+                          height: 200.0.h,
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.all(
@@ -128,8 +143,8 @@ class MessageWidget extends StatelessWidget {
                         clipBehavior: Clip.hardEdge,
                       );
                     },
-                    width: 180.0,
-                    height: 180.0,
+                    width: 180.0.w,
+                    height: 180.0.h,
                     fit: BoxFit.cover,
                   ),
                 ),

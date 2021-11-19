@@ -5,6 +5,7 @@ import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets_chat/chat_body_wiget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllUsersChat extends StatefulWidget {
   final String contactNumber;
@@ -39,7 +40,7 @@ class _AllUsersChatState extends State<AllUsersChat> {
         title: Text(
           'Select Contact',
           style: TextStyle(
-            fontSize: 22.0,
+            fontSize: 22.0.sp,
             color: Colors.white70,
             fontWeight: FontWeight.w600,
           ),
@@ -71,8 +72,8 @@ class _AllUsersChatState extends State<AllUsersChat> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+              topLeft: Radius.circular(20.0.r),
+              topRight: Radius.circular(20.0.r),
             ),
           ),
           child: StreamBuilder<List<User>>(
@@ -93,9 +94,6 @@ class _AllUsersChatState extends State<AllUsersChat> {
                         users.removeAt(index);
                       }
                     }
-
-                    print(users.length);
-
                     if (users.isEmpty) {
                       return buildText('No Users Found');
                     } else {

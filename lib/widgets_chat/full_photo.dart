@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../theme.dart';
@@ -42,8 +43,8 @@ class _FullPhotoScreenState extends State<FullPhotoScreen> {
       decoration: BoxDecoration(
         color: MyColors.primaryColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25.0),
-          topRight: Radius.circular(25.0),
+          topLeft: Radius.circular(25.0.r),
+          topRight: Radius.circular(25.0.r),
         ),
       ),
       child: PhotoView(

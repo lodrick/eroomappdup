@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/pages_chat/chat_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatBodyWidget extends StatefulWidget {
   final List<User> users;
@@ -39,12 +40,15 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
   @override
   Widget build(BuildContext context) => Expanded(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.w,
+            vertical: 10.h,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
+              topLeft: Radius.circular(25.r),
+              topRight: Radius.circular(25.r),
             ),
           ),
           child: buildChats(),
@@ -61,7 +65,7 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
             return SizedBox.shrink();
           } else {
             return Container(
-              height: 75.0,
+              height: 75.0.h,
               child: ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -73,7 +77,7 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
                   ));
                 },
                 leading: CircleAvatar(
-                  radius: 25,
+                  radius: 25.r,
                   backgroundImage: NetworkImage(user.imageUrl ??
                       'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png'),
                 ),

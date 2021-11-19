@@ -4,6 +4,7 @@ import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/widgets_chat/messages_widget.dart';
 import 'package:eRoomApp/widgets_chat/new_message_widget.dart';
 import 'package:eRoomApp/widgets_chat/profile_header_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatPage extends StatefulWidget {
   final User user;
@@ -35,12 +36,12 @@ class _ChatPageState extends State<ChatPage> {
                 name: widget.user.name + ' ' + widget.user.surname),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
+                    topLeft: Radius.circular(25.r),
+                    topRight: Radius.circular(25.r),
                   ),
                 ),
                 child: MessagesWidget(

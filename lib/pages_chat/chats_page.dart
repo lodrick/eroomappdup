@@ -9,6 +9,7 @@ import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/widgets_chat/chat_body_wiget.dart';
 import 'package:eRoomApp/widgets_chat/chat_header_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatsPage extends StatefulWidget {
   final String contactNumber;
@@ -40,7 +41,7 @@ class _ChatsPageState extends State<ChatsPage> {
           title: Text(
             'Chats',
             style: TextStyle(
-              fontSize: 22.0,
+              fontSize: 22.0.sp,
               fontWeight: FontWeight.w600,
               color: Colors.white70,
             ),
@@ -86,14 +87,18 @@ class _ChatsPageState extends State<ChatsPage> {
                             children: [
                               ListTile(
                                 contentPadding: EdgeInsets.zero,
-                                leading: Icon(item.iconData,
-                                    size: 25.0, color: MyColors.sidebar),
+                                leading: Icon(
+                                  item.iconData,
+                                  size: 25.0.sp,
+                                  color: MyColors.sidebar,
+                                ),
                                 title: Text(
                                   item.text,
                                   softWrap: true,
                                   style: TextStyle(
-                                      color: MyColors.sidebar,
-                                      fontWeight: FontWeight.w500),
+                                    color: MyColors.sidebar,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                               Divider(

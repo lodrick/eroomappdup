@@ -91,7 +91,10 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
           color: Colors.white,
         ),
         //color: Colors.white,
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.w,
+          vertical: 8.w,
+        ),
         child: Row(
           children: <Widget>[
             IconButton(
@@ -116,11 +119,14 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
                 }),
               ),
             ),
-            SizedBox(width: 20),
+            SizedBox(width: 20.w),
             GestureDetector(
               onTap: message.trim().isEmpty ? null : sendMessage,
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.w,
+                  vertical: 8.h,
+                ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
