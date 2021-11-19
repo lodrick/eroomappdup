@@ -185,6 +185,7 @@ class FirebaseApi {
     return retriveUser(userToupdate.contactNumber);
   }
 
+  // ignore: missing_return
   static Future<User> updateUserByField({
     String field,
     String value,
@@ -193,9 +194,7 @@ class FirebaseApi {
     FirebaseFirestore.instance
         .collection('users')
         .doc(idUser)
-        .update({
-          field: value,
-        })
+        .update({field: value})
         .then((value) => print('user updated'))
         .catchError((error) => print('Failed to update $error'));
   }

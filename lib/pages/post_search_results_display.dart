@@ -26,6 +26,7 @@ class PostSearchResultsDisplay extends StatelessWidget {
       child: Scaffold(
         backgroundColor: MyColors.primaryColor,
         appBar: AppBar(
+          backgroundColor: MyColors.primaryColor,
           iconTheme: IconThemeData(color: Colors.white70),
           centerTitle: false,
           title: Text(

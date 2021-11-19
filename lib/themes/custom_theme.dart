@@ -7,8 +7,11 @@ class CustomTheme {
       primaryColor: MyColors.primaryColor,
       scaffoldBackgroundColor: MyColors.kBackgroundColor,
       textTheme: ThemeData.light().textTheme,
-      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber)
-          .copyWith(secondary: Colors.amber),
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.blueGrey,
+      ).copyWith(
+        secondary: Colors.blueGrey,
+      ),
     );
   }
 }
