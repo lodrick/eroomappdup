@@ -1,3 +1,4 @@
+import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
@@ -275,12 +276,17 @@ class _LoginPageState extends State<LoginPage> {
                                             color: MyColors.lightTextColor,
                                           ),
                                         ),
-                                        Text(
-                                          'terms and conditions',
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: MyColors.purpleColor,
+                                        GestureDetector(
+                                          onTap: () => AppLauncherUtils.openLink(
+                                              url:
+                                                  'https://kwepilecorp.wordpress.com/'),
+                                          child: Text(
+                                            'terms and conditions',
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: MyColors.purpleColor,
+                                            ),
                                           ),
                                         ),
                                       ],

@@ -368,7 +368,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () => AppLauncherUtils.openLink(
-                                          url: 'https://flutter.dev/'),
+                                          url:
+                                              'https://kwepilecorp.wordpress.com/'),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,

@@ -109,6 +109,7 @@ class _OtpPageState extends State<OtpPage> {
                               Container(
                                 margin: EdgeInsets.symmetric(
                                   horizontal: 20.w,
+                                  vertical: 40.h,
                                 ),
                                 child: Wrap(
                                   children: [
@@ -143,6 +144,7 @@ class _OtpPageState extends State<OtpPage> {
                               ),
                             ],
                           ),
+                          SizedBox(height: 10.h),
                           Container(
                             margin: const EdgeInsets.symmetric(
                               horizontal: 20,
