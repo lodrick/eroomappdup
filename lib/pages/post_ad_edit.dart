@@ -16,6 +16,7 @@ class PostAdEdit extends StatefulWidget {
   final String idUser;
   final String email;
   final String contactNumber;
+  final bool isEnabled;
 
   PostAdEdit({
     @required this.advert,
@@ -24,6 +25,7 @@ class PostAdEdit extends StatefulWidget {
     @required this.idUser,
     @required this.email,
     @required this.contactNumber,
+    @required this.isEnabled,
   });
   @override
   _PostAdEditState createState() => _PostAdEditState();
@@ -148,22 +150,27 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         ),
                                         Switch(
                                           value: isSwitched,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              isSwitched = value;
-                                              print(isSwitched);
-                                              if (isSwitched) {
-                                                _status = 'pending';
-                                                _textStatus = 'Activating Post';
-                                                _color = Color(0xFF26ED41);
-                                              } else {
-                                                _status = 'decined';
-                                                _textStatus = 'Closing Post';
-                                                _color =
-                                                    Colors.redAccent.shade200;
-                                              }
-                                            });
-                                          },
+                                          onChanged: widget.isEnabled
+                                              ? (value) {
+                                                  setState(() {
+                                                    isSwitched = value;
+                                                    print(isSwitched);
+                                                    if (isSwitched) {
+                                                      _status = 'pending';
+                                                      _textStatus =
+                                                          'Activating Post';
+                                                      _color =
+                                                          Color(0xFF26ED41);
+                                                    } else {
+                                                      _status = 'decined';
+                                                      _textStatus =
+                                                          'Closing Post';
+                                                      _color = Colors
+                                                          .redAccent.shade200;
+                                                    }
+                                                  });
+                                                }
+                                              : null,
 
                                           //inactiveThumbColor:
                                           //    MyColors.primaryColor,
@@ -188,6 +195,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                       child: DropdownButton(
                                         dropdownColor: Colors.blueGrey[100],
                                         underline: SizedBox(),
+                                        value: _roomType,
                                         hint: Text(
                                           'Select Room/Type',
                                           style: TextStyle(
@@ -216,12 +224,14 @@ class _PostAdEditState extends State<PostAdEdit> {
                                             );
                                           },
                                         ).toList(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            _roomType = val;
-                                            print('Yeah: ' + _roomType);
-                                          });
-                                        },
+                                        onChanged: widget.isEnabled
+                                            ? (val) {
+                                                setState(() {
+                                                  _roomType = val;
+                                                  print('Yeah: ' + _roomType);
+                                                });
+                                              }
+                                            : null,
                                       ),
                                     ),
                                     CustomTextField(
@@ -232,6 +242,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: priceController,
+                                      isReadOnly: widget.isEnabled,
                                     ),
                                     CustomTextField(
                                       hintTxt: 'Incredible room a bachelar',
@@ -241,6 +252,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: titleController,
+                                      isReadOnly: widget.isEnabled,
                                     ),
                                     CustomTextField(
                                       hintTxt:
@@ -251,6 +263,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: descriptionController,
+                                      isReadOnly: widget.isEnabled,
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
@@ -294,19 +307,21 @@ class _PostAdEditState extends State<PostAdEdit> {
                                             );
                                           },
                                         ).toList(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            _province = val;
-                                            //_cities
-                                            //_cities = List<Province>();
+                                        onChanged: widget.isEnabled
+                                            ? (val) {
+                                                setState(() {
+                                                  _province = val;
+                                                  //_cities
+                                                  //_cities = List<Province>();
 
-                                            /*ProvinceApi.getProvinces(_province)
+                                                  /*ProvinceApi.getProvinces(_province)
                                                 .then((citites) {
                                               _cities = citites;
                                               print(_cities);
                                             });*/
-                                          });
-                                        },
+                                                });
+                                              }
+                                            : null,
                                       ),
                                     ),
                                     SizedBox(height: 10.0.h),
@@ -347,12 +362,14 @@ class _PostAdEditState extends State<PostAdEdit> {
                                             ),
                                           );
                                         }).toList(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            this._city = val;
-                                            print('City: $_city');
-                                          });
-                                        },
+                                        onChanged: widget.isEnabled
+                                            ? (val) {
+                                                setState(() {
+                                                  this._city = val;
+                                                  print('City: $_city');
+                                                });
+                                              }
+                                            : null,
                                       ),
                                       /*child: 
                                       FutureBuilder(
@@ -432,6 +449,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                                         color: MyColors.primaryColor,
                                       ),
                                       controller: suburbController,
+                                      isReadOnly: widget.isEnabled,
                                     ),
                                     SizedBox(height: 10.0.h),
                                   ],
@@ -449,57 +467,60 @@ class _PostAdEditState extends State<PostAdEdit> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var price = double.parse(priceController.text.toString());
-          Advert advert = new Advert(
-            roomType: _roomType,
-            price: price,
-            title: titleController.text.toString(),
-            decription: descriptionController.text.toString(),
-            province: _province,
-            city: cityController.text.toString(),
-            suburb: suburbController.text.toString(),
-            status: _status ?? 'pending',
-          );
+      floatingActionButton: widget.isEnabled
+          ? FloatingActionButton(
+              onPressed: () {
+                var price = double.parse(priceController.text.toString());
+                Advert advert = new Advert(
+                  roomType: _roomType,
+                  price: price,
+                  title: titleController.text.toString(),
+                  decription: descriptionController.text.toString(),
+                  province: _province,
+                  city: cityController.text.toString(),
+                  suburb: suburbController.text.toString(),
+                  status: _status ?? 'pending',
+                );
 
-          FireBusinessApi.updateAdvert(advert, widget.advert.id).then((resut) {
-            showDialog(
-              context: context,
-              builder: (context) => DialogBoxPost(
-                title: advert.title,
-                descrition:
-                    'Your post is under review, you will receive an email when it has been declined or approved',
-                firstName: widget.firstName,
-                lastName: widget.lastName,
-                email: widget.email,
-                contactNumber: widget.contactNumber,
-                idUser: widget.idUser,
+                FireBusinessApi.updateAdvert(advert, widget.advert.id)
+                    .then((resut) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => DialogBoxPost(
+                      title: advert.title,
+                      descrition:
+                          'Your post is under review, you will receive an email when it has been declined or approved',
+                      firstName: widget.firstName,
+                      lastName: widget.lastName,
+                      email: widget.email,
+                      contactNumber: widget.contactNumber,
+                      idUser: widget.idUser,
+                    ),
+                  );
+
+                  Fluttertoast.showToast(
+                    msg: 'Post updated.',
+                    backgroundColor: Colors.black12.withOpacity(.7),
+                    textColor: Colors.white,
+                  );
+                }).catchError(
+                  (e) => Fluttertoast.showToast(
+                    msg: 'Unable to update the post.',
+                    backgroundColor: Colors.black12.withOpacity(.7),
+                    textColor: Colors.white,
+                  ),
+                );
+
+                dispose();
+              },
+              child: Icon(
+                Icons.check,
+                size: 30.0.sp,
+                color: Colors.white70,
               ),
-            );
-
-            Fluttertoast.showToast(
-              msg: 'Post updated.',
-              backgroundColor: Colors.black12.withOpacity(.7),
-              textColor: Colors.white,
-            );
-          }).catchError(
-            (e) => Fluttertoast.showToast(
-              msg: 'Unable to update the post.',
-              backgroundColor: Colors.black12.withOpacity(.7),
-              textColor: Colors.white,
-            ),
-          );
-
-          dispose();
-        },
-        child: Icon(
-          Icons.check,
-          size: 30.0.sp,
-          color: Colors.white70,
-        ),
-        backgroundColor: MyColors.primaryColor,
-      ),
+              backgroundColor: MyColors.primaryColor,
+            )
+          : SizedBox.shrink(),
     );
   }
 }

@@ -120,6 +120,57 @@ class _CreatePostState extends State<CreatePost> {
     }
   }
 
+  Widget getTextField({
+    @required String hintTxt,
+    @required String labelTxt,
+    @required Icon icon,
+    @required TextEditingController controller,
+    @required String errorText,
+    @required TextInputType textInputType,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 3.w,
+        vertical: 3.h,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0.r),
+      ),
+      child: TextFormField(
+        autocorrect: true,
+        enableInteractiveSelection: true,
+        validator: (value) {
+          if ((value == null && value.isEmpty) ||
+              !RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
+            //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
+
+            return errorText;
+          }
+          return null;
+        },
+        keyboardType: textInputType,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 5.0,
+          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: icon,
+          ),
+          filled: false,
+          hintStyle: new TextStyle(color: Colors.grey[800]),
+          hintText: hintTxt,
+          labelText: labelTxt + '*',
+          border: InputBorder.none,
+        ),
+        style: TextStyle(
+          fontSize: 16.0.sp,
+        ),
+        controller: controller,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,7 +251,7 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                     ),
                     SizedBox(height: 4.0.h),
-                    CustomTextField(
+                    getTextField(
                       hintTxt: '4800.00',
                       labelTxt: 'Price',
                       icon: Icon(
@@ -211,7 +262,7 @@ class _CreatePostState extends State<CreatePost> {
                       errorText: 'Please enter the correct price',
                       textInputType: TextInputType.number,
                     ),
-                    CustomTextField(
+                    getTextField(
                       hintTxt: 'Incredible room a bachelar',
                       labelTxt: 'Title',
                       icon: Icon(
@@ -222,7 +273,7 @@ class _CreatePostState extends State<CreatePost> {
                       errorText: 'Please fill in the title',
                       textInputType: TextInputType.text,
                     ),
-                    CustomTextField(
+                    getTextField(
                       hintTxt: 'A stylish great room suitable for a stylish',
                       labelTxt: 'Description',
                       icon: Icon(
@@ -334,7 +385,7 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                     ),
                     SizedBox(height: 4.0.h),
-                    CustomTextField(
+                    getTextField(
                       hintTxt: 'Midrand',
                       labelTxt: 'Suburb',
                       icon: Icon(
@@ -565,58 +616,6 @@ class _CreatePostState extends State<CreatePost> {
                 backgroundColor: Colors.black38.withOpacity(0.8),
                 msg: 'Please upload aleast one image');
           }
-          /*Fluttertoast.showToast(
-              backgroundColor: Colors.black38.withOpacity(0.8),
-              msg: 'Submitting.');
-          print('submitting');*/
-
-          /*if (priceController.text.isNotEmpty &&
-              titleController.text.isNotEmpty &&
-              suburbController.text.isNotEmpty &&
-              _province.isNotEmpty &&
-              _city.isNotEmpty) {
-            var price = double.parse(priceController.text.toString());
-
-            if (imageFiles != null && imageFiles.length > 0) {
-              Advert advert = Advert(
-                roomType: _roomType,
-                price: price,
-                title: titleController.text.toString(),
-                decription: decriptionController.text.toString(),
-                province: _province,
-                city: _city,
-                suburb: suburbController.text.toString(),
-                userId: widget.idUser,
-                email: widget.email,
-                status: 'pending',
-              );
-
-              FireBusinessApi.addAdvert(advert, imageFiles).then((result) {
-                showDialog(
-                  context: context,
-                  builder: (context) => DialogBoxPost(
-                    title: advert.title,
-                    descrition:
-                        'Your post is under review, you will receive an email when it has been declined or approved',
-                    firstName: widget.firstName,
-                    lastName: widget.lastName,
-                    email: widget.email,
-                    contactNumber: widget.contactNumber,
-                    idUser: widget.idUser,
-                  ),
-                );
-              }).catchError((e) => print(e.toString));
-            } else {
-              Fluttertoast.showToast(
-                  backgroundColor: Colors.black38.withOpacity(0.8),
-                  msg: 'Aleast 1 Image is required.');
-            }
-          } else {
-            Fluttertoast.showToast(
-                backgroundColor: Colors.black38.withOpacity(0.8),
-                msg:
-                    'Some of your fields are empty, please make sure all required info are filed');
-          }*/
         },
         child: Icon(
           Icons.check,

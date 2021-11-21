@@ -154,6 +154,7 @@ class _FavouritesState extends State<Favourites> {
                                     firstName: widget.firstName,
                                     lastName: widget.lastName,
                                     idUser: widget.idUser,
+                                    isEnabled: false,
                                   ),
                                 ),
                               ),

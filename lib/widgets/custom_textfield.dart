@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String errorText;
   final TextInputType textInputType;
+  final bool isReadOnly;
 
   CustomTextField({
     this.hintTxt,
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.errorText,
     this.textInputType,
+    this.isReadOnly = false,
   });
 
   @override
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(25.0.r),
         ),
         child: TextFormField(
+          readOnly: !isReadOnly,
           autocorrect: true,
           enableInteractiveSelection: true,
           initialValue: initialValue,

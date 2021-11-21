@@ -158,6 +158,7 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                     firstName: widget.firstName,
                                     lastName: widget.lastName,
                                     idUser: widget.idUser,
+                                    isEnabled: true,
                                   ),
                                 ),
                               ),
