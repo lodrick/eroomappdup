@@ -7,7 +7,6 @@ import 'package:eRoomApp/models/advert.dart';
 //import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/theme.dart';
-import 'package:eRoomApp/widgets/custom_textfield.dart';
 import 'package:eRoomApp/widgets/dialog_box_post_confirm.dart';
 import 'package:eRoomApp/widgets/popover.dart';
 import 'package:file_picker/file_picker.dart';
@@ -140,10 +139,11 @@ class _CreatePostState extends State<CreatePost> {
         autocorrect: true,
         enableInteractiveSelection: true,
         validator: (value) {
-          if ((value == null && value.isEmpty) ||
-              !RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
+          if (value == null && value.isEmpty) {
             //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
 
+            return '$labelTxt is required.';
+          } else if (!RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
             return errorText;
           }
           return null;
@@ -608,13 +608,25 @@ class _CreatePostState extends State<CreatePost> {
               }).catchError((e) => print(e.toString));
             } else {
               Fluttertoast.showToast(
-                  backgroundColor: Colors.black38.withOpacity(0.8),
-                  msg: 'Aleast 1 Image is required.');
+                backgroundColor: Colors.black38.withOpacity(0.8),
+                msg: 'Aleast 1 Image is required.',
+                gravity: ToastGravity.BOTTOM,
+                textColor: Colors.redAccent,
+                toastLength: Toast.LENGTH_LONG,
+                fontSize: 16.sp,
+                webPosition: 1,
+              );
             }
           } else {
             Fluttertoast.showToast(
-                backgroundColor: Colors.black38.withOpacity(0.8),
-                msg: 'Please upload aleast one image');
+              backgroundColor: Colors.black38.withOpacity(0.8),
+              msg: 'Please please attend to the filled marked red*',
+              gravity: ToastGravity.BOTTOM,
+              textColor: Colors.redAccent,
+              toastLength: Toast.LENGTH_LONG,
+              fontSize: 16.sp,
+              webPosition: 1,
+            );
           }
         },
         child: Icon(

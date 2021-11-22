@@ -297,6 +297,8 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               Icons.location_city,
                               color: MyColors.primaryColor,
                             ),
+                            isReadOnly: true,
+                            textInputType: TextInputType.text,
                           ),
                         ],
                       ),
