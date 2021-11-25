@@ -1,9 +1,10 @@
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
-import 'package:eRoomApp/pages/post_ad_edit.dart';
+
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:eRoomApp/widgets/dialog_box_stats.dart';
+import 'package:eRoomApp/widgets/post_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -72,7 +73,7 @@ class _FavouritesState extends State<Favourites> {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: 16.w,
+            horizontal: 8.w,
             vertical: 8.h,
           ),
           child: StreamBuilder<List<Advert>>(
@@ -96,10 +97,6 @@ class _FavouritesState extends State<Favourites> {
                       return buildText('No Adverts Found');
                     } else {
                       return ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0.r),
-                          topRight: Radius.circular(30.0.r),
-                        ),
                         child: ListView.builder(
                           itemCount: adverts.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -146,15 +143,9 @@ class _FavouritesState extends State<Favourites> {
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => PostAdEdit(
-                                    //authToken: widget.authToken,
+                                  builder: (_) => PostInfo(
                                     advert: advert,
                                     contactNumber: widget.contactNumber,
-                                    email: widget.email,
-                                    firstName: widget.firstName,
-                                    lastName: widget.lastName,
-                                    idUser: widget.idUser,
-                                    isEnabled: false,
                                   ),
                                 ),
                               ),
@@ -162,7 +153,7 @@ class _FavouritesState extends State<Favourites> {
                                 margin: EdgeInsets.only(
                                   top: 5.0.h,
                                   bottom: 5.0.h,
-                                  right: 20.0.w,
+                                  right: 5.0.w,
                                 ),
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 10.0.w,

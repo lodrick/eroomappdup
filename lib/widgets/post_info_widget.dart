@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
@@ -239,12 +240,15 @@ class _PostInfoState extends State<PostInfo> {
                                         title: widget.advert.title ?? '',
                                         description:
                                             widget.advert.decription ?? '',
-                                        updatedAt: DateFormat('dd-MM-yyy')
-                                                .format(DateTime.parse(widget
-                                                    .advert.updatedAt
-                                                    .toDate()
-                                                    .toString())) ??
-                                            '',
+                                        updatedAt:
+                                            DateFormat('dd-MM-yyy').format(
+                                                  DateTime.parse(
+                                                    widget.advert.updatedAt
+                                                        .toDate()
+                                                        .toString(),
+                                                  ),
+                                                ) ??
+                                                '',
                                       ),
                                     ),
                                     Padding(
@@ -475,8 +479,8 @@ class _PostInfoState extends State<PostInfo> {
               ),
             ),
             Icon(
-              Icons.access_time_sharp,
-              color: Colors.red[500],
+              FontAwesomeIcons.calendar,
+              color: MyColors.primaryColor,
             ),
             Padding(
               padding: const EdgeInsets.all(2.0),

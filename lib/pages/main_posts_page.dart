@@ -141,7 +141,8 @@ class _MainPostsPageState extends State<MainPostsPage> {
                     child: PopupMenuButton(
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r)),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
                       onSelected: (value) {
                         switch (value) {
                           case IconsMenu.PROFILE:

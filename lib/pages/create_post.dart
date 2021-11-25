@@ -139,9 +139,7 @@ class _CreatePostState extends State<CreatePost> {
         autocorrect: true,
         enableInteractiveSelection: true,
         validator: (value) {
-          if (value == null && value.isEmpty) {
-            //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
-
+          if (value == null || value.isEmpty) {
             return '$labelTxt is required.';
           } else if (!RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
             return errorText;
@@ -178,7 +176,6 @@ class _CreatePostState extends State<CreatePost> {
       body: Form(
         key: formKey,
         child: SafeArea(
-          //onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
             height: MediaQuery.of(context).size.height.h,
             decoration: BoxDecoration(
@@ -262,27 +259,94 @@ class _CreatePostState extends State<CreatePost> {
                       errorText: 'Please enter the correct price',
                       textInputType: TextInputType.number,
                     ),
-                    getTextField(
-                      hintTxt: 'Incredible room a bachelar',
-                      labelTxt: 'Title',
-                      icon: Icon(
-                        Icons.title,
-                        color: MyColors.primaryColor,
+
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3.w,
+                        vertical: 3.h,
                       ),
-                      controller: titleController,
-                      errorText: 'Please fill in the title',
-                      textInputType: TextInputType.text,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0.r),
+                      ),
+                      child: TextFormField(
+                        autocorrect: true,
+                        enableInteractiveSelection: true,
+                        validator: (value) {
+                          if (value == null && value.isEmpty) {
+                            return 'Title is required.';
+                          } else if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                            return 'Please fill in the correct title';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 5.0,
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Icon(
+                              Icons.title,
+                              color: MyColors.primaryColor,
+                            ),
+                          ),
+                          filled: false,
+                          hintStyle: new TextStyle(color: Colors.grey[800]),
+                          hintText: 'An incredible room the bachelar',
+                          labelText: 'Title*',
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                        ),
+                        controller: titleController,
+                      ),
                     ),
-                    getTextField(
-                      hintTxt: 'A stylish great room suitable for a stylish',
-                      labelTxt: 'Description',
-                      icon: Icon(
-                        Icons.description,
-                        color: MyColors.primaryColor,
+
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3.w,
+                        vertical: 3.h,
                       ),
-                      controller: decriptionController,
-                      errorText: 'Please fill in the description',
-                      textInputType: TextInputType.text,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0.r),
+                      ),
+                      child: TextFormField(
+                        autocorrect: true,
+                        enableInteractiveSelection: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Description is required.';
+                          } else if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                            return 'Please fill the correct description';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 5.0,
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Icon(
+                              Icons.description,
+                              color: MyColors.primaryColor,
+                            ),
+                          ),
+                          filled: false,
+                          hintStyle: new TextStyle(color: Colors.grey[800]),
+                          hintText:
+                              'A stylish great room suitable for a stylish',
+                          labelText: 'Description*',
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                        ),
+                        controller: decriptionController,
+                      ),
                     ),
                     SizedBox(height: 4.0.h),
                     Container(
@@ -348,7 +412,6 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                       child: DropdownButtonFormField(
                         dropdownColor: Colors.blueGrey[100],
-                        //underline: SizedBox(),
                         decoration: InputDecoration.collapsed(hintText: ''),
                         isExpanded: true,
                         iconSize: 30.0.sp,
@@ -385,16 +448,49 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                     ),
                     SizedBox(height: 4.0.h),
-                    getTextField(
-                      hintTxt: 'Midrand',
-                      labelTxt: 'Suburb',
-                      icon: Icon(
-                        Icons.location_city,
-                        color: MyColors.primaryColor,
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3.w,
+                        vertical: 3.h,
                       ),
-                      controller: suburbController,
-                      errorText: 'Please fill in the suburb',
-                      textInputType: TextInputType.streetAddress,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0.r),
+                      ),
+                      child: TextFormField(
+                        autocorrect: true,
+                        enableInteractiveSelection: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Suburb is required.';
+                          } else if (!RegExp(r'^[A-Za-z0-9]+$')
+                              .hasMatch(value)) {
+                            return 'Please fill in the suburb';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.streetAddress,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 5.0,
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Icon(
+                              Icons.location_city,
+                              color: MyColors.primaryColor,
+                            ),
+                          ),
+                          filled: false,
+                          hintStyle: new TextStyle(color: Colors.grey[800]),
+                          hintText: 'Midrand',
+                          labelText: 'Suburb*',
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                        ),
+                        controller: suburbController,
+                      ),
                     ),
                     SizedBox(height: 3.0.h),
                     IconButton(
@@ -617,16 +713,6 @@ class _CreatePostState extends State<CreatePost> {
                 webPosition: 1,
               );
             }
-          } else {
-            Fluttertoast.showToast(
-              backgroundColor: Colors.black38.withOpacity(0.8),
-              msg: 'Please please attend to the filled marked red*',
-              gravity: ToastGravity.BOTTOM,
-              textColor: Colors.redAccent,
-              toastLength: Toast.LENGTH_LONG,
-              fontSize: 16.sp,
-              webPosition: 1,
-            );
           }
         },
         child: Icon(

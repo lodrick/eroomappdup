@@ -38,7 +38,6 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
     suburbController.dispose();
     maxPriceControler.dispose();
     minPriceController.dispose();
-    ProvinceApi.getProvinces('Gauteng');
   }
 
   @override
@@ -297,7 +296,6 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                               Icons.location_city,
                               color: MyColors.primaryColor,
                             ),
-                            isReadOnly: true,
                             textInputType: TextInputType.text,
                           ),
                         ],
