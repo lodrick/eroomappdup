@@ -2,13 +2,6 @@ import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-/*
-firstName: widget.firstName,
-                      lastName: widget.lastName,
-                      contactNumber: widget.contactNumber,
-                      email: widget.email,
-                      idUser: widget.idUser,
-*/
 
 class DialogBoxPost extends StatelessWidget {
   final String title;
@@ -18,6 +11,7 @@ class DialogBoxPost extends StatelessWidget {
   final String contactNumber;
   final String email;
   final String idUser;
+  final bool isContinue;
 
   DialogBoxPost({
     @required this.title,
@@ -27,6 +21,7 @@ class DialogBoxPost extends StatelessWidget {
     @required this.contactNumber,
     @required this.email,
     @required this.idUser,
+    @required this.isContinue,
   });
 
   @override
@@ -97,13 +92,15 @@ class DialogBoxPost extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                        'Continue Posting'.toUpperCase(),
-                        style: TextStyle(
-                          color: MyColors.primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: isContinue
+                          ? Text(
+                              'Continue Posting'.toUpperCase(),
+                              style: TextStyle(
+                                color: MyColors.primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          : SizedBox.shrink(),
                     ),
                     SizedBox(width: 3.0.w),
                     // ignore: deprecated_member_use

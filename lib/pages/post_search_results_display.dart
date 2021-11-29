@@ -58,11 +58,6 @@ class PostSearchResultsDisplay extends StatelessWidget {
                       stream: FireBusinessApi.getSearchResultAdvert(
                           minPrice, maxPrice, suburb, city),
                       builder: (context, snapshot) {
-                        print('minPrice: $minPrice');
-                        print('maxPrice: $maxPrice');
-                        print('suburb: ' + suburb);
-                        print('city:' + city);
-
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
                             return Center(child: CircularProgressIndicator());

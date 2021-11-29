@@ -73,6 +73,7 @@ dependencies:
   flutter_bloc:
   rxdart:
   flutter_screenutil:
+  basic_utils:
 
 dev_dependencies:
   flutter_test:

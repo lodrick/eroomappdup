@@ -676,13 +676,13 @@ class _CreatePostState extends State<CreatePost> {
             var price = double.parse(priceController.text.toString());
             if (imageFiles != null && imageFiles.length > 0) {
               Advert advert = Advert(
-                roomType: _roomType,
+                roomType: _roomType.toLowerCase(),
                 price: price,
-                title: titleController.text.toString(),
-                decription: decriptionController.text.toString(),
-                province: _province,
-                city: _city,
-                suburb: suburbController.text.toString(),
+                title: titleController.text.toLowerCase(),
+                decription: decriptionController.text.toLowerCase(),
+                province: _province.toLowerCase(),
+                city: _city.toLowerCase(),
+                suburb: suburbController.text.toLowerCase(),
                 userId: widget.idUser,
                 email: widget.email,
                 status: 'pending',
@@ -699,6 +699,7 @@ class _CreatePostState extends State<CreatePost> {
                     email: widget.email,
                     contactNumber: widget.contactNumber,
                     idUser: widget.idUser,
+                    isContinue: true,
                   ),
                 );
               }).catchError((e) => print(e.toString));

@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -131,7 +132,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       title: Container(
                         width: MediaQuery.of(context).size.width.w * 0.45,
                         child: Text(
-                          advert.title,
+                          StringUtils.capitalize(advert.title),
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20.sp,
@@ -142,7 +143,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       subtitle: Container(
                         width: MediaQuery.of(context).size.width.w * 0.45,
                         child: Text(
-                          advert.decription,
+                          StringUtils.capitalize(advert.decription),
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
                             fontSize: 18.sp,

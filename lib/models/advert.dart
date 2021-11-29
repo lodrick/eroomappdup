@@ -7,18 +7,18 @@ class AdvertField {
 
 class Advert {
   final String id;
-  final String roomType;
-  final double price;
-  final String title;
-  final String decription;
-  final String province;
-  final String city;
-  final String suburb;
+  String roomType;
+  double price;
+  String title;
+  String decription;
+  String province;
+  String city;
+  String suburb;
   final String userId;
   final String email;
   final createdAt;
   final updatedAt;
-  final String status;
+  String status;
   final int likes;
   final dynamic photosUrl;
 

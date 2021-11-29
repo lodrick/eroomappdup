@@ -387,7 +387,7 @@ class _PostAdEditState extends State<PostAdEdit> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             var price = double.parse(priceController.text.toString());
-            Advert advert = new Advert(
+            /*Advert advert = new Advert(
               roomType: _roomType,
               price: price,
               title: titleController.text.toString(),
@@ -396,10 +396,17 @@ class _PostAdEditState extends State<PostAdEdit> {
               city: cityController.text.toString(),
               suburb: suburbController.text.toString(),
               status: _status ?? 'pending',
-            );
+            );*/
+            Advert advert = widget.advert;
+            advert.roomType = _roomType.toLowerCase();
+            advert.price = price;
+            advert.title = titleController.text.toLowerCase();
+            advert.decription = descriptionController.text.toLowerCase();
+            advert.city = cityController.text.toLowerCase();
+            advert.suburb = suburbController.text.toLowerCase();
+            advert.status = _status ?? 'pending';
 
-            FireBusinessApi.updateAdvert(advert, widget.advert.id)
-                .then((resut) {
+            FireBusinessApi.updateAdvert(advert, widget.advert.id).then((_) {
               showDialog(
                 context: context,
                 builder: (context) => DialogBoxPost(
@@ -411,6 +418,7 @@ class _PostAdEditState extends State<PostAdEdit> {
                   email: widget.email,
                   contactNumber: widget.contactNumber,
                   idUser: widget.idUser,
+                  isContinue: false,
                 ),
               );
 
@@ -427,7 +435,7 @@ class _PostAdEditState extends State<PostAdEdit> {
               ),
             );
 
-            dispose();
+            //dispose();
           },
           child: Icon(
             Icons.check,

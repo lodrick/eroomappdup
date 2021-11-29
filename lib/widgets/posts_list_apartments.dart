@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/models/advert.dart';
 import 'package:eRoomApp/theme.dart';
@@ -200,7 +201,8 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              advert.title,
+                                              StringUtils.capitalize(
+                                                  advert.title),
                                               style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 15.0.sp,
@@ -214,7 +216,8 @@ class _PostsListApartmentsState extends State<PostsListApartments> {
                                                       .width *
                                                   0.45.w,
                                               child: Text(
-                                                advert.decription,
+                                                StringUtils.capitalize(
+                                                    advert.decription),
                                                 style: TextStyle(
                                                   color: Colors.blueGrey,
                                                   fontSize: 15.0.sp,

@@ -7,6 +7,7 @@ import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:eRoomApp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:basic_utils/basic_utils.dart';
 
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -237,9 +238,12 @@ class _PostInfoState extends State<PostInfo> {
                                         vertical: 20.h,
                                       ),
                                       child: titleSection(
-                                        title: widget.advert.title ?? '',
-                                        description:
-                                            widget.advert.decription ?? '',
+                                        title: StringUtils.capitalize(
+                                                widget.advert.title) ??
+                                            '',
+                                        description: StringUtils.capitalize(
+                                                widget.advert.decription) ??
+                                            '',
                                         updatedAt:
                                             DateFormat('dd-MM-yyy').format(
                                                   DateTime.parse(
@@ -260,12 +264,16 @@ class _PostInfoState extends State<PostInfo> {
                                       child: Column(
                                         children: [
                                           buildPostInfo(
-                                              desc: 'City:',
-                                              data: widget.advert.city),
+                                            desc: 'City:',
+                                            data: StringUtils.capitalize(
+                                                widget.advert.city),
+                                          ),
                                           Divider(color: MyColors.primaryColor),
                                           buildPostInfo(
-                                              desc: 'Suburb:',
-                                              data: widget.advert.suburb),
+                                            desc: 'Suburb:',
+                                            data: StringUtils.capitalize(
+                                                widget.advert.suburb),
+                                          ),
                                           Divider(color: MyColors.primaryColor),
                                           buildPostInfo(
                                               desc: 'Price:',

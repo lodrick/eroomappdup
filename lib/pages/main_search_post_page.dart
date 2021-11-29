@@ -1,5 +1,5 @@
 import 'package:eRoomApp/api/business_api.dart';
-import 'package:eRoomApp/api/province_api.dart';
+
 //import 'package:eRoomApp/models/province.dart';
 import 'package:eRoomApp/models/static_data.dart';
 import 'package:eRoomApp/pages/post_search_results_display.dart';
@@ -317,9 +317,9 @@ class _MainSearchPostPageState extends State<MainSearchPostPage> {
                 builder: (context) => PostSearchResultsDisplay(
                   minPrice: double.parse(minPriceController.text.toString()),
                   maxPrice: double.parse(maxPriceControler.text.toString()),
-                  suburb: suburbController.text,
+                  suburb: suburbController.text.toLowerCase(),
                   contactNumber: widget.contactNumber,
-                  city: _city,
+                  city: _city.toLowerCase(),
                 ),
               ),
             );

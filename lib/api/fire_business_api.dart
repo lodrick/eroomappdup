@@ -82,7 +82,7 @@ class FireBusinessApi {
     });
   }
 
-  static Future updateAdvert(Advert advert, adId) async {
+  static Future<void> updateAdvert(Advert advert, adId) async {
     FirebaseFirestore.instance.collection('adverts').doc(adId).update({
       //'id': advert.id,
       'roomType': advert.roomType,
@@ -138,14 +138,14 @@ class FireBusinessApi {
           .where('advertId', isEqualTo: advertId)
           .snapshots()
           .transform(Utils.transformer(AdvertImage.fromJson));
-  
+
   static Future<void> updateLikes(String adId, int like) async {
     FirebaseFirestore.instance
         .collection('adverts')
         .doc(adId)
         .update(Advert.updateLikes(adId: adId, like: like))
         .then((value) => print('you like this post'))
-        .catchError((onError) =>print(onError.toString()));
+        .catchError((onError) => print(onError.toString()));
   }
 
   /*static Future<void> updateLikes(
