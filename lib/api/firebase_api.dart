@@ -168,6 +168,23 @@ class FirebaseApi {
     return User.fromJson(documentSnapshot.data());
   }
 
+  static Future<User> retriveUserByID(String idUser) async {
+    QueryDocumentSnapshot documentSnapshot;
+    var result = await FirebaseFirestore.instance
+        .collection('users')
+        .where('idUser', isEqualTo: idUser)
+        .get();
+
+    result.docs.forEach((res) {
+      documentSnapshot = res;
+    });
+
+    if (documentSnapshot == null) {
+      return null;
+    }
+    return User.fromJson(documentSnapshot.data());
+  }
+
   static Future<User> updateUser(User userToupdate, idUser) async {
     FirebaseFirestore.instance
         .collection('users')

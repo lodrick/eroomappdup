@@ -35,13 +35,13 @@ class IconsMenu {
     iconData: Icons.account_circle,
   );
 
-  static const SIGNOUT = IconMenu(
+  /*static const SIGNOUT = IconMenu(
     text: 'Logout',
     iconData: Icons.logout,
-  );
+  );*/
 
   static const items = <IconMenu>[
     PROFILE,
-    SIGNOUT,
+    //SIGNOUT,
   ];
 }

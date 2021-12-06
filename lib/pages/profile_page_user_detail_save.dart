@@ -388,7 +388,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              _userDesc,
+              _userDesc ?? '',
               style: TextStyle(
                 color: MyColors.primaryTextColor.withOpacity(.8),
                 fontSize: 16.sp,

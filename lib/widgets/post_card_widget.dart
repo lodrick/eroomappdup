@@ -44,7 +44,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         }*/
       });
     });
-    //bookMarkedFavourates
   }
 
   Map<String, bool> testLike = Map<String, bool>();
@@ -153,74 +152,76 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.lock_clock,
-                                color: Colors.blueGrey,
-                              ),
-                              Text(_updatedAt)
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Text(
-                              'Available',
-                              style: TextStyle(
-                                fontSize: 18.0.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.amberAccent,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Row(
                               children: <Widget>[
                                 Icon(
-                                  Icons.add_shopping_cart,
-                                  color: MyColors.primaryColor,
+                                  Icons.lock_clock,
+                                  color: Colors.blueGrey,
                                 ),
-                                Text(
-                                  'R ' + advert.price.toString(),
-                                  style: TextStyle(
-                                    color: MyColors.primaryColor,
-                                  ),
-                                ),
-                                SizedBox(width: 18.w),
-                                GestureDetector(
-                                  onTap: null,
-                                  child: Icon(
-                                    isLiked
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: isLiked
-                                        ? Colors.pink[400]
-                                        : Colors.black54,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 4.0.w,
-                                ),
-                                Text(
-                                  '${advert.likes}',
-                                  style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+                                Text(_updatedAt)
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: Text(
+                                'Available',
+                                style: TextStyle(
+                                  fontSize: 18.0.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.amberAccent,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.add_shopping_cart,
+                                    color: MyColors.primaryColor,
+                                  ),
+                                  Text(
+                                    'R ' + advert.price.toString(),
+                                    style: TextStyle(
+                                      color: MyColors.primaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(width: 18.w),
+                                  GestureDetector(
+                                    onTap: null,
+                                    child: Icon(
+                                      isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: isLiked
+                                          ? Colors.pink[400]
+                                          : Colors.black54,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 4.0.w,
+                                  ),
+                                  Text(
+                                    '${advert.likes}',
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

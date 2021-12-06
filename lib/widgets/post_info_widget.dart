@@ -2,6 +2,7 @@ import 'package:eRoomApp/api/fire_business_api.dart';
 import 'package:eRoomApp/api/firebase_api.dart';
 import 'package:eRoomApp/app_launcher_utils.dart';
 import 'package:eRoomApp/models/advert.dart';
+import 'package:eRoomApp/models/user_model.dart';
 import 'package:eRoomApp/pages_chat/chat_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,21 +32,12 @@ class PostInfo extends StatefulWidget {
 }
 
 class _PostInfoState extends State<PostInfo> {
-  //String authToken;
   bool isLiked = false;
   int likeCount = 0;
   String currentUserId;
   List<String> imageUrls;
   List<String> bookMarkedFavourates = [];
-  /*final List<String> images = [
-    'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
-    'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
-    'https://images.unsplash.com/photo-1586901533048-0e856dff2c0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-    'https://images.unsplash.com/photo-1586902279476-3244d8d18285?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
-    'https://images.unsplash.com/photo-1586943101559-4cdcf86a6f87?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1556&q=80',
-    'https://images.unsplash.com/photo-1586951144438-26d4e072b891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-    'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-  ];*/
+  User posterUserInfo;
 
   void currentUser() async {
     SharedPrefs.getContactNumber().then((currentUserPhone) {
@@ -53,6 +45,14 @@ class _PostInfoState extends State<PostInfo> {
         setState(() {
           currentUserId = currentUser.idUser;
         });
+      });
+    });
+  }
+
+  void posterUser() async {
+    FirebaseApi.retriveUserByID(widget.advert.userId).then((value) {
+      setState(() {
+        posterUserInfo = value;
       });
     });
   }
@@ -86,14 +86,15 @@ class _PostInfoState extends State<PostInfo> {
     SharedPrefs.getBookMarkFavourates().then((result) {
       setState(() {
         bookMarkedFavourates = result;
-        for (String data in result) {
-          if (data.contains(widget.advert.id)) {
-            isLiked = true;
+        if (result != null) {
+          for (String data in result) {
+            if (data.contains(widget.advert.id)) {
+              isLiked = true;
+            }
           }
         }
       });
     });
-    //bookMarkedFavourates
   }
 
   @override
@@ -102,6 +103,7 @@ class _PostInfoState extends State<PostInfo> {
     currentUser();
     addPostFramecallback();
     getBookMarkFavourates();
+    posterUser();
   }
 
   @override
@@ -369,7 +371,8 @@ class _PostInfoState extends State<PostInfo> {
                                             ),
                                             onPressed: () =>
                                                 AppLauncherUtils.openPhoneCall(
-                                              phoneNumber: '+27680308734',
+                                              phoneNumber:
+                                                  posterUserInfo?.contactNumber,
                                             ),
                                           ),
                                           'Call Us',
@@ -383,7 +386,8 @@ class _PostInfoState extends State<PostInfo> {
                                             ),
                                             onPressed: () =>
                                                 AppLauncherUtils.openSMS(
-                                              phoneNumber: '+27680308734',
+                                              phoneNumber:
+                                                  posterUserInfo?.contactNumber,
                                             ),
                                           ),
                                           'SMS',

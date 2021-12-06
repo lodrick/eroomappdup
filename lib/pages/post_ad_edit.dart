@@ -62,12 +62,15 @@ class _PostAdEditState extends State<PostAdEdit> {
         if (widget.advert.status.contains('approved')) {
           _textStatus = 'Post Active';
           _color = Color(0xFF26ED41);
+          isSwitched = true;
         } else if (widget.advert.status.contains('pending')) {
           _textStatus = 'Post Pending';
           _color = Colors.amberAccent;
+          isSwitched = false;
         } else {
-          _textStatus = 'Post Active';
+          _textStatus = 'Post Inactive';
           _color = Colors.redAccent.shade200;
+          isSwitched = false;
         }
       }
 
@@ -155,20 +158,16 @@ class _PostAdEditState extends State<PostAdEdit> {
                                                 print(isSwitched);
                                                 if (isSwitched) {
                                                   _status = 'pending';
-                                                  _textStatus =
-                                                      'Activating Post';
+                                                  _textStatus = 'Post Avtive';
                                                   _color = Color(0xFF26ED41);
                                                 } else {
                                                   _status = 'decined';
-                                                  _textStatus = 'Closing Post';
+                                                  _textStatus = 'Post Inactive';
                                                   _color =
                                                       Colors.redAccent.shade200;
                                                 }
                                               });
                                             },
-
-                                            //inactiveThumbColor:
-                                            //    MyColors.primaryColor,
                                             inactiveTrackColor: Colors
                                                 .tealAccent
                                                 .withOpacity(.5),
@@ -301,14 +300,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                                           onChanged: (val) {
                                             setState(() {
                                               _province = val;
-                                              //_cities
-                                              //_cities = List<Province>();
-
-                                              /*ProvinceApi.getProvinces(_province)
-                                                .then((citites) {
-                                              _cities = citites;
-                                              print(_cities);
-                                            });*/
                                             });
                                           },
                                         ),
@@ -387,16 +378,7 @@ class _PostAdEditState extends State<PostAdEdit> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             var price = double.parse(priceController.text.toString());
-            /*Advert advert = new Advert(
-              roomType: _roomType,
-              price: price,
-              title: titleController.text.toString(),
-              decription: descriptionController.text.toString(),
-              province: _province,
-              city: cityController.text.toString(),
-              suburb: suburbController.text.toString(),
-              status: _status ?? 'pending',
-            );*/
+
             Advert advert = widget.advert;
             advert.roomType = _roomType.toLowerCase();
             advert.price = price;
@@ -434,8 +416,6 @@ class _PostAdEditState extends State<PostAdEdit> {
                 textColor: Colors.white,
               ),
             );
-
-            //dispose();
           },
           child: Icon(
             Icons.check,

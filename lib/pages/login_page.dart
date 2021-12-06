@@ -253,53 +253,53 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                        value: _checkBoxValue,
-                                        onChanged: (onChanged) {
-                                          setState(() {
-                                            _checkBoxValue = onChanged;
-                                          });
-                                        }),
-                                    SizedBox(width: 10.w),
-                                    Column(
-                                      //alignment: WrapAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          'By signing in to eRoom you agree to our',
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: MyColors.lightTextColor,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () => AppLauncherUtils.openLink(
-                                              url:
-                                                  'https://kwepilecorp.wordpress.com/'),
-                                          child: Text(
-                                            'terms and conditions',
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: MyColors.purpleColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
                             ],
                           ),
                         )
                       ],
                     ),
                   ),
+                ),
+              ),
+              bottomNavigationBar: Container(
+                height: MediaQuery.of(context).size.height * .06,
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  children: [
+                    Checkbox(
+                        value: _checkBoxValue,
+                        onChanged: (onChanged) {
+                          setState(() {
+                            _checkBoxValue = onChanged;
+                          });
+                        }),
+                    SizedBox(width: 10.w),
+                    Column(
+                      //alignment: WrapAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'By signing in to eRoom you agree to our',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: MyColors.lightTextColor,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => AppLauncherUtils.openLink(
+                              url: 'https://kwepilecorp.wordpress.com/'),
+                          child: Text(
+                            'terms and conditions',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                              color: MyColors.purpleColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

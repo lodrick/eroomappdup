@@ -36,10 +36,7 @@ class CustomTextField extends StatelessWidget {
           enableInteractiveSelection: true,
           initialValue: initialValue,
           validator: (value) {
-            if ((value == null && value.isEmpty) ||
-                !RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
-              //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
-
+            if ((value == null && value.isEmpty)) {
               return errorText;
             }
             return null;

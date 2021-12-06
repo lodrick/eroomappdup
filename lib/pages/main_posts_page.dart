@@ -11,7 +11,6 @@ import 'package:eRoomApp/pages/favourites.dart';
 import 'package:eRoomApp/pages/inbox.dart';
 import 'package:eRoomApp/pages/main_search_post_page.dart';
 
-import 'package:eRoomApp/widgets/dialog_box_exit_app.dart';
 import 'package:eRoomApp/widgets/mybutton.dart';
 import 'package:eRoomApp/widgets/post_cards.dart';
 import 'package:eRoomApp/widgets/posts_list_apartments.dart';
@@ -107,7 +106,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
               }
             }
             return Scaffold(
-              //backgroundColor: MyColors.primaryColor,
               appBar: AppBar(
                 iconTheme: IconThemeData(color: Colors.white70),
                 centerTitle: false,
@@ -157,17 +155,6 @@ class _MainPostsPageState extends State<MainPostsPage> {
                             );
                             break;
                           default:
-                            showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                title: 'Exit App',
-                                descriptions:
-                                    'Are you sure you want to exit the app?',
-                                text: 'bluh bluh',
-                                imgUrl: currentImageUrl ??
-                                    'assets/img/black-house-01.jpeg',
-                              ),
-                            );
                             break;
                         }
                       },
@@ -197,9 +184,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                               ))
                           .toList(),
                     ),
-                  )
-
-                  //elevation: 0.0,
+                  ),
                 ],
               ),
               body: SafeArea(
@@ -367,87 +352,45 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       height: (menuContainerHeight) / 8.h,
                                       widget: ContactUs(),
                                     ),
-                                    GestureDetector(
-                                      onTap: () => AppLauncherUtils.openLink(
-                                          url:
-                                              'https://kwepilecorp.wordpress.com/'),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          Icon(
-                                            Icons.edit_sharp,
-                                            color: MyColors.primaryColor,
-                                          ),
-                                          SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          Text(
-                                            'terms and conditions',
-                                            style: TextStyle(
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.8),
-                                                  offset: Offset(8.0, 6.0),
-                                                  blurRadius: 15.0.r,
-                                                ),
-                                              ],
-                                              color: MyColors.primaryColorLight,
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                     Divider(
                                       thickness: 1.sp,
                                       color: MyColors.primaryColor,
                                     ),
-                                    // ignore: deprecated_member_use
-                                    FlatButton(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Logout',
-                                            style: TextStyle(
-                                              color: MyColors.primaryColorLight,
-                                              fontSize: 16.sp,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.8),
-                                                  offset: Offset(8.0, 6.0),
-                                                  blurRadius: 15,
-                                                ),
-                                              ],
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w, vertical: 22.h),
+                                      child: GestureDetector(
+                                        onTap: () => AppLauncherUtils.openLink(
+                                            url:
+                                                'https://kwepilecorp.wordpress.com/'),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              'terms and conditions',
+                                              style: TextStyle(
+                                                shadows: [
+                                                  Shadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    offset: Offset(8.0, 6.0),
+                                                    blurRadius: 15.0.r,
+                                                  ),
+                                                ],
+                                                color:
+                                                    MyColors.primaryColorLight,
+                                                fontSize: 18.sp,
+                                              ),
                                             ),
-                                          ),
-                                          Icon(
-                                            Icons.logout,
-                                            color: MyColors.primaryColorLight,
-                                          ),
-                                        ],
+                                            Icon(
+                                              Icons.edit_sharp,
+                                              color: MyColors.primaryColor,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => CustomDialogBox(
-                                            title: 'Exit App',
-                                            descriptions:
-                                                'Are you sure you want to exit the app?',
-                                            text: '',
-                                            imgUrl: currentImageUrl ??
-                                                'assets/img/black-house-01.jpeg',
-                                          ),
-                                        );
-                                      },
                                     ),
                                   ],
                                 ),
@@ -492,41 +435,20 @@ class _MainPostsPageState extends State<MainPostsPage> {
           ),
         ),
       );
-    } else if (choice == Constants.SIGNOUT) {
-      print('Sign Out');
-      showDialog(
-        context: context,
-        builder: (context) => CustomDialogBox(
-          title: 'Exit App',
-          descriptions: 'Are you sure you want to exit the app?',
-          text: 'bluh bluh',
-          imgUrl: currentImageUrl ?? 'assets/img/black-house-01.jpeg',
-        ),
-      );
     }
   }
 
   Widget _createBottomNavigationBar() {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.black54, MyColors.primaryColor],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.0, 0.8],
-          tileMode: TileMode.clamp,
-        ),
-        color: Colors.white,
-      ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: MyColors.primaryColor,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Colors.blueGrey,
         selectedFontSize: 15.0.sp,
         unselectedFontSize: 14.0.sp,
         onTap: _onItemTap,
         currentIndex: _bottomBarIndex,
-        backgroundColor: Colors.transparent,
+        backgroundColor: MyColors.kBackgroundColor,
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.dashboard),
