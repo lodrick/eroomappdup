@@ -124,7 +124,6 @@ class _CreatePostState extends State<CreatePost> {
     @required String labelTxt,
     @required Icon icon,
     @required TextEditingController controller,
-    @required String errorText,
     @required TextInputType textInputType,
   }) {
     return Container(
@@ -141,8 +140,6 @@ class _CreatePostState extends State<CreatePost> {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return '$labelTxt is required.';
-          } else if (!RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
-            return errorText;
           }
           return null;
         },
@@ -256,7 +253,6 @@ class _CreatePostState extends State<CreatePost> {
                         color: MyColors.primaryColor,
                       ),
                       controller: priceController,
-                      errorText: 'Please enter the correct price',
                       textInputType: TextInputType.number,
                     ),
 
@@ -274,9 +270,6 @@ class _CreatePostState extends State<CreatePost> {
                         validator: (value) {
                           if (value == null && value.isEmpty) {
                             return 'Title is required.';
-                          } else if (!RegExp(r'^[A-Za-z0-9]+$')
-                              .hasMatch(value)) {
-                            return 'Please fill in the correct title';
                           }
                           return null;
                         },
@@ -319,9 +312,6 @@ class _CreatePostState extends State<CreatePost> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Description is required.';
-                          } else if (!RegExp(r'^[A-Za-z0-9]+$')
-                              .hasMatch(value)) {
-                            return 'Please fill the correct description';
                           }
                           return null;
                         },
@@ -464,9 +454,6 @@ class _CreatePostState extends State<CreatePost> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Suburb is required.';
-                          } else if (!RegExp(r'^[A-Za-z0-9]+$')
-                              .hasMatch(value)) {
-                            return 'Please fill in the suburb';
                           }
                           return null;
                         },

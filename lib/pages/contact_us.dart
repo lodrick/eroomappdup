@@ -174,14 +174,14 @@ class ContactUs extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => AppLauncherUtils.openEmail(
-            toEmail: 'lodrick.mpanze0@gmail.com',
+            toEmail: 'eroominfo@kwepilecorp.com',
             subject: 'Subject',
             body: 'Hi how are you.',
           ),
           child: _buildButtonColumn(
             MyColors.primaryColor,
             Icons.email,
-            'Email',
+            'EMAIL',
           ),
         ),
       ],
@@ -200,7 +200,7 @@ class ContactUs extends StatelessWidget {
       'If you are renting out rooms or cottages or you are simply looking for a '
       'room or cottage to rent you have made an incredible choice by '
       'downloading this App. The Simplicity of finding everything suitable to '
-      'your needs right at your fingertips, worry not, you have found what you'
+      'your needs right at your fingertips, worry not, you have found what you '
       'are looking for. Welcome to eRoom',
       softWrap: true,
     ),
